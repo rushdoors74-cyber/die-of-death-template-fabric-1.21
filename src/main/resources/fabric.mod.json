@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "dieofdeath",
+	"version": "${version}",
+	"name": "Die Of Death",
+	"description": "Trying to make DoD in Minecraft",
+	"authors": [
+		"Badware"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "GPL-3.0-only",
+	"icon": "assets/dieofdeath/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.badware.dieofdeath.DieOfDeath"
+		],
+		"fabric-datagen": [
+			"net.badware.dieofdeath.DieOfDeathDataGenerator"
+		],
+		"client": [
+			"net.badware.dieofdeath.DieOfDeathClient"
+		]
+	},
+	"mixins": [
+		"dieofdeath.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.0",
+		"minecraft": "~1.21",
+		"java": ">=21",
+		"fabric-api": ">=0.100.1"
+	}
+}

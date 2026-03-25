@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_implement_wall": {
+      "conditions": {
+        "items": [
+          {
+            "items": "dieofdeath:implement_wall"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "dieofdeath:wall_brick_from_implement_wall"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_implement_wall"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "dieofdeath:wall_brick_from_implement_wall"
+    ]
+  }
+}

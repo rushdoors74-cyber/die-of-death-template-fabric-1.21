@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_hotdog": {
+      "conditions": {
+        "items": [
+          {
+            "items": "dieofdeath:hotdog"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:bonuspad_shard_from_blasting_hotdog"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_hotdog"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:bonuspad_shard_from_blasting_hotdog"
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "dieofdeath:block/wood_box",
+    "side": "dieofdeath:block/wood_box",
+    "top": "dieofdeath:block/wood_box"
+  }
+}

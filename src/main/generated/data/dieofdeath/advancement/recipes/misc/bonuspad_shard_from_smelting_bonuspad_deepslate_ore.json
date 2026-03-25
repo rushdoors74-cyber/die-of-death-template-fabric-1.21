@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_bonuspad_deepslate_ore": {
+      "conditions": {
+        "items": [
+          {
+            "items": "dieofdeath:bonuspad_deepslate_ore"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:bonuspad_shard_from_smelting_bonuspad_deepslate_ore"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_bonuspad_deepslate_ore"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:bonuspad_shard_from_smelting_bonuspad_deepslate_ore"
+    ]
+  }
+}

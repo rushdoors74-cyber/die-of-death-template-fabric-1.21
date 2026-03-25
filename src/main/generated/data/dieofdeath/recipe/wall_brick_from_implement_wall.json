@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "dieofdeath:implement_wall"
+    }
+  ],
+  "result": {
+    "count": 6,
+    "id": "dieofdeath:wall_brick"
+  }
+}

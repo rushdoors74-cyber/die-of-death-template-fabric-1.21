@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "dieofdeath:block/slab_0"
+    },
+    "type=double": {
+      "model": "dieofdeath:block/wood_box"
+    },
+    "type=top": {
+      "model": "dieofdeath:block/slab_0_top"
+    }
+  }
+}

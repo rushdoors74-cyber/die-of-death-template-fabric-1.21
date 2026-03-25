@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 280,
+  "experience": 0.3,
+  "group": "bonuspad_shard",
+  "ingredient": {
+    "item": "dieofdeath:bonuspad_ore"
+  },
+  "result": {
+    "id": "dieofdeath:bonuspad_shard"
+  }
+}

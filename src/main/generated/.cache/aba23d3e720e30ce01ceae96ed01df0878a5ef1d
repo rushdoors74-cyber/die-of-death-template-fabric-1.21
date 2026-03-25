@@ -1,0 +1,10 @@
+// 1.21	2026-03-25T15:49:09.9492451	Die Of Death/Tags for minecraft:block
+7de5b133c1d4f1d1556e92c738574b560e03afd8 data\minecraft\tags\block\mineable\pickaxe.json
+e9d35f98f4bbeb32fab5045860e0cf38fc1178d0 data\minecraft\tags\block\wooden_fences.json
+b11f313a186c0ce20e7fdd6080af254c55373fe5 data\minecraft\tags\block\needs_iron_tool.json
+6e0e72be6c554be7eb490c4de3133fafc9a03b39 data\minecraft\tags\block\mineable\axe.json
+2d61348ab7e1b3330de950febf192234a844c12c data\minecraft\tags\block\needs_diamond_tool.json
+06ea1fa3e9786ecbb990cd98e71a4fce8f9ac8e3 data\dieofdeath\tags\block\need_yellow_thing_tool.json
+dd893986b37561a05f25fa2d418e29e914e6489e data\minecraft\tags\block\fence_gates.json
+fc3e74097221d59abfd1d6e6d18757a482d0d901 data\minecraft\tags\block\walls.json
+7894e4f439b060c31f894e524761fa0873a69487 data\minecraft\tags\block\needs_stone_tool.json

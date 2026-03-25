@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "dieofdeath:bonuspad_shard"
+    },
+    "D": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "BB ",
+    "BD ",
+    " D "
+  ],
+  "result": {
+    "count": 1,
+    "id": "dieofdeath:blue_axe"
+  }
+}

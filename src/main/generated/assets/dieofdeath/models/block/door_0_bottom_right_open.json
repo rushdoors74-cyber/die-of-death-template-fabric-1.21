@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_right_open",
+  "textures": {
+    "bottom": "dieofdeath:block/door_0_bottom",
+    "top": "dieofdeath:block/door_0_top"
+  }
+}

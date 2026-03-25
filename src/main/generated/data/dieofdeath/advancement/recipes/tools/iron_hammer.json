@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_breeze_rod": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:breeze_rod"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_cement": {
+      "conditions": {
+        "items": [
+          {
+            "items": "dieofdeath:cement"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "dieofdeath:iron_hammer"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_cement",
+      "has_breeze_rod"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "dieofdeath:iron_hammer"
+    ]
+  }
+}

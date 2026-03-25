@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "dieofdeath:block/pressure_plate_0"
+    },
+    "powered=true": {
+      "model": "dieofdeath:block/pressure_plate_0_down"
+    }
+  }
+}

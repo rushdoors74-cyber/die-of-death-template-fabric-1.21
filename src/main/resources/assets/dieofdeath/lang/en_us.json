@@ -1,0 +1,38 @@
+{
+  "item.dieofdeath.wall_brick": "Wall Brick",
+  "item.dieofdeath.bonuspad_shard": "BonusPad Shard",
+  "item.dieofdeath.box_chain": "Box Chain",
+  "item.dieofdeath.cement": "Cement",
+  "item.dieofdeath.artful_wand": "Wand",
+  "item.dieofdeath.hotdog": "Hotdog",
+  "item.dieofdeath.boiling_water": "Boiling Water",
+  "item.dieofdeath.pursuer_cleave": "Pursuer's Cleave",
+  "item.dieofdeath.yellow_thing": "Yellow Pickaxe",
+  "item.dieofdeath.blue_axe": "Blue Axe",
+  "item.dieofdeath.shovel_stuff": "Shovel Shovel Why So OP",
+  "item.dieofdeath.weird_hoe": "Hoeing",
+  "item.dieofdeath.iron_hammer": "4x4 Hammer",
+
+  "block.dieofdeath.implement_wall": "Implement Wall",
+  "block.dieofdeath.killer_only_block": "Killer Barrier",
+  "block.dieofdeath.wood_box": "Wood Box",
+  "block.dieofdeath.bonuspad_ore": "Bonus Pad Ore",
+  "block.dieofdeath.bonuspad_deepslate_ore": "Bonus Pad Deepslate Ore",
+  "block.dieofdeath.test_rail": "DoD Teapot Palace Test Block",
+  "block.dieofdeath.trapdoor_0": "Trapdoor thing",
+  "block.dieofdeath.button_0": "button thing",
+  "block.dieofdeath.door_0": "door thing",
+  "block.dieofdeath.fence_0": "fence thing",
+  "block.dieofdeath.fence_gate_0": "fence gate thing",
+  "block.dieofdeath.slab_0": "slab thing",
+  "block.dieofdeath.stairs_0": "stair thing",
+  "block.dieofdeath.wall_0": "wall thing",
+  "block.dieofdeath.pressure_plate_0": "pressure plate thing",
+  "block.dieofdeath.tundra_trench_lamp": "Lamp Tundra Trench",
+
+  "itemgroup.dieofdeath.die_of_death": "Items Of Death",
+  "itemgroup.dieofdeath.die_of_death_blocks": "Blocks Of Death",
+
+  "With a flick of my wand- I bring your wildest dreams- into reality...!": "With a flick of my wand- I bring your wildest dreams- §9into reality...!§r",
+  "The only thing stopping you from achieving your dreams are the mental roadblocks you set before yourself!": "The only thing stopping you from achieving your dreams are §9the mental roadblocks you set before yourself!§r"
+}

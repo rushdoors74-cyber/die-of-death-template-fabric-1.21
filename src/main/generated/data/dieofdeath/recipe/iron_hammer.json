@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "E": {
+      "item": "dieofdeath:cement"
+    },
+    "F": {
+      "item": "minecraft:breeze_rod"
+    }
+  },
+  "pattern": [
+    "EEE",
+    "EFE",
+    " F "
+  ],
+  "result": {
+    "count": 1,
+    "id": "dieofdeath:iron_hammer"
+  }
+}

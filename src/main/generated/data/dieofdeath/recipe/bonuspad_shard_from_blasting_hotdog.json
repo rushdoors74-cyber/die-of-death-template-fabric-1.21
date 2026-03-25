@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 140,
+  "experience": 0.3,
+  "group": "bonuspad_shard",
+  "ingredient": {
+    "item": "dieofdeath:hotdog"
+  },
+  "result": {
+    "id": "dieofdeath:bonuspad_shard"
+  }
+}

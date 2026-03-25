@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 300,
+  "experience": 0.2,
+  "group": "cement",
+  "ingredient": {
+    "item": "dieofdeath:wall_brick"
+  },
+  "result": {
+    "id": "dieofdeath:cement"
+  }
+}

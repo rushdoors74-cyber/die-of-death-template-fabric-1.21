@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "dieofdeath:test_rail"
+    }
+  ],
+  "result": {
+    "count": 41,
+    "id": "dieofdeath:hotdog"
+  }
+}

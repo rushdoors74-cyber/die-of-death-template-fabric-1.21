@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "clicked=false": {
+      "model": "dieofdeath:block/tundra_trench_lamp"
+    },
+    "clicked=true": {
+      "model": "dieofdeath:block/tundra_trench_lamp_on"
+    }
+  }
+}
