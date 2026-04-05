@@ -34,6 +34,16 @@ public class ModItemGroups {
                         entries.add(ModItems.WEIRD_HOE);
 
                         entries.add(ModItems.IRON_HAMMER);
+
+                        entries.add(ModItems.BLOCK_HELMET);
+                        entries.add(ModItems.BLOCK_CHESTPLATE);
+                        entries.add(ModItems.BLOCK_LEGGINGS);
+                        entries.add(ModItems.BLOCK_BOOTS);
+
+                        entries.add(ModItems.HARKEN_BOW);
+
+                        entries.add(ModItems.ETERNITY_V2_MUSIC_DISC);
+
                     }).build());
 
     public static final ItemGroup Die_Of_Death_Blocks = Registry.register(Registries.ITEM_GROUP,
@@ -44,8 +54,6 @@ public class ModItemGroups {
                         entries.add(ModBlocks.KILLER_ONLY_BLOCK);
                         entries.add(ModBlocks.IMPLEMENT_WALL);
                         entries.add(ModBlocks.WOOD_BOX);
-                        entries.add(ModBlocks.BONUSPAD_ORE);
-                        entries.add(ModBlocks.BONUSPAD_DEEPSLATE_ORE);
                         entries.add(ModBlocks.TEST_RAIL);
                         entries.add(ModBlocks.TRAPDOOR_0);
                         entries.add(ModBlocks.BUTTON_0);
@@ -58,6 +66,23 @@ public class ModItemGroups {
                         entries.add(ModBlocks.PRESSURE_PLATE_0);
                         entries.add(ModBlocks.TUNDRA_TRENCH_LAMP);
 
+                    }).build());
+
+    public static final ItemGroup Die_Of_Death_Ores = Registry.register(Registries.ITEM_GROUP,
+            Identifier.of(DieOfDeath.MOD_ID, "die_of_death_ores"),
+    FabricItemGroup.builder().icon(() -> new ItemStack(ModBlocks.BONUSPAD_ORE))
+            .displayName(Text.translatable("itemgroup.dieofdeath.die_of_death_ores"))
+            .entries((displayContext, entries) -> {
+                entries.add(ModBlocks.BONUSPAD_ORE);
+                entries.add(ModBlocks.BONUSPAD_DEEPSLATE_ORE);
+            }).build());
+
+    public static final ItemGroup Die_Of_Death_Natural = Registry.register(Registries.ITEM_GROUP,
+            Identifier.of(DieOfDeath.MOD_ID, "die_of_death_natural"),
+            FabricItemGroup.builder().icon(() -> new ItemStack(ModBlocks.BACKYARD_BUSH))
+                    .displayName(Text.translatable("itemgroup.dieofdeath.die_of_death_natural"))
+                    .entries((displayContext, entries) -> {
+                        entries.add(ModBlocks.BACKYARD_BUSH);
                     }).build());
 
 

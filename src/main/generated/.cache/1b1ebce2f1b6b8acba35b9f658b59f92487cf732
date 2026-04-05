@@ -1,7 +1,9 @@
-// 1.21	2026-03-25T15:49:09.9512448	Die Of Death/Tags for minecraft:item
+// 1.21	2026-04-04T16:11:22.5936693	Die Of Death/Tags for minecraft:item
 1d9c16a3c022b26ba685cec7cebc1b73965e3059 data\minecraft\tags\item\axes.json
 71733a8c334d94a36b382064096e91287fca0fb3 data\minecraft\tags\item\pickaxes.json
 927e5716f6b073edf70e05a41d87b2b222828364 data\minecraft\tags\item\swords.json
 43daef91d0015fbcfd411de65f3ab5950af0a747 data\dieofdeath\tags\item\transformable_items.json
 d4c34abb83e455c0ef1e61e77cada0fcdc5998bb data\minecraft\tags\item\shovels.json
+dcad87175ee5c26896f489f3ed4cdba13d335a71 data\minecraft\tags\item\trimmable_armor.json
 be3a49c9001af03cee92f3b8cbc9eeb192c7c3a4 data\minecraft\tags\item\hoes.json
+60daf4cd72b95ac0f24700475b78a2a415b3b2ca data\minecraft\tags\item\enchantable\bow.json

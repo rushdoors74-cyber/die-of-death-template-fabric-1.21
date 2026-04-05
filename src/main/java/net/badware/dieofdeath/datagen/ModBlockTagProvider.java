@@ -43,5 +43,11 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .add(ModBlocks.TEST_RAIL)
                 .addTag(BlockTags.NEEDS_DIAMOND_TOOL);
 
+        getOrCreateTagBuilder(BlockTags.FLOWERS)
+                .add(ModBlocks.BACKYARD_BUSH);
+
+        getOrCreateTagBuilder(BlockTags.REPLACEABLE_BY_TREES)
+                .add(ModBlocks.BACKYARD_BUSH);
+
     }
 }

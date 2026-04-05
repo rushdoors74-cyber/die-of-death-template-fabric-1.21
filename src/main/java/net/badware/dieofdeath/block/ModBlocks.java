@@ -1,8 +1,10 @@
 package net.badware.dieofdeath.block;
 
 import net.badware.dieofdeath.DieOfDeath;
+import net.badware.dieofdeath.block.advanced.BackyardBushBlock;
 import net.badware.dieofdeath.block.advanced.Test_Rail;
 import net.badware.dieofdeath.item.advanced.TundraTrenchLamp;
+import net.badware.dieofdeath.sound.ModSounds;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
@@ -22,7 +24,7 @@ import java.util.List;
 public class ModBlocks {
     public static final Block IMPLEMENT_WALL = registerBlock("implement_wall",
             new Block(AbstractBlock.Settings.create().strength(2.5f, 8f)
-                    .requiresTool().noBlockBreakParticles().sounds(BlockSoundGroup.NETHER_BRICKS)) {
+                    .requiresTool().noBlockBreakParticles().sounds(ModSounds.IMPLEMENT_SOUNDS)) {
                 @Override
                 public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType options) {
                     tooltip.add(Text.translatable("The only thing stopping you from achieving your dreams are the mental roadblocks you set before yourself!"));
@@ -73,6 +75,14 @@ public static final Block TRAPDOOR_0 = registerBlock("trapdoor_0",
 
 public static final Block TUNDRA_TRENCH_LAMP = registerBlock("tundra_trench_lamp", new TundraTrenchLamp(AbstractBlock.Settings.create().strength(0.5f).luminance(state -> state.get(TundraTrenchLamp.CLICKED) ? 15 : 0)));
 
+    public static final Block BACKYARD_BUSH = registerBlock("backyard_bush",
+            new BackyardBushBlock(AbstractBlock.Settings.create()
+                    .mapColor(MapColor.DARK_GREEN)
+                    .noCollision()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.GRASS)
+                    .nonOpaque()
+                    .burnable()));
 
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);

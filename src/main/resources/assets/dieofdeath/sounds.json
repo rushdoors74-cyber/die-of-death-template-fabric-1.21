@@ -1,0 +1,35 @@
+{
+  "wand_use": {
+    "subtitle": "subtitles.dieofdeath.wand_use",
+    "sounds": [
+      "dieofdeath:wand_use"
+    ]
+  },
+  "implement_break": {
+    "subtitle": "subtitles.dieofdeath.implement_break",
+    "sounds": [
+      "dieofdeath:implement_break"
+    ]
+  },
+  "implement_place": {
+    "subtitle": "subtitles.dieofdeath.implement_place",
+    "sounds": [
+      "dieofdeath:implement_place"
+    ]
+  },
+  "eternity_v2": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "dieofdeath:eternity_v2",
+        "stream": true
+      }
+    ]
+  },
+  "entangled": {
+    "subtitle": "subtitles.dieofdeath.entangled",
+    "sounds": [
+      "dieofdeath:entangled"
+    ]
+  }
+}

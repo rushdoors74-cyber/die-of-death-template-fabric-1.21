@@ -1,0 +1,8 @@
+{
+  "comparator_output": 15,
+  "description": {
+    "translate": "item.dieofdeath.eternity_v2_music_disc.desc"
+  },
+  "length_in_seconds": 148.0,
+  "sound_event": "dieofdeath:eternity_v2"
+}

@@ -36,6 +36,15 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
         getOrCreateTagBuilder(ItemTags.HOES)
                 .add(ModItems.WEIRD_HOE);
 
+        getOrCreateTagBuilder(ItemTags.TRIMMABLE_ARMOR)
+                .add(ModItems.BLOCK_HELMET)
+                .add(ModItems.BLOCK_CHESTPLATE)
+                .add(ModItems.BLOCK_LEGGINGS)
+                .add(ModItems.BLOCK_BOOTS);
+
+        getOrCreateTagBuilder(ItemTags.BOW_ENCHANTABLE)
+                .add(ModItems.HARKEN_BOW);
+
 
     }
 }

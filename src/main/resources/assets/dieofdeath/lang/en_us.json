@@ -12,6 +12,27 @@
   "item.dieofdeath.shovel_stuff": "Shovel Shovel Why So OP",
   "item.dieofdeath.weird_hoe": "Hoeing",
   "item.dieofdeath.iron_hammer": "4x4 Hammer",
+  "item.dieofdeath.block_helmet": "Block Helmet",
+  "item.dieofdeath.block_chestplate": "Block Chestplate",
+  "item.dieofdeath.block_leggings": "Block Leggings",
+  "item.dieofdeath.block_boots": "Block Boots",
+  "item.dieofdeath.harken_bow": "Test Bow",
+
+  "item.dieofdeath.eternity_v2_music_disc": "Eternity V2",
+  "item.dieofdeath.eternity_v2_music_disc.desc": "billmusic - ETERNITY (v2)",
+
+  "effect.dieofdeath.tangled": "Tangled",
+
+  "enchantment.dieofdeath.entanglement": "Entanglement",
+
+  "painting.dieofdeath.harken_eye.title": "Harken's Eye",
+  "painting.dieofdeath.harken_eye.author": "Javasteve983",
+  "painting.dieofdeath.pursuer.title": "Pursuer",
+  "painting.dieofdeath.pursuer.author": "Javasteve983",
+  "painting.dieofdeath.tundra_trench.title": "Tundra Trench",
+  "painting.dieofdeath.tundra_trench.author": "Javasteve983",
+  "painting.dieofdeath.teapot_paradise.title": "Teapot Paradise",
+  "painting.dieofdeath.teapot_paradise.author": "Javasteve983",
 
   "block.dieofdeath.implement_wall": "Implement Wall",
   "block.dieofdeath.killer_only_block": "Killer Barrier",
@@ -29,9 +50,12 @@
   "block.dieofdeath.wall_0": "wall thing",
   "block.dieofdeath.pressure_plate_0": "pressure plate thing",
   "block.dieofdeath.tundra_trench_lamp": "Lamp Tundra Trench",
+  "block.dieofdeath.backyard_bush": "Backyard Bush",
 
   "itemgroup.dieofdeath.die_of_death": "Items Of Death",
   "itemgroup.dieofdeath.die_of_death_blocks": "Blocks Of Death",
+  "itemgroup.dieofdeath.die_of_death_ores": "Ores Of Death",
+  "itemgroup.dieofdeath.die_of_death_natural": "Live Of Life",
 
   "With a flick of my wand- I bring your wildest dreams- into reality...!": "With a flick of my wand- I bring your wildest dreams- §9into reality...!§r",
   "The only thing stopping you from achieving your dreams are the mental roadblocks you set before yourself!": "The only thing stopping you from achieving your dreams are §9the mental roadblocks you set before yourself!§r"

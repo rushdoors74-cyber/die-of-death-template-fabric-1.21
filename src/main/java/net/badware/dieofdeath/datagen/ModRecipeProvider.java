@@ -21,9 +21,9 @@ public class ModRecipeProvider extends FabricRecipeProvider {
     public ModRecipeProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
         super(output, registriesFuture);
     }
-
     @Override
     public void generate(RecipeExporter exporter) {
+
         List<ItemConvertible> SHARD_SMELTABLES = List.of(ModItems.HOTDOG, ModBlocks.BONUSPAD_ORE,
                 ModBlocks.BONUSPAD_DEEPSLATE_ORE);
 
@@ -96,5 +96,22 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .criterion(hasItem(ModBlocks.TEST_RAIL), conditionsFromItem(ModBlocks.TEST_RAIL))
                 .offerTo(exporter, Identifier.of(DieOfDeath.MOD_ID, "hotdog_from_test_rail"));
 
+        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModItems.WALL_BRICK)
+                .pattern("AB")
+                .input('A', ModItems.CEMENT)
+                .input('B', Items.WHITE_DYE)
+                .criterion(hasItem(ModItems.CEMENT), conditionsFromItem(ModItems.CEMENT))
+                .criterion(hasItem(Items.WHITE_DYE), conditionsFromItem(Items.WHITE_DYE))
+                .offerTo(exporter);
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.COMBAT, ModItems.BLOCK_CHESTPLATE)
+                .pattern("A A")
+                .pattern("ABA")
+                .pattern("AAA")
+                .input('A', Items.IRON_INGOT)
+                .input('B', Items.IRON_BLOCK)
+                .criterion(hasItem(Items.IRON_INGOT), conditionsFromItem(Items.IRON_INGOT))
+                .criterion(hasItem(Items.IRON_BLOCK), conditionsFromItem(Items.IRON_BLOCK))
+                .offerTo(exporter);
     }
 }

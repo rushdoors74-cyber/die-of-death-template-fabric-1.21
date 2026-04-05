@@ -51,6 +51,8 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
         addDrop(ModBlocks.TRAPDOOR_0);
         addDrop(ModBlocks.DOOR_0, doorDrops(ModBlocks.DOOR_0));
 
+        this.addDrop(ModBlocks.BACKYARD_BUSH);
+
     }
 
     public LootTable.Builder multipleOreDrops(Block drop, Item item, float minDrops, float maxDrops) {

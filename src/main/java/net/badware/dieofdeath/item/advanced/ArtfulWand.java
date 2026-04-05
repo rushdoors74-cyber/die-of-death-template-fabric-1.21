@@ -1,6 +1,7 @@
 package net.badware.dieofdeath.item.advanced;
 
 import net.badware.dieofdeath.block.ModBlocks;
+import net.badware.dieofdeath.sound.ModSounds;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EquipmentSlot;
@@ -49,7 +50,7 @@ public class ArtfulWand extends Item {
                 context.getStack().damage(1, ((ServerWorld) world), ((ServerPlayerEntity) context.getPlayer()),
                         item -> context.getPlayer().sendEquipmentBreakStatus(item, EquipmentSlot.MAINHAND));
 
-                world.playSound(null, context.getBlockPos(), SoundEvents.BLOCK_CROP_BREAK, SoundCategory.BLOCKS);
+                world.playSound(null, context.getBlockPos(), ModSounds.WAND_USE, SoundCategory.BLOCKS);
 
             }
 

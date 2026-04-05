@@ -5,14 +5,15 @@
 	"name": "Die Of Death",
 	"description": "Trying to make DoD in Minecraft",
 	"authors": [
-		"Badware"
+		"Badware (Javasteve983)"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://modrinth.com/mod/die-of-death",
+		"issues": "https://github.com/rushdoors74-cyber/die-of-death-template-fabric-1.21/issues",
+		"sources": "https://github.com/rushdoors74-cyber/die-of-death-template-fabric-1.21"
 	},
 	"license": "GPL-3.0-only",
-	"icon": "assets/dieofdeath/icon.png",
+	"icon": "assets/dod_better_icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [

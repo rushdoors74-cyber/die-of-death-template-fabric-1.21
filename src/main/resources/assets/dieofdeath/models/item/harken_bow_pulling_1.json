@@ -1,0 +1,6 @@
+{
+  "parent": "dieofdeath:item/harken_bow",
+  "textures": {
+    "layer0": "dieofdeath:item/harken_bow_pulling_1"
+  }
+}

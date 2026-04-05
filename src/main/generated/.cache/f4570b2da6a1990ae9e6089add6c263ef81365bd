@@ -1,4 +1,4 @@
-// 1.21	2026-03-25T15:49:09.9572467	Die Of Death/Block Loot Tables
+// 1.21	2026-04-04T16:11:22.6016692	Die Of Death/Block Loot Tables
 c62bb92bdfc22f00b4f7fe8d399e5d2ea0dc13f0 data\dieofdeath\loot_table\blocks\implement_wall.json
 e013bf20997f806be46440d6363a31e93ed5b7e8 data\dieofdeath\loot_table\blocks\slab_0.json
 48b23a6da7c2886ef31f8667fead6d45ffb1bcad data\dieofdeath\loot_table\blocks\wood_box.json
@@ -8,6 +8,7 @@ e013bf20997f806be46440d6363a31e93ed5b7e8 data\dieofdeath\loot_table\blocks\slab_
 c8053dd9e8e2556dce5dd7d6a9c971925f12866d data\dieofdeath\loot_table\blocks\trapdoor_0.json
 0b4af1de63a2a96e33c2952ef6799897d36b54f6 data\dieofdeath\loot_table\blocks\bonuspad_ore.json
 6eea6f47ff7f589f8d12a0ff010dbba5e2c854a1 data\dieofdeath\loot_table\blocks\fence_0.json
+78e550127be35a43595d16da4870c56bfe4c8376 data\dieofdeath\loot_table\blocks\backyard_bush.json
 73a7728461443a64a0f69503cb72a6a4c79f1bad data\dieofdeath\loot_table\blocks\wall_0.json
 f121df3a2c867893e6e652fc99367dacd588afd1 data\dieofdeath\loot_table\blocks\stairs_0.json
 4dfaa3a904892ec7674857c612b0c25a9e310061 data\dieofdeath\loot_table\blocks\bonuspad_deepslate_ore.json
