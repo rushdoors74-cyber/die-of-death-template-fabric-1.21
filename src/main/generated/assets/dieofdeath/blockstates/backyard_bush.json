@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "dieofdeath:block/backyard_bush_stage0"
+    },
+    "age=1": {
+      "model": "dieofdeath:block/backyard_bush_stage1"
+    }
+  }
+}
