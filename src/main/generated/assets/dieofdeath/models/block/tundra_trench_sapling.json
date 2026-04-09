@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "dieofdeath:block/tundra_trench_sapling"
+  }
+}

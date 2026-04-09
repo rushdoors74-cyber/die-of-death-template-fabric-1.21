@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_bonuspad_shard": {
+      "conditions": {
+        "items": [
+          {
+            "items": "dieofdeath:bonuspad_shard"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "dieofdeath:bonuspad_ingot"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_bonuspad_shard"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "dieofdeath:bonuspad_ingot"
+    ]
+  }
+}

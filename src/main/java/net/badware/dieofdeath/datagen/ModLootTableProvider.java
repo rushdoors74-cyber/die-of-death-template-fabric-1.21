@@ -36,7 +36,7 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
         addDrop(ModBlocks.WOOD_BOX);
 
         addDrop(ModBlocks.BONUSPAD_ORE, oreDrops(ModBlocks.BONUSPAD_ORE, ModItems.BONUSPAD_SHARD));
-        addDrop(ModBlocks.BONUSPAD_DEEPSLATE_ORE, multipleOreDrops(ModBlocks.BONUSPAD_DEEPSLATE_ORE, ModItems.BONUSPAD_SHARD, 4, 8));
+        addDrop(ModBlocks.BONUSPAD_DEEPSLATE_ORE, multipleOreDrops(ModBlocks.BONUSPAD_DEEPSLATE_ORE, ModItems.BONUSPAD_SHARD, 2, 4));
 
         addDrop(ModBlocks.STAIRS_0);
         addDrop(ModBlocks.SLAB_0, slabDrops(ModBlocks.SLAB_0));
@@ -52,6 +52,8 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
         addDrop(ModBlocks.DOOR_0, doorDrops(ModBlocks.DOOR_0));
 
         this.addDrop(ModBlocks.BACKYARD_BUSH);
+
+        addDrop(ModBlocks.TUNDRA_TRENCH_SAPLING);
 
     }
 

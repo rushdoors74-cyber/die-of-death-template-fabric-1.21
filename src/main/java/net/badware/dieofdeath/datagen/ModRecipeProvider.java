@@ -113,5 +113,11 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .criterion(hasItem(Items.IRON_INGOT), conditionsFromItem(Items.IRON_INGOT))
                 .criterion(hasItem(Items.IRON_BLOCK), conditionsFromItem(Items.IRON_BLOCK))
                 .offerTo(exporter);
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.BONUSPAD_INGOT, 1)
+                .pattern("AAA")
+                .input('A', ModItems.BONUSPAD_SHARD)
+                .criterion(hasItem(ModItems.BONUSPAD_SHARD), conditionsFromItem(ModItems.BONUSPAD_SHARD))
+                .offerTo(exporter);
     }
 }

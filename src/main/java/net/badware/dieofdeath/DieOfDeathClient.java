@@ -13,7 +13,10 @@ public class DieOfDeathClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.DOOR_0, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.TRAPDOOR_0, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.BACKYARD_BUSH, RenderLayer.getCutout());
+
         ModModelPredicates.registerModModels();
+
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.TUNDRA_TRENCH_SAPLING, RenderLayer.getCutout());
 
     }
 }

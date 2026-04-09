@@ -1,4 +1,4 @@
-// 1.21	2026-04-04T16:11:22.6026738	Die Of Death/Recipes
+// 1.21	2026-04-09T17:39:53.7741363	Die Of Death/Recipes
 d5def4a9389ca094143fecfc397f5bbc2a28a54a data\dieofdeath\advancement\recipes\misc\bonuspad_shard_from_blasting_hotdog.json
 3f5e95a0e2c7a5420fa2837e22fe5a340adb83af data\dieofdeath\advancement\recipes\misc\hotdog_from_test_rail.json
 af8fd2d9c710b62948bb5df1820a085576048bf1 data\dieofdeath\advancement\recipes\combat\block_chestplate.json
@@ -13,9 +13,11 @@ ea7902451dcc08361f676bf3366949364d39aaa3 data\dieofdeath\advancement\recipes\mis
 d43a26e82351cdac9281baf96005b09ce40e035d data\dieofdeath\recipe\wall_brick.json
 e668787b8733219ee15c2a9d461be2dc2ff0cb22 data\dieofdeath\recipe\bonuspad_shard_from_blasting_hotdog.json
 34605f3d9f4ce8dbb3ecd80602e5d529d5909ac7 data\dieofdeath\advancement\recipes\tools\iron_hammer.json
+7e0674ad3bf8e60e5647f1e3ae8d98910ab657c7 data\dieofdeath\advancement\recipes\misc\bonuspad_ingot.json
 697780d43bfe1f79899011b84e0229b79e2c8f16 data\dieofdeath\recipe\wall_brick_from_implement_wall.json
 e6753d7881ffd1fe39df43fa3a5c7be9e3058886 data\dieofdeath\advancement\recipes\misc\bonuspad_shard_from_blasting_bonuspad_deepslate_ore.json
 067c74dd1ee5561ff63fee683397d0ac452290d5 data\dieofdeath\advancement\recipes\tools\blue_axe_mirrored.json
+b786bb56a1d68e5e20a63963d591176e56a41ce8 data\dieofdeath\recipe\bonuspad_ingot.json
 fe94feded754c1c68f783d9fe273bcfecd85aaaa data\dieofdeath\advancement\recipes\building_blocks\wall_brick.json
 c951a1db8579479e5281e534edf6f4410c188f6d data\dieofdeath\recipe\cement_from_blasting_wall_brick.json
 96d22617d8e122fe004a85a7d003356706ecb88b data\dieofdeath\recipe\bonuspad_shard_from_blasting_bonuspad_deepslate_ore.json

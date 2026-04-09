@@ -20,6 +20,7 @@ public class ModItemGroups {
                         entries.add(ModItems.BONUSPAD_SHARD);
                         entries.add(ModItems.BOX_CHAIN);
                         entries.add(ModItems.CEMENT);
+                        entries.add(ModItems.BONUSPAD_INGOT);
 
                         entries.add(ModItems.ARTFUL_WAND);
 
@@ -43,6 +44,8 @@ public class ModItemGroups {
                         entries.add(ModItems.HARKEN_BOW);
 
                         entries.add(ModItems.ETERNITY_V2_MUSIC_DISC);
+
+                        entries.add(ModBlocks.TUNDRA_TRENCH_SAPLING);
 
                     }).build());
 
@@ -83,6 +86,7 @@ public class ModItemGroups {
                     .displayName(Text.translatable("itemgroup.dieofdeath.die_of_death_natural"))
                     .entries((displayContext, entries) -> {
                         entries.add(ModBlocks.BACKYARD_BUSH);
+                        entries.add(ModBlocks.TUNDRA_TRENCH_SAPLING);
                     }).build());
 
 

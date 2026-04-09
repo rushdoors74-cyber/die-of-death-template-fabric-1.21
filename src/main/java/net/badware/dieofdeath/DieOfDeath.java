@@ -8,6 +8,7 @@ import net.badware.dieofdeath.item.ModItems;
 import net.badware.dieofdeath.item.advanced.ModArmorItem;
 import net.badware.dieofdeath.sound.ModSounds;
 import net.badware.dieofdeath.util.HammerUsageEvent;
+import net.badware.dieofdeath.world.gen.ModWorldGeneration;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -38,6 +39,8 @@ public class DieOfDeath implements ModInitializer {
 
 		ModEffects.registerEffects();
 
+        ModWorldGeneration.generateModWorldGen();
+
 		Registry.register(Registries.ENCHANTMENT_ENTITY_EFFECT_TYPE,
 				Identifier.of("dieofdeath", "entanglement"),
 				EntanglementEnchantmentEffect.CODEC);
@@ -53,4 +56,4 @@ public class DieOfDeath implements ModInitializer {
 		});
 	}
 
-	}
+}

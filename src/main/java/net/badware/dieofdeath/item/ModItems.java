@@ -15,7 +15,7 @@ import net.minecraft.util.Rarity;
 
 public class ModItems {
     public static final Item WALL_BRICK = registerItem("wall_brick", new Item(new Item.Settings()));
-    public static final Item BONUSPAD_SHARD = registerItem("bonuspad_shard", new Item(new Item.Settings()));
+    public static final Item BONUSPAD_SHARD = registerItem("bonuspad_shard", new Item(new Item.Settings().fireproof()));
     public static final Item BOX_CHAIN = registerItem("box_chain", new Item(new Item.Settings()));
     public static final Item CEMENT = registerItem("cement", new Item(new Item.Settings()));
 
@@ -60,6 +60,9 @@ public static final Item HARKEN_BOW = registerItem("harken_bow",
 
 public static final Item ETERNITY_V2_MUSIC_DISC = registerItem("eternity_v2_music_disc",
         new Item(new Item.Settings().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.ETERNITY_V2_KEY).maxCount(1)));
+
+public static final Item BONUSPAD_INGOT = registerItem("bonuspad_ingot",
+        new Item(new Item.Settings().fireproof()));
 
 
     private static Item registerItem(String name, Item item) {

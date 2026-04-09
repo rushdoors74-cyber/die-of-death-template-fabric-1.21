@@ -17,6 +17,7 @@
   "item.dieofdeath.block_leggings": "Block Leggings",
   "item.dieofdeath.block_boots": "Block Boots",
   "item.dieofdeath.harken_bow": "Test Bow",
+  "item.dieofdeath.bonuspad_ingot": "BonusPad Ingot",
 
   "item.dieofdeath.eternity_v2_music_disc": "Eternity V2",
   "item.dieofdeath.eternity_v2_music_disc.desc": "billmusic - ETERNITY (v2)",
@@ -51,11 +52,13 @@
   "block.dieofdeath.pressure_plate_0": "pressure plate thing",
   "block.dieofdeath.tundra_trench_lamp": "Lamp Tundra Trench",
   "block.dieofdeath.backyard_bush": "Backyard Bush",
+  "block.dieofdeath.tundra_trench_sapling": "Tundra Trench Sapling",
 
   "itemgroup.dieofdeath.die_of_death": "Items Of Death",
   "itemgroup.dieofdeath.die_of_death_blocks": "Blocks Of Death",
   "itemgroup.dieofdeath.die_of_death_ores": "Ores Of Death",
   "itemgroup.dieofdeath.die_of_death_natural": "Live Of Life",
+  "itemgroup.dieofdeath.die_of_death_rainbows": "Test Rainbows Textures",
 
   "With a flick of my wand- I bring your wildest dreams- into reality...!": "With a flick of my wand- I bring your wildest dreams- §9into reality...!§r",
   "The only thing stopping you from achieving your dreams are the mental roadblocks you set before yourself!": "The only thing stopping you from achieving your dreams are §9the mental roadblocks you set before yourself!§r"

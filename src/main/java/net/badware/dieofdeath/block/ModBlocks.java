@@ -2,9 +2,11 @@ package net.badware.dieofdeath.block;
 
 import net.badware.dieofdeath.DieOfDeath;
 import net.badware.dieofdeath.block.advanced.BackyardBushBlock;
+import net.badware.dieofdeath.block.advanced.StoneSaplingBlock;
 import net.badware.dieofdeath.block.advanced.Test_Rail;
 import net.badware.dieofdeath.item.advanced.TundraTrenchLamp;
 import net.badware.dieofdeath.sound.ModSounds;
+import net.badware.dieofdeath.world.ModConfiguredFeatures;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.*;
 import net.minecraft.item.BlockItem;
@@ -20,6 +22,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ModBlocks {
     public static final Block IMPLEMENT_WALL = registerBlock("implement_wall",
@@ -83,6 +86,14 @@ public static final Block TUNDRA_TRENCH_LAMP = registerBlock("tundra_trench_lamp
                     .sounds(BlockSoundGroup.GRASS)
                     .nonOpaque()
                     .burnable()));
+
+    public static final SaplingGenerator TUNDRA_TRENCH_GENERATING = new SaplingGenerator("tundra_trench_generating",
+            Optional.of(ModConfiguredFeatures.MEGA_TUNDRA_TRENCH_TREE_KEY),
+            Optional.of(ModConfiguredFeatures.TUNDRA_TRENCH_TREE_KEY),
+            Optional.empty());
+
+    public static final Block TUNDRA_TRENCH_SAPLING = registerBlock("tundra_trench_sapling",
+            new StoneSaplingBlock(TUNDRA_TRENCH_GENERATING, AbstractBlock.Settings.copy(Blocks.SPRUCE_SAPLING)));
 
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);

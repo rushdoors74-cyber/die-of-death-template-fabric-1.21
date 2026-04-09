@@ -52,6 +52,8 @@ public class ModModelProvider extends FabricModelProvider {
                         )
         );
 
+        blockStateModelGenerator.registerTintableCrossBlockState(ModBlocks.TUNDRA_TRENCH_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED);
+
     }
 
     @Override
@@ -63,6 +65,7 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.BOX_CHAIN, Models.GENERATED);
         itemModelGenerator.register(ModItems.CEMENT, Models.GENERATED);
         itemModelGenerator.register(ModItems.HOTDOG, Models.GENERATED);
+        itemModelGenerator.register(ModItems.BONUSPAD_INGOT, Models.GENERATED);
 
         itemModelGenerator.register(ModItems.PURSUER_CLEAVE, Models.HANDHELD);
         itemModelGenerator.register(ModItems.YELLOW_THING, Models.HANDHELD);
