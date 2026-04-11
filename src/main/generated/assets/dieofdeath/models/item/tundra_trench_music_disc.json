@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "dieofdeath:item/tundra_trench_music_disc"
+  }
+}

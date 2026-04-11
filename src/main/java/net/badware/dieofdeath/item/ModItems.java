@@ -1,10 +1,7 @@
 package net.badware.dieofdeath.item;
 
 import net.badware.dieofdeath.DieOfDeath;
-import net.badware.dieofdeath.item.advanced.ArtfulWand;
-import net.badware.dieofdeath.item.advanced.HammerItem;
-import net.badware.dieofdeath.item.advanced.ModArmorItem;
-import net.badware.dieofdeath.item.advanced.ModToolMaterials;
+import net.badware.dieofdeath.item.advanced.*;
 import net.badware.dieofdeath.sound.ModSounds;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.*;
@@ -26,7 +23,7 @@ public class ModItems {
     public static final Item BOILING_WATER = registerItem("boiling_water", new Item(new Item.Settings()));
 
     public static final Item PURSUER_CLEAVE = registerItem("pursuer_cleave",
-            new SwordItem(ModToolMaterials.YELLOW_THING, new Item.Settings().attributeModifiers(SwordItem.createAttributeModifiers(ModToolMaterials.YELLOW_THING, 3, -0.4f))));
+            new PursuerCleave(ModToolMaterials.YELLOW_THING, new Item.Settings().attributeModifiers(SwordItem.createAttributeModifiers(ModToolMaterials.YELLOW_THING, 3, -0.4f))));
 
 public static final Item YELLOW_THING = registerItem("yellow_thing",
             new PickaxeItem(ModToolMaterials.YELLOW_THING, new Item.Settings().attributeModifiers(PickaxeItem.createAttributeModifiers(ModToolMaterials.YELLOW_THING, 2, -2.4f))));
@@ -60,6 +57,51 @@ public static final Item HARKEN_BOW = registerItem("harken_bow",
 
 public static final Item ETERNITY_V2_MUSIC_DISC = registerItem("eternity_v2_music_disc",
         new Item(new Item.Settings().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.ETERNITY_V2_KEY).maxCount(1)));
+
+public static final Item GRANDMA_BACKYARD_MUSIC_DISC = registerItem("grandma_backyard_music_disc",
+        new Item(new Item.Settings().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.GRANDMA_BACKYARD_KEY).maxCount(1)));
+
+public static final Item TEMPLE = registerItem("temple_music_disc",
+        new Item(new Item.Settings().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.TEMPLE_KEY).maxCount(1)));
+
+public static final Item ROBLOX_HQ = registerItem("roblox_hq_music_disc",
+        new Item(new Item.Settings().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.ROBLOX_HQ_KEY).maxCount(1)));
+
+public static final Item BASEPLATE = registerItem("baseplate_music_disc",
+        new Item(new Item.Settings().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.BASEPLATE_KEY).maxCount(1)));
+
+public static final Item TUNDRA_TRENCH = registerItem("tundra_trench_music_disc",
+        new Item(new Item.Settings().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.TUNDRA_TRENCH_KEY).maxCount(1)));
+
+public static final Item TEAPOT_PALACE_TOUR_CALM = registerItem("teapot_palace_tour_calm_music_disc",
+        new Item(new Item.Settings().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.TEAPOT_PALACE_TOUR_CALM_KEY).maxCount(1)));
+
+public static final Item TEAPOT_PALACE_TOUR_RAIN = registerItem("teapot_palace_tour_rain_music_disc",
+        new Item(new Item.Settings().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.TEAPOT_PALACE_TOUR_RAIN_KEY).maxCount(1)));
+
+public static final Item TEAPOT_PALACE_TOUR_LMS = registerItem("teapot_palace_tour_lms_music_disc",
+        new Item(new Item.Settings().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.TEAPOT_PALACE_TOUR_LMS_KEY).maxCount(1)));
+
+public static final Item OMEGAS_FINAL_STAND = registerItem("omegas_final_stand_music_disc",
+        new Item(new Item.Settings().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.OMEGAS_FINAL_STAND_KEY).maxCount(7)));
+
+public static final Item CARELESS = registerItem("careless_music_disc",
+        new Item(new Item.Settings().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.CARELESS_KEY).maxCount(1)));
+
+public static final Item VIGILANTE_SHOOTDOWN = registerItem("vigilante_shootdown_music_disc",
+        new Item(new Item.Settings().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.VIGILANTE_SHOOTDOWN_KEY).maxCount(2)));
+
+public static final Item SHOWTIME = registerItem("showtime_music_disc",
+        new Item(new Item.Settings().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.SHOWTIME_KEY).maxCount(1)));
+
+public static final Item ETERNITY = registerItem("eternity_music_disc",
+        new Item(new Item.Settings().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.ETERNITY_KEY).maxCount(2)));
+
+public static final Item Y2K = registerItem("y2k_music_disc",
+        new Item(new Item.Settings().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.Y2K_KEY).maxCount(2)));
+
+public static final Item ONE_BOUNCE = registerItem("one_bounce_music_disc",
+        new Item(new Item.Settings().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.ONE_BOUNCE_KEY).maxCount(8)));
 
 public static final Item BONUSPAD_INGOT = registerItem("bonuspad_ingot",
         new Item(new Item.Settings().fireproof()));

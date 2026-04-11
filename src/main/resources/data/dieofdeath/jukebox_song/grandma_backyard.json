@@ -1,0 +1,8 @@
+{
+  "comparator_output": 15,
+  "description": {
+    "translate": "item.dieofdeath.grandma_backyard_music_disc.desc"
+  },
+  "length_in_seconds": 80.0,
+  "sound_event": "dieofdeath:grandma_backyard"
+}

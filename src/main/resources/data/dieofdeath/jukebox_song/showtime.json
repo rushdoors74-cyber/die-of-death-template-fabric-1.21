@@ -1,0 +1,8 @@
+{
+  "comparator_output": 15,
+  "description": {
+    "translate": "item.dieofdeath.showtime_music_disc.desc"
+  },
+  "length_in_seconds": 95.0,
+  "sound_event": "dieofdeath:showtime"
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "dieofdeath:item/teapot_palace_tour_calm_music_disc"
+  }
+}

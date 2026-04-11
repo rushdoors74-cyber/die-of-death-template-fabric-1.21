@@ -80,6 +80,21 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.registerArmor((ArmorItem) ModItems.BLOCK_BOOTS);
 
         itemModelGenerator.register(ModItems.ETERNITY_V2_MUSIC_DISC, Models.GENERATED);
+        itemModelGenerator.register(ModItems.GRANDMA_BACKYARD_MUSIC_DISC, Models.GENERATED);
+        itemModelGenerator.register(ModItems.TEMPLE, Models.GENERATED);
+        itemModelGenerator.register(ModItems.ROBLOX_HQ, Models.GENERATED);
+        itemModelGenerator.register(ModItems.BASEPLATE, Models.GENERATED);
+        itemModelGenerator.register(ModItems.TUNDRA_TRENCH, Models.GENERATED);
+        itemModelGenerator.register(ModItems.TEAPOT_PALACE_TOUR_CALM, Models.GENERATED);
+        itemModelGenerator.register(ModItems.TEAPOT_PALACE_TOUR_RAIN, Models.GENERATED);
+        itemModelGenerator.register(ModItems.TEAPOT_PALACE_TOUR_LMS, Models.GENERATED);
+        itemModelGenerator.register(ModItems.OMEGAS_FINAL_STAND, Models.GENERATED);
+        itemModelGenerator.register(ModItems.CARELESS, Models.GENERATED);
+        itemModelGenerator.register(ModItems.VIGILANTE_SHOOTDOWN, Models.GENERATED);
+        itemModelGenerator.register(ModItems.SHOWTIME, Models.GENERATED);
+        itemModelGenerator.register(ModItems.ETERNITY, Models.GENERATED);
+        itemModelGenerator.register(ModItems.Y2K, Models.GENERATED);
+        itemModelGenerator.register(ModItems.ONE_BOUNCE, Models.GENERATED);
 
         itemModelGenerator.register(ModBlocks.BACKYARD_BUSH.asItem(), Models.GENERATED);
 

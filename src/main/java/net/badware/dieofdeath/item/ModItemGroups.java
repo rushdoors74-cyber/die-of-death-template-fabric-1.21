@@ -43,10 +43,6 @@ public class ModItemGroups {
 
                         entries.add(ModItems.HARKEN_BOW);
 
-                        entries.add(ModItems.ETERNITY_V2_MUSIC_DISC);
-
-                        entries.add(ModBlocks.TUNDRA_TRENCH_SAPLING);
-
                     }).build());
 
     public static final ItemGroup Die_Of_Death_Blocks = Registry.register(Registries.ITEM_GROUP,
@@ -67,7 +63,6 @@ public class ModItemGroups {
                         entries.add(ModBlocks.STAIRS_0);
                         entries.add(ModBlocks.WALL_0);
                         entries.add(ModBlocks.PRESSURE_PLATE_0);
-                        entries.add(ModBlocks.TUNDRA_TRENCH_LAMP);
 
                     }).build());
 
@@ -88,6 +83,29 @@ public class ModItemGroups {
                         entries.add(ModBlocks.BACKYARD_BUSH);
                         entries.add(ModBlocks.TUNDRA_TRENCH_SAPLING);
                     }).build());
+
+    public static final ItemGroup Die_Of_Death_Music = Registry.register(Registries.ITEM_GROUP,
+            Identifier.of(DieOfDeath.MOD_ID, "die_of_death_music"),
+            FabricItemGroup.builder().icon(() -> new ItemStack(ModItems.ETERNITY_V2_MUSIC_DISC))
+                    .displayName(Text.translatable("itemgroup.dieofdeath.die_of_death_music"))
+                    .entries(((displayContext, entries) -> {
+                        entries.add(ModItems.ETERNITY_V2_MUSIC_DISC);
+                        entries.add(ModItems.GRANDMA_BACKYARD_MUSIC_DISC);
+                        entries.add(ModItems.TEMPLE);
+                        entries.add(ModItems.ROBLOX_HQ);
+                        entries.add(ModItems.BASEPLATE);
+                        entries.add(ModItems.TUNDRA_TRENCH);
+                        entries.add(ModItems.TEAPOT_PALACE_TOUR_CALM);
+                        entries.add(ModItems.TEAPOT_PALACE_TOUR_RAIN);
+                        entries.add(ModItems.TEAPOT_PALACE_TOUR_LMS);
+                        entries.add(ModItems.OMEGAS_FINAL_STAND);
+                        entries.add(ModItems.CARELESS);
+                        entries.add(ModItems.VIGILANTE_SHOOTDOWN);
+                        entries.add(ModItems.SHOWTIME);
+                        entries.add(ModItems.ETERNITY);
+                        entries.add(ModItems.Y2K);
+                        entries.add(ModItems.ONE_BOUNCE);
+                    })).build());
 
 
 

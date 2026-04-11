@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "dieofdeath:item/roblox_hq_music_disc"
+  }
+}

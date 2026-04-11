@@ -40,8 +40,7 @@ public class ModBlocks {
                     .noCollision().nonOpaque().emissiveLighting((state, world, pos) -> true)));
 
     public static final Block WOOD_BOX = registerBlock("wood_box",
-            new Block(AbstractBlock.Settings.create().strength(1.5f, 1f)
-                    .sounds(BlockSoundGroup.WOOD)));
+            new Block(AbstractBlock.Settings.create().strength(1.5f, 1f).sounds(ModSounds.WOOD_BREAKING_FIRE)));
 
     public static final Block BONUSPAD_ORE = registerBlock("bonuspad_ore",
             new ExperienceDroppingBlock(UniformIntProvider.create(3, 4),
@@ -55,26 +54,26 @@ public class ModBlocks {
             new Test_Rail(AbstractBlock.Settings.create().strength(0.5f, 1f).requiresTool()));
 
     public static final Block STAIRS_0 = registerBlock("stairs_0",
-            new StairsBlock(ModBlocks.WOOD_BOX.getDefaultState(), AbstractBlock.Settings.create().strength(1.5f, 1f).requiresTool()));
+            new StairsBlock(ModBlocks.WOOD_BOX.getDefaultState(), AbstractBlock.Settings.create().strength(1.5f, 1f).requiresTool().sounds(ModSounds.WOOD_BREAKING_FIRE)));
 public static final Block SLAB_0 = registerBlock("slab_0",
-            new SlabBlock(AbstractBlock.Settings.create().strength(1.5f, 1f).requiresTool()));
+            new SlabBlock(AbstractBlock.Settings.create().strength(1.5f, 1f).requiresTool().sounds(ModSounds.WOOD_BREAKING_FIRE)));
 
 public static final Block BUTTON_0 = registerBlock("button_0",
-            new ButtonBlock(BlockSetType.IRON, 15, AbstractBlock.Settings.create().strength(1.5f, 1f).requiresTool().noCollision()));
+            new ButtonBlock(BlockSetType.IRON, 15, AbstractBlock.Settings.create().strength(1.5f, 1f).requiresTool().noCollision().sounds(ModSounds.WOOD_BREAKING_FIRE)));
 public static final Block PRESSURE_PLATE_0 = registerBlock("pressure_plate_0",
-            new PressurePlateBlock(BlockSetType.IRON, AbstractBlock.Settings.create().strength(1.5f, 1f).requiresTool()));
+            new PressurePlateBlock(BlockSetType.IRON, AbstractBlock.Settings.create().strength(1.5f, 1f).requiresTool().sounds(ModSounds.WOOD_BREAKING_FIRE)));
 
 public static final Block FENCE_0 = registerBlock("fence_0",
-            new FenceBlock(AbstractBlock.Settings.create().strength(1.5f, 1f).requiresTool()));
+            new FenceBlock(AbstractBlock.Settings.create().strength(1.5f, 1f).requiresTool().sounds(ModSounds.WOOD_BREAKING_FIRE)));
 public static final Block FENCE_GATE_0 = registerBlock("fence_gate_0",
-            new FenceGateBlock(WoodType.OAK, AbstractBlock.Settings.create().strength(1.5f, 1f).requiresTool()));
+            new FenceGateBlock(WoodType.OAK, AbstractBlock.Settings.create().strength(1.5f, 1f).requiresTool().sounds(ModSounds.WOOD_BREAKING_FIRE)));
 public static final Block WALL_0 = registerBlock("wall_0",
-            new WallBlock(AbstractBlock.Settings.create().strength(1.5f, 1f).requiresTool()));
+            new WallBlock(AbstractBlock.Settings.create().strength(1.5f, 1f).requiresTool().sounds(ModSounds.WOOD_BREAKING_FIRE)));
 
 public static final Block DOOR_0 = registerBlock("door_0",
-            new DoorBlock(BlockSetType.IRON, AbstractBlock.Settings.create().strength(1.5f, 1f).requiresTool().nonOpaque()));
+            new DoorBlock(BlockSetType.IRON, AbstractBlock.Settings.create().strength(1.5f, 1f).requiresTool().nonOpaque().sounds(ModSounds.WOOD_BREAKING_FIRE)));
 public static final Block TRAPDOOR_0 = registerBlock("trapdoor_0",
-            new TrapdoorBlock(BlockSetType.IRON, AbstractBlock.Settings.create().strength(1.5f, 1f).requiresTool().nonOpaque()));
+            new TrapdoorBlock(BlockSetType.IRON, AbstractBlock.Settings.create().strength(1.5f, 1f).requiresTool().nonOpaque().sounds(ModSounds.WOOD_BREAKING_FIRE)));
 
 public static final Block TUNDRA_TRENCH_LAMP = registerBlock("tundra_trench_lamp", new TundraTrenchLamp(AbstractBlock.Settings.create().strength(0.5f).luminance(state -> state.get(TundraTrenchLamp.CLICKED) ? 15 : 0)));
 

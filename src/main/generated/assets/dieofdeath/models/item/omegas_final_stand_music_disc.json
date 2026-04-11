@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "dieofdeath:item/omegas_final_stand_music_disc"
+  }
+}

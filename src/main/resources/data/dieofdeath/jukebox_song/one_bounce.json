@@ -1,0 +1,8 @@
+{
+  "comparator_output": 15,
+  "description": {
+    "translate": "item.dieofdeath.one_bounce_music_disc.desc"
+  },
+  "length_in_seconds": 78.0,
+  "sound_event": "dieofdeath:one_bounce"
+}

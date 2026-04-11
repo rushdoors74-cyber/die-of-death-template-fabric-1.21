@@ -17,11 +17,158 @@
       "dieofdeath:implement_place"
     ]
   },
+  "wood_box_break": {
+    "subtitle": "subtitles.dieofdeath.wood_box_break",
+    "sounds": [
+      "dieofdeath:wood_box_break"
+    ]
+  },
+  "pursuer_cleave_sfx": {
+    "subtitle": "subtitles.dieofdeath.pursuer_cleave_sfx",
+    "sounds": [
+      "dieofdeath:pursuer_cleave_sfx"
+    ]
+  },
   "eternity_v2": {
     "category": "record",
     "sounds": [
       {
         "name": "dieofdeath:eternity_v2",
+        "stream": true
+      }
+    ]
+  },
+  "grandma_backyard": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "dieofdeath:grandma_backyard",
+        "stream": true
+      }
+    ]
+  },
+  "temple": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "dieofdeath:temple",
+        "stream": true
+      }
+    ]
+  },
+  "roblox_hq": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "dieofdeath:roblox_hq",
+        "stream": true
+      }
+    ]
+  },
+  "baseplate": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "dieofdeath:baseplate",
+        "stream": true
+      }
+    ]
+  },
+  "tundra_trench": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "dieofdeath:tundra_trench",
+        "stream": true
+      }
+    ]
+  },
+  "teapot_palace_tour_calm": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "dieofdeath:teapot_palace_tour_calm",
+        "stream": true
+      }
+    ]
+  },
+  "teapot_palace_tour_rain": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "dieofdeath:teapot_palace_tour_rain",
+        "stream": true
+      }
+    ]
+  },
+  "teapot_palace_tour_lms": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "dieofdeath:teapot_palace_tour_lms",
+        "stream": true
+      }
+    ]
+  },
+  "omegas_final_stand": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "dieofdeath:omegas_final_stand",
+        "stream": true
+      }
+    ]
+  },
+  "careless": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "dieofdeath:careless",
+        "stream": true
+      }
+    ]
+  },
+  "vigilante_shootdown": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "dieofdeath:vigilante_shootdown",
+        "stream": true
+      }
+    ]
+  },
+  "showtime": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "dieofdeath:showtime",
+        "stream": true
+      }
+    ]
+  },
+  "eternity": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "dieofdeath:eternity",
+        "stream": true
+      }
+    ]
+  },
+  "y2k": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "dieofdeath:y2k",
+        "stream": true
+      }
+    ]
+  },
+  "one_bounce": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "dieofdeath:one_bounce",
         "stream": true
       }
     ]

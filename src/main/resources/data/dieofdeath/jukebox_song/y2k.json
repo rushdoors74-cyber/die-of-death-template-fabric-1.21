@@ -1,0 +1,8 @@
+{
+  "comparator_output": 15,
+  "description": {
+    "translate": "item.dieofdeath.y2k_music_disc.desc"
+  },
+  "length_in_seconds": 80.0,
+  "sound_event": "dieofdeath:y2k"
+}
