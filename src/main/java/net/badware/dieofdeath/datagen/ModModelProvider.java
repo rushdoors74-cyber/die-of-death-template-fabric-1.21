@@ -98,5 +98,7 @@ public class ModModelProvider extends FabricModelProvider {
 
         itemModelGenerator.register(ModBlocks.BACKYARD_BUSH.asItem(), Models.GENERATED);
 
+        itemModelGenerator.register(ModItems.CAREPAD_INGOT, Models.GENERATED);
+
     }
 }

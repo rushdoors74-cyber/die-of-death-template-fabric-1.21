@@ -35,6 +35,8 @@ public class ModSounds {
 
     public static final SoundEvent WAND_USE = registerSoundEvent("wand_use");
     public static final SoundEvent PURSUER_CLEAVE_SFX = registerSoundEvent("pursuer_cleave_sfx");
+    public static final SoundEvent BONUSPAD_STEPPED = registerSoundEvent("bonuspad_stepped");
+    public static final SoundEvent CAREPAD_HEAL = registerSoundEvent("carepad_heal");
 
     public static SoundEvent ETERNITY_V2 = registerSoundEvent("eternity_v2");
     public static final RegistryKey<JukeboxSong> ETERNITY_V2_KEY =

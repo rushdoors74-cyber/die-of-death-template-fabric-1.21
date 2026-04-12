@@ -20,13 +20,17 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .add(ModBlocks.BONUSPAD_DEEPSLATE_ORE)
                 .add(ModBlocks.BONUSPAD_ORE)
                 .add(ModBlocks.IMPLEMENT_WALL)
-                .add(ModBlocks.TEST_RAIL);
+                .add(ModBlocks.TEST_RAIL)
+                .add(ModBlocks.BONUSPAD)
+                .add(ModBlocks.CAREPAD);
 
         getOrCreateTagBuilder(BlockTags.AXE_MINEABLE)
                 .add(ModBlocks.WOOD_BOX);
 
         getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL)
-                .add(ModBlocks.IMPLEMENT_WALL);
+                .add(ModBlocks.IMPLEMENT_WALL)
+                .add(ModBlocks.BONUSPAD)
+                .add(ModBlocks.CAREPAD);
 
         getOrCreateTagBuilder(BlockTags.NEEDS_IRON_TOOL)
                 .add(ModBlocks.BONUSPAD_ORE);

@@ -1,5 +1,5 @@
-// 1.21	2026-04-11T14:53:45.2347728	Die Of Death/Tags for minecraft:block
-7de5b133c1d4f1d1556e92c738574b560e03afd8 data\minecraft\tags\block\mineable\pickaxe.json
+// 1.21	2026-04-11T22:46:28.2301278	Die Of Death/Tags for minecraft:block
+788672201a2870e74b274ef9cf36b78e76fa6b1e data\minecraft\tags\block\mineable\pickaxe.json
 fc382d9bff5e59e42084050ad8c9708ba6d6a305 data\minecraft\tags\block\flowers.json
 e9d35f98f4bbeb32fab5045860e0cf38fc1178d0 data\minecraft\tags\block\wooden_fences.json
 b11f313a186c0ce20e7fdd6080af254c55373fe5 data\minecraft\tags\block\needs_iron_tool.json
@@ -9,4 +9,4 @@ b11f313a186c0ce20e7fdd6080af254c55373fe5 data\minecraft\tags\block\needs_iron_to
 dd893986b37561a05f25fa2d418e29e914e6489e data\minecraft\tags\block\fence_gates.json
 fc382d9bff5e59e42084050ad8c9708ba6d6a305 data\minecraft\tags\block\replaceable_by_trees.json
 fc3e74097221d59abfd1d6e6d18757a482d0d901 data\minecraft\tags\block\walls.json
-7894e4f439b060c31f894e524761fa0873a69487 data\minecraft\tags\block\needs_stone_tool.json
+e2b40716842c500e26a60746ec1c878977736533 data\minecraft\tags\block\needs_stone_tool.json

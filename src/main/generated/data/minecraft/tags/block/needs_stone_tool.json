@@ -1,5 +1,7 @@
 {
   "values": [
-    "dieofdeath:implement_wall"
+    "dieofdeath:implement_wall",
+    "dieofdeath:bonuspad",
+    "dieofdeath:carepad"
   ]
 }

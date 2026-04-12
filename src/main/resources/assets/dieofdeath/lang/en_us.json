@@ -18,6 +18,7 @@
   "item.dieofdeath.block_boots": "Block Boots",
   "item.dieofdeath.harken_bow": "Test Bow",
   "item.dieofdeath.bonuspad_ingot": "BonusPad Ingot",
+  "item.dieofdeath.carepad_ingot": "CarePad Ingot",
 
   "item.dieofdeath.eternity_v2_music_disc": "Eternity V2",
   "item.dieofdeath.eternity_v2_music_disc.desc": "bill - ETERNITY (v2)",
@@ -84,6 +85,8 @@
   "block.dieofdeath.tundra_trench_lamp": "Lamp Tundra Trench",
   "block.dieofdeath.backyard_bush": "Backyard Bush",
   "block.dieofdeath.tundra_trench_sapling": "Tundra Trench Sapling",
+  "block.dieofdeath.bonuspad": "§bBonusPad",
+  "block.dieofdeath.carepad": "§aCarePad",
 
   "itemgroup.dieofdeath.die_of_death": "Items Of Death",
   "itemgroup.dieofdeath.die_of_death_blocks": "Blocks Of Death",

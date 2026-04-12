@@ -43,6 +43,8 @@ public class ModItemGroups {
 
                         entries.add(ModItems.HARKEN_BOW);
 
+                        entries.add(ModItems.CAREPAD_INGOT);
+
                     }).build());
 
     public static final ItemGroup Die_Of_Death_Blocks = Registry.register(Registries.ITEM_GROUP,
@@ -63,6 +65,8 @@ public class ModItemGroups {
                         entries.add(ModBlocks.STAIRS_0);
                         entries.add(ModBlocks.WALL_0);
                         entries.add(ModBlocks.PRESSURE_PLATE_0);
+                        entries.add(ModBlocks.BONUSPAD);
+                        entries.add(ModBlocks.CAREPAD);
 
                     }).build());
 

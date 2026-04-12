@@ -55,6 +55,9 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
 
         addDrop(ModBlocks.TUNDRA_TRENCH_SAPLING);
 
+        addDrop(ModBlocks.BONUSPAD);
+        addDrop(ModBlocks.CAREPAD);
+
     }
 
     public LootTable.Builder multipleOreDrops(Block drop, Item item, float minDrops, float maxDrops) {

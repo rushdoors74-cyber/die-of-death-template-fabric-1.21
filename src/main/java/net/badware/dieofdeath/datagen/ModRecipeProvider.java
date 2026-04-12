@@ -8,11 +8,13 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.data.server.recipe.RecipeExporter;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -118,6 +120,32 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .pattern("AAA")
                 .input('A', ModItems.BONUSPAD_SHARD)
                 .criterion(hasItem(ModItems.BONUSPAD_SHARD), conditionsFromItem(ModItems.BONUSPAD_SHARD))
+                .offerTo(exporter);
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModBlocks.BONUSPAD)
+                .pattern("AAA")
+                .pattern("BBB")
+                .input('A', ModItems.BONUSPAD_INGOT)
+                .input('B', Items.IRON_INGOT)
+                .criterion(hasItem(ModItems.BONUSPAD_INGOT), conditionsFromItem(ModItems.BONUSPAD_INGOT))
+                .criterion(hasItem(Items.IRON_INGOT), conditionsFromItem(Items.IRON_INGOT))
+                .offerTo(exporter);
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModBlocks.CAREPAD)
+                .pattern("AAA")
+                .pattern("BBB")
+                .input('A', ModItems.CAREPAD_INGOT)
+                .input('B', Items.IRON_INGOT)
+                .criterion(hasItem(ModItems.CAREPAD_INGOT), conditionsFromItem(ModItems.CAREPAD_INGOT))
+                .criterion(hasItem(Items.IRON_INGOT), conditionsFromItem(Items.IRON_INGOT))
+                .offerTo(exporter);
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.CAREPAD_INGOT)
+                .pattern("AB")
+                .input('A', ModItems.BONUSPAD_INGOT)
+                .input('B', Items.GLISTERING_MELON_SLICE)
+                .criterion(hasItem(ModItems.BONUSPAD_INGOT), conditionsFromItem(ModItems.BONUSPAD_INGOT))
+                .criterion(hasItem(Items.GLISTERING_MELON_SLICE), conditionsFromItem(Items.GLISTERING_MELON_SLICE))
                 .offerTo(exporter);
     }
 }

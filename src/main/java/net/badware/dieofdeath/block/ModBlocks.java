@@ -1,9 +1,7 @@
 package net.badware.dieofdeath.block;
 
 import net.badware.dieofdeath.DieOfDeath;
-import net.badware.dieofdeath.block.advanced.BackyardBushBlock;
-import net.badware.dieofdeath.block.advanced.StoneSaplingBlock;
-import net.badware.dieofdeath.block.advanced.Test_Rail;
+import net.badware.dieofdeath.block.advanced.*;
 import net.badware.dieofdeath.item.advanced.TundraTrenchLamp;
 import net.badware.dieofdeath.sound.ModSounds;
 import net.badware.dieofdeath.world.ModConfiguredFeatures;
@@ -77,7 +75,7 @@ public static final Block TRAPDOOR_0 = registerBlock("trapdoor_0",
 
 public static final Block TUNDRA_TRENCH_LAMP = registerBlock("tundra_trench_lamp", new TundraTrenchLamp(AbstractBlock.Settings.create().strength(0.5f).luminance(state -> state.get(TundraTrenchLamp.CLICKED) ? 15 : 0)));
 
-    public static final Block BACKYARD_BUSH = registerBlock("backyard_bush",
+public static final Block BACKYARD_BUSH = registerBlock("backyard_bush",
             new BackyardBushBlock(AbstractBlock.Settings.create()
                     .mapColor(MapColor.DARK_GREEN)
                     .noCollision()
@@ -86,13 +84,19 @@ public static final Block TUNDRA_TRENCH_LAMP = registerBlock("tundra_trench_lamp
                     .nonOpaque()
                     .burnable()));
 
-    public static final SaplingGenerator TUNDRA_TRENCH_GENERATING = new SaplingGenerator("tundra_trench_generating",
+public static final SaplingGenerator TUNDRA_TRENCH_GENERATING = new SaplingGenerator("tundra_trench_generating",
             Optional.of(ModConfiguredFeatures.MEGA_TUNDRA_TRENCH_TREE_KEY),
             Optional.of(ModConfiguredFeatures.TUNDRA_TRENCH_TREE_KEY),
             Optional.empty());
 
-    public static final Block TUNDRA_TRENCH_SAPLING = registerBlock("tundra_trench_sapling",
-            new StoneSaplingBlock(TUNDRA_TRENCH_GENERATING, AbstractBlock.Settings.copy(Blocks.SPRUCE_SAPLING)));
+public static final Block TUNDRA_TRENCH_SAPLING = registerBlock("tundra_trench_sapling",
+        new StoneSaplingBlock(TUNDRA_TRENCH_GENERATING, AbstractBlock.Settings.copy(Blocks.SPRUCE_SAPLING)));
+
+public static final Block BONUSPAD = registerBlock("bonuspad",
+        new BonuspadBlock(AbstractBlock.Settings.create().strength(3f,3f).requiresTool().nonOpaque()));
+
+public static final Block CAREPAD = registerBlock("carepad",
+        new CarepadBlock(AbstractBlock.Settings.create().strength(3f, 3f).requiresTool().nonOpaque()));
 
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);

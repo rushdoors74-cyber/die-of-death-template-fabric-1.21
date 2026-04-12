@@ -55,5 +55,4 @@ public class DieOfDeath implements ModInitializer {
 			return ModArmorItem.onPlayerDamage(entity, source, amount);
 		});
 	}
-
 }

@@ -106,6 +106,9 @@ public static final Item ONE_BOUNCE = registerItem("one_bounce_music_disc",
 public static final Item BONUSPAD_INGOT = registerItem("bonuspad_ingot",
         new Item(new Item.Settings().fireproof()));
 
+public static final Item CAREPAD_INGOT = registerItem("carepad_ingot",
+        new Item(new Item.Settings().fireproof()));
+
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(DieOfDeath.MOD_ID, name), item);

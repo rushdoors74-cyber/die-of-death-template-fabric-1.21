@@ -178,5 +178,17 @@
     "sounds": [
       "dieofdeath:entangled"
     ]
+  },
+  "bonuspad_stepped": {
+  "subtitle": "subtitles.dieofdeath.bonuspad_stepped",
+  "sounds": [
+    "dieofdeath:bonuspad_stepped"
+  ]
+  },
+  "carepad_heal": {
+    "subtitle": "subtitles.dieofdeath.carepad_heal",
+    "sounds": [
+      "dieofdeath:carepad_heal"
+    ]
   }
 }

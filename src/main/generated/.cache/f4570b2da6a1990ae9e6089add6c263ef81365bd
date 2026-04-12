@@ -1,6 +1,8 @@
-// 1.21	2026-04-11T14:53:45.2527759	Die Of Death/Block Loot Tables
+// 1.21	2026-04-11T22:46:28.2442564	Die Of Death/Block Loot Tables
 c62bb92bdfc22f00b4f7fe8d399e5d2ea0dc13f0 data\dieofdeath\loot_table\blocks\implement_wall.json
+43bcc3fed61d8192c38563a5e9f22e9d7937e7a6 data\dieofdeath\loot_table\blocks\bonuspad.json
 e013bf20997f806be46440d6363a31e93ed5b7e8 data\dieofdeath\loot_table\blocks\slab_0.json
+4a61fd0a5839e64d2658a24d041beaa722f1d659 data\dieofdeath\loot_table\blocks\carepad.json
 ceb8851fb649b41044020b6344b6d60b962cb7d6 data\dieofdeath\loot_table\blocks\tundra_trench_sapling.json
 48b23a6da7c2886ef31f8667fead6d45ffb1bcad data\dieofdeath\loot_table\blocks\wood_box.json
 5b09e39a827e16992aa02dbf398dfb00a39eb613 data\dieofdeath\loot_table\blocks\fence_gate_0.json
