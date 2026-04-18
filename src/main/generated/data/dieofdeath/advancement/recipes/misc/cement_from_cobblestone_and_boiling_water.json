@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_boiling_water": {
+      "conditions": {
+        "items": [
+          {
+            "items": "dieofdeath:boiling_water"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_cobblestone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:cobblestone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_sand": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:sand"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "dieofdeath:cement_from_cobblestone_and_boiling_water"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_cobblestone",
+      "has_boiling_water",
+      "has_sand"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "dieofdeath:cement_from_cobblestone_and_boiling_water"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_carepad_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "dieofdeath:carepad_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "dieofdeath:carepad_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_carepad_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "dieofdeath:carepad_block"
+    ]
+  }
+}

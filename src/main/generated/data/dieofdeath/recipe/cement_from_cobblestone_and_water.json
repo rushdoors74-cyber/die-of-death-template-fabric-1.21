@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:cobblestone"
+    },
+    "B": {
+      "item": "minecraft:water_bucket"
+    },
+    "C": {
+      "item": "minecraft:sand"
+    }
+  },
+  "pattern": [
+    "ABC"
+  ],
+  "result": {
+    "count": 5,
+    "id": "dieofdeath:cement"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "dieofdeath:carepad_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "dieofdeath:carepad_ingot"
+  }
+}
