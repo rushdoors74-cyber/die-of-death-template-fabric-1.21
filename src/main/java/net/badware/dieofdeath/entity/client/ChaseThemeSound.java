@@ -9,7 +9,8 @@ public class ChaseThemeSound extends MovingSoundInstance {
     private final PursuerEntity pursuer;
 
     public ChaseThemeSound(PursuerEntity pursuer) {
-        super(ModSounds.STARVATION_V3, SoundCategory.HOSTILE, pursuer.getWorld().getRandom());
+        super(pursuer.getVariant() == 1 ? ModSounds.INAPPETENCE : ModSounds.STARVATION_V3, SoundCategory.HOSTILE, pursuer.getWorld().getRandom());
+
         this.pursuer = pursuer;
         this.repeat = true;
         this.repeatDelay = 0;
@@ -21,6 +22,7 @@ public class ChaseThemeSound extends MovingSoundInstance {
     public void tick() {
         if (this.pursuer == null || this.pursuer.isRemoved() || !this.pursuer.isAlive()) {
             this.setDone();
+            if (this.pursuer != null) this.pursuer.setThemePlaying(false);
             return;
         }
 
@@ -32,17 +34,28 @@ public class ChaseThemeSound extends MovingSoundInstance {
 
         if (player != null) {
             double distanceSq = this.pursuer.squaredDistanceTo(player);
-
-            if (distanceSq > 3600) {
-                this.volume -= 0.05f;
-                if (this.volume <= 0) {
-                    this.setDone();
-                }
-            } else {
-                this.volume = Math.min(this.volume + 0.05f, 1.0f);
+            if (distanceSq > 4000) {
+                this.setDone();
+                this.pursuer.setThemePlaying(false);
             }
         } else {
             this.setDone();
         }
+    }
+
+    @Override
+    public float getVolume() {
+        net.minecraft.client.network.ClientPlayerEntity player = net.minecraft.client.MinecraftClient.getInstance().player;
+        if (player == null || pursuer == null) return 0.0f;
+
+        double distanceSq = this.pursuer.squaredDistanceTo(player);
+
+        if (distanceSq < 2500) {
+            return 1.0f;
+        } else if (distanceSq < 3600) {
+            return (float) (1.0f - ((distanceSq - 2500) / 1100.0));
+        }
+
+        return 0.0f;
     }
 }

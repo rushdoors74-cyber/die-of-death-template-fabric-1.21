@@ -9,6 +9,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -16,6 +17,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
@@ -29,11 +31,11 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class PursuerEntity extends HostileEntity implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    private static final TrackedData<Integer> VARIANT = DataTracker.registerData(PursuerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
     private int howlTicks = 0;
     private int cleaveTicks = 0;
     private boolean isThemePlaying = false;
-    private int musicTickDelay = 0;
 
     public PursuerEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
@@ -50,11 +52,75 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
     private static final TrackedData<Boolean> IS_CLEAVING = DataTracker.registerData(PursuerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_HOWLING = DataTracker.registerData(PursuerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
+    public void setThemePlaying(boolean playing) {
+        this.isThemePlaying = playing;
+    }
+
+    public int getVariant() {
+        return this.dataTracker.get(VARIANT);
+    }
+
+    public void setVariant(int variant) {
+        this.dataTracker.set(VARIANT, variant);
+    }
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putInt("Variant", this.getVariant());
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        this.setVariant(nbt.getInt("Variant"));
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.getWorld().isClient) {
+            checkAndPlayChaseMusic();
+        }
+    }
+
+    private void checkAndPlayChaseMusic() {
+        if (!this.isAlive()) return;
+
+        net.minecraft.client.MinecraftClient client = net.minecraft.client.MinecraftClient.getInstance();
+        if (client.player == null) return;
+
+        double dist = this.squaredDistanceTo(client.player);
+
+        if (dist < 2500 && !isThemePlaying) {
+            client.getSoundManager().play(new ChaseThemeSound(this));
+            this.isThemePlaying = true;
+        }
+    }
+
     @Override
     protected void initDataTracker(DataTracker.Builder builder) {
         super.initDataTracker(builder);
+        builder.add(VARIANT, 0);
         builder.add(IS_CLEAVING, false);
         builder.add(IS_HOWLING, false);
+    }
+
+    @Override
+    public net.minecraft.entity.EntityData initialize(net.minecraft.world.ServerWorldAccess world, net.minecraft.world.LocalDifficulty difficulty, net.minecraft.entity.SpawnReason spawnReason, @org.jetbrains.annotations.Nullable net.minecraft.entity.EntityData entityData) {
+        entityData = super.initialize(world, difficulty, spawnReason, entityData);
+
+        if (spawnReason != net.minecraft.entity.SpawnReason.SPAWN_EGG) {
+            if (this.random.nextInt(100) < 50) {
+                this.setVariant(1);
+            } else {
+                this.setVariant(0);
+            }
+        } else {
+            this.setVariant(this.random.nextBoolean() ? 1 : 0);
+        }
+
+        return entityData;
     }
 
     public void performCleave() {
@@ -64,7 +130,7 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
         this.triggerAnim("attack_controller", "cleave");
 
         this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
-                ModSounds.PURSUER_CLEAVE_START, this.getSoundCategory(), 1.0f, 1.0f);
+                ModSounds.PURSUER_CLEAVE_START, this.getSoundCategory(), 2.0f, 1.0f);
 
         int boostDuration = this.isSprinting() ? 40 : 20;
         this.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, boostDuration, 1));
@@ -83,16 +149,16 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
         });
 
         this.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 40, 2));
-        this.dataTracker.set(IS_CLEAVING, false);
     }
 
     public void performHowl() {
         this.dataTracker.set(IS_HOWLING, true);
         this.triggerAnim("attack_controller", "howl");
+
         this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
-                ModSounds.PURSUER_SCREAM, this.getSoundCategory(), 1.0f, 1.0f);
+                ModSounds.PURSUER_SCREAM, this.getSoundCategory(), 2.0f, 1.0f);
         this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
-        ModSounds.PURSUER_SHOCKWAVE, this.getSoundCategory(), 1.0f, 1.0f);
+                ModSounds.PURSUER_SHOCKWAVE, this.getSoundCategory(), 2.0f, 1.0f);
 
         this.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 40, 10));
 
@@ -121,19 +187,10 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
     public boolean tryAttack(Entity target) {
         if (this.dataTracker.get(IS_CLEAVING) || this.dataTracker.get(IS_HOWLING)) return false;
 
-        int move = this.random.nextInt(10);
-
-        if (move < 2) {
-            this.performCleave();
-        } else if (move == 2) {
-            this.performHowl();
-        } else {
-            this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
-                    ModSounds.PURSUER_SWINGING, this.getSoundCategory(), 1.0f, 1.0f);
-            this.triggerAnim("attack_controller", "swing");
-            return super.tryAttack(target);
-        }
-        return true;
+        this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
+                ModSounds.PURSUER_SWINGING, this.getSoundCategory(), 1.0f, 1.0f);
+        this.triggerAnim("attack_controller", "swing");
+        return super.tryAttack(target);
     }
 
     @Override
@@ -141,7 +198,6 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
         controllers.add(new AnimationController<>(this, "movement_controller", 5, state -> {
             if (state.isMoving()) {
                 state.getController().setAnimationSpeed(1.0);
-
                 return state.setAndContinue(RawAnimation.begin().thenLoop("animation.pursuer.run"));
             }
             return state.setAndContinue(RawAnimation.begin().thenLoop("animation.pursuer.idle"));
@@ -157,6 +213,18 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
     @Override
     public void mobTick() {
         super.mobTick();
+
+        if (this.age % 10 == 0 && this.getTarget() != null && !this.dataTracker.get(IS_CLEAVING) && !this.dataTracker.get(IS_HOWLING)) {
+            double distance = this.squaredDistanceTo(this.getTarget());
+            if (distance > 25 && distance < 100) {
+                int randomMove = this.random.nextInt(100);
+                if (randomMove < 5) {
+                    this.performHowl();
+                } else if (randomMove < 15) {
+                    this.performCleave();
+                }
+            }
+        }
 
         if (this.howlTicks > 0) {
             this.howlTicks--;
@@ -177,32 +245,19 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
             if (this.cleaveTicks == 1) {
                 this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
                         ModSounds.PURSUER_CLEAVE_END, this.getSoundCategory(), 1.0f, 1.0f);
-
                 this.dataTracker.set(IS_CLEAVING, false);
             }
         }
-
         if (this.dataTracker.get(IS_CLEAVING) && this.hasStatusEffect(StatusEffects.SLOWNESS)) {
             this.setSprinting(false);
         }
     }
 
     @Override
-    public void tick() {
-        super.tick();
-
-        if (this.getWorld().isClient) {
-            checkAndPlayChaseMusic();
-        }
-    }
-
-    private void checkAndPlayChaseMusic() {
-        net.minecraft.client.MinecraftClient client = net.minecraft.client.MinecraftClient.getInstance();
-        double dist = this.squaredDistanceTo(client.player);
-
-        if (dist < 2500 && !isThemePlaying) {
-            client.getSoundManager().play(new ChaseThemeSound(this));
-            isThemePlaying = true;
+    protected void dropLoot(DamageSource damageSource, boolean causedByPlayer) {
+        super.dropLoot(damageSource, causedByPlayer);
+        if (causedByPlayer) {
+            this.dropStack(new net.minecraft.item.ItemStack(net.badware.dieofdeath.item.ModItems.PURSUER_CLEAVE));
         }
     }
 

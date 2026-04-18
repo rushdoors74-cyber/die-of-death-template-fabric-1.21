@@ -3,7 +3,6 @@ package net.badware.dieofdeath;
 import net.badware.dieofdeath.block.ModBlocks;
 import net.badware.dieofdeath.entity.ModEntities;
 import net.badware.dieofdeath.entity.client.PursuerRenderer;
-import net.badware.dieofdeath.sound.ModSounds;
 import net.badware.dieofdeath.util.ModModelPredicates;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -22,6 +21,5 @@ public class DieOfDeathClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.TUNDRA_TRENCH_SAPLING, RenderLayer.getCutout());
 
         EntityRendererRegistry.register(ModEntities.PURSUER, PursuerRenderer::new);
-
     }
 }

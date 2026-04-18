@@ -47,6 +47,7 @@ public class ModSounds {
     public static final SoundEvent PURSUER_SCREAM = registerSoundEvent("pursuer_scream");
     public static final SoundEvent PURSUER_SHOCKWAVE = registerSoundEvent("pursuer_shockwave");
     public static final SoundEvent STARVATION_V3 = registerSoundEvent("starvation_v3");
+    public static final SoundEvent INAPPETENCE = registerSoundEvent("inappetence");
 
     public static SoundEvent ETERNITY_V2 = registerSoundEvent("eternity_v2");
     public static final RegistryKey<JukeboxSong> ETERNITY_V2_KEY =

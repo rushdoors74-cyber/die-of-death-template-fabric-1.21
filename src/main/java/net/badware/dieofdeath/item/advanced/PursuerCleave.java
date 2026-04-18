@@ -1,5 +1,6 @@
 package net.badware.dieofdeath.item.advanced;
 
+import net.badware.dieofdeath.effect.ModEffects;
 import net.badware.dieofdeath.sound.ModSounds;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -18,6 +19,9 @@ public class PursuerCleave extends SwordItem {
         if (!world.isClient) {
             world.playSound(null, target.getBlockPos(),
                     ModSounds.PURSUER_CLEAVE_SFX, SoundCategory.PLAYERS, 1.0f, 1.0f);
+
+            target.addStatusEffect(new net.minecraft.entity.effect.StatusEffectInstance(
+                    ModEffects.BLEED, 20, 0));
         }
         return super.postHit(stack, target, attacker);
     }

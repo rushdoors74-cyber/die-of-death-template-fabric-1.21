@@ -250,7 +250,18 @@
     "sounds": [
       {
         "name": "dieofdeath:music/starvation_v3",
-        "stream": true
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "inappetence": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/inappetence",
+        "stream": true,
+        "attenuation_distance": 64
       }
     ]
   }

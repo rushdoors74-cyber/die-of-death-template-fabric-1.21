@@ -13,7 +13,10 @@ public class PursuerModel extends GeoModel<PursuerEntity> {
 
     @Override
     public Identifier getTextureResource(PursuerEntity animatable) {
-        return Identifier.of(DieOfDeath.MOD_ID, "textures/entity/pursuer/pursuer_killer.png");
+        return switch (animatable.getVariant()) {
+            case 1 -> Identifier.of(DieOfDeath.MOD_ID, "textures/entity/pursuer/pursuer_avoider.png");
+            default -> Identifier.of(DieOfDeath.MOD_ID, "textures/entity/pursuer/pursuer_killer.png");
+        };
     }
 
     @Override

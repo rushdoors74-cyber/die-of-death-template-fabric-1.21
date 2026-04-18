@@ -24,7 +24,7 @@ public class ModItems {
     public static final Item BOILING_WATER = registerItem("boiling_water", new Item(new Item.Settings()));
 
     public static final Item PURSUER_CLEAVE = registerItem("pursuer_cleave",
-            new PursuerCleave(ModToolMaterials.YELLOW_THING, new Item.Settings().attributeModifiers(SwordItem.createAttributeModifiers(ModToolMaterials.YELLOW_THING, 3, -0.4f))));
+            new PursuerCleave(ModToolMaterials.YELLOW_THING, new Item.Settings().attributeModifiers(SwordItem.createAttributeModifiers(ModToolMaterials.YELLOW_THING, 3, -3.2f))));
 
 public static final Item YELLOW_THING = registerItem("yellow_thing",
             new PickaxeItem(ModToolMaterials.YELLOW_THING, new Item.Settings().attributeModifiers(PickaxeItem.createAttributeModifiers(ModToolMaterials.YELLOW_THING, 2, -2.4f))));
@@ -111,7 +111,7 @@ public static final Item CAREPAD_INGOT = registerItem("carepad_ingot",
         new Item(new Item.Settings().fireproof()));
 
 public static final Item PURSUER_SPAWN_EGG = registerItem("pursuer_spawn_egg",
-        new SpawnEggItem(ModEntities.PURSUER, 0x1B1B1B, 0x143306, new Item.Settings()));
+            new SpawnEggItem(ModEntities.PURSUER,0x1B1B1B, 0x143306, new Item.Settings()));
 
 
     private static Item registerItem(String name, Item item) {

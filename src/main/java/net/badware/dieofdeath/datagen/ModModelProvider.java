@@ -1,5 +1,7 @@
 package net.badware.dieofdeath.datagen;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import net.badware.dieofdeath.block.ModBlocks;
 import net.badware.dieofdeath.block.advanced.BackyardBushBlock;
 import net.badware.dieofdeath.item.ModItems;
@@ -8,7 +10,6 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
 import net.minecraft.item.ArmorItem;
-import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 
 import java.util.Optional;
@@ -108,6 +109,5 @@ public class ModModelProvider extends FabricModelProvider {
 
         itemModelGenerator.register(ModItems.PURSUER_SPAWN_EGG,
                 new Model(Optional.of(Identifier.of("item/template_spawn_egg")), Optional.empty()));
-
     }
 }
