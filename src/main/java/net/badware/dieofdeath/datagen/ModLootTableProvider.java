@@ -58,6 +58,9 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
         addDrop(ModBlocks.BONUSPAD);
         addDrop(ModBlocks.CAREPAD);
 
+        addDrop(ModBlocks.BONUSPAD_BLOCK);
+        addDrop(ModBlocks.CAREPAD_BLOCK);
+
     }
 
     public LootTable.Builder multipleOreDrops(Block drop, Item item, float minDrops, float maxDrops) {

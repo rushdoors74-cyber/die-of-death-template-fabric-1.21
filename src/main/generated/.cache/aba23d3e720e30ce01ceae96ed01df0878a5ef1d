@@ -1,8 +1,8 @@
-// 1.21	2026-04-11T22:46:28.2301278	Die Of Death/Tags for minecraft:block
-788672201a2870e74b274ef9cf36b78e76fa6b1e data\minecraft\tags\block\mineable\pickaxe.json
+// 1.21	2026-04-18T01:28:09.0093076	Die Of Death/Tags for minecraft:block
+ce37a6b060446a1d68010e04b3c4e4922a524e0a data\minecraft\tags\block\mineable\pickaxe.json
 fc382d9bff5e59e42084050ad8c9708ba6d6a305 data\minecraft\tags\block\flowers.json
 e9d35f98f4bbeb32fab5045860e0cf38fc1178d0 data\minecraft\tags\block\wooden_fences.json
-b11f313a186c0ce20e7fdd6080af254c55373fe5 data\minecraft\tags\block\needs_iron_tool.json
+5ad755fedc99527fc61543de76b4419e2edd45a1 data\minecraft\tags\block\needs_iron_tool.json
 6e0e72be6c554be7eb490c4de3133fafc9a03b39 data\minecraft\tags\block\mineable\axe.json
 2d61348ab7e1b3330de950febf192234a844c12c data\minecraft\tags\block\needs_diamond_tool.json
 06ea1fa3e9786ecbb990cd98e71a4fce8f9ac8e3 data\dieofdeath\tags\block\need_yellow_thing_tool.json

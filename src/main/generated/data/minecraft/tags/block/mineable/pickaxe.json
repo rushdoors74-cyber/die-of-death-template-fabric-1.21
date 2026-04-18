@@ -5,6 +5,8 @@
     "dieofdeath:implement_wall",
     "dieofdeath:test_rail",
     "dieofdeath:bonuspad",
-    "dieofdeath:carepad"
+    "dieofdeath:carepad",
+    "dieofdeath:bonuspad_block",
+    "dieofdeath:carepad_block"
   ]
 }

@@ -1,6 +1,7 @@
 package net.badware.dieofdeath.item;
 
 import net.badware.dieofdeath.DieOfDeath;
+import net.badware.dieofdeath.entity.ModEntities;
 import net.badware.dieofdeath.item.advanced.*;
 import net.badware.dieofdeath.sound.ModSounds;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -108,6 +109,9 @@ public static final Item BONUSPAD_INGOT = registerItem("bonuspad_ingot",
 
 public static final Item CAREPAD_INGOT = registerItem("carepad_ingot",
         new Item(new Item.Settings().fireproof()));
+
+public static final Item PURSUER_SPAWN_EGG = registerItem("pursuer_spawn_egg",
+        new SpawnEggItem(ModEntities.PURSUER, 0x1B1B1B, 0x143306, new Item.Settings()));
 
 
     private static Item registerItem(String name, Item item) {

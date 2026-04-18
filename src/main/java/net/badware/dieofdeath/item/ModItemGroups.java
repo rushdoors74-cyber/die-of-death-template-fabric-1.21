@@ -67,6 +67,8 @@ public class ModItemGroups {
                         entries.add(ModBlocks.PRESSURE_PLATE_0);
                         entries.add(ModBlocks.BONUSPAD);
                         entries.add(ModBlocks.CAREPAD);
+                        entries.add(ModBlocks.CAREPAD_BLOCK);
+                        entries.add(ModBlocks.BONUSPAD_BLOCK);
 
                     }).build());
 
@@ -110,6 +112,14 @@ public class ModItemGroups {
                         entries.add(ModItems.Y2K);
                         entries.add(ModItems.ONE_BOUNCE);
                     })).build());
+
+    public static final ItemGroup Killers = Registry.register(Registries.ITEM_GROUP,
+            Identifier.of(DieOfDeath.MOD_ID, "killers"),
+            FabricItemGroup.builder().icon(() -> new ItemStack(ModItems.PURSUER_SPAWN_EGG))
+                    .displayName(Text.translatable("itemgroup.dieofdeath.killers"))
+                    .entries((((displayContext, entries) -> {
+                        entries.add(ModItems.PURSUER_SPAWN_EGG);
+                    }))).build());
 
 
 

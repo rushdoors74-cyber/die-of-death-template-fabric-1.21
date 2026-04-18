@@ -8,7 +8,7 @@
   "item.dieofdeath.boiling_water": "Boiling Water",
   "item.dieofdeath.pursuer_cleave": "Pursuer's Cleave",
   "item.dieofdeath.yellow_thing": "Yellow Pickaxe",
-  "item.dieofdeath.blue_axe": "Blue Axe",
+  "item.dieofdeath.blue_axe": "BonusPad Axe",
   "item.dieofdeath.shovel_stuff": "Shovel Shovel Why So OP",
   "item.dieofdeath.weird_hoe": "Hoeing",
   "item.dieofdeath.iron_hammer": "4x4 Hammer",
@@ -52,9 +52,11 @@
   "item.dieofdeath.y2k_music_disc.desc": "theonlywhitesofa - Y2K (DUAL BADWARE LMS THEME)",
   "item.dieofdeath.one_bounce_music_disc": "ONE BOUNCE",
   "item.dieofdeath.one_bounce_music_disc.desc": "Imperfect - ONE BOUNCE (8 Killers Vs 1 Survivor)",
+  "item.dieofdeath.pursuer_spawn_egg": "Pursuer Spawn Egg",
 
 
   "effect.dieofdeath.tangled": "Tangled",
+  "effect.dieofdeath.bleed": "Bleed",
 
   "enchantment.dieofdeath.entanglement": "Entanglement",
 
@@ -87,12 +89,17 @@
   "block.dieofdeath.tundra_trench_sapling": "Tundra Trench Sapling",
   "block.dieofdeath.bonuspad": "§bBonusPad",
   "block.dieofdeath.carepad": "§aCarePad",
+  "block.dieofdeath.bonuspad_block": "Block of BonusPad",
+  "block.dieofdeath.carepad_block": "Block of CarePad",
 
   "itemgroup.dieofdeath.die_of_death": "Items Of Death",
   "itemgroup.dieofdeath.die_of_death_blocks": "Blocks Of Death",
   "itemgroup.dieofdeath.die_of_death_ores": "Ores Of Death",
   "itemgroup.dieofdeath.die_of_death_natural": "Live Of Life",
   "itemgroup.dieofdeath.die_of_death_music": "Music Of Death",
+  "itemgroup.dieofdeath.killers": "Killers",
+
+  "entity.dieofdeath.pursuer": "Pursuer",
 
   "With a flick of my wand- I bring your wildest dreams- into reality...!": "With a flick of my wand- I bring your wildest dreams- §9into reality...!§r",
   "The only thing stopping you from achieving your dreams are the mental roadblocks you set before yourself!": "The only thing stopping you from achieving your dreams are §9the mental roadblocks you set before yourself!§r"

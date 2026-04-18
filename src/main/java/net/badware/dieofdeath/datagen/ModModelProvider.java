@@ -8,7 +8,10 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.*;
 import net.minecraft.item.ArmorItem;
+import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
+
+import java.util.Optional;
 
 public class ModModelProvider extends FabricModelProvider {
     public ModModelProvider(FabricDataOutput output) {
@@ -53,6 +56,9 @@ public class ModModelProvider extends FabricModelProvider {
         );
 
         blockStateModelGenerator.registerTintableCrossBlockState(ModBlocks.TUNDRA_TRENCH_SAPLING, BlockStateModelGenerator.TintType.NOT_TINTED);
+
+        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.BONUSPAD_BLOCK);
+        blockStateModelGenerator.registerSimpleCubeAll(ModBlocks.CAREPAD_BLOCK);
 
     }
 
@@ -99,6 +105,9 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModBlocks.BACKYARD_BUSH.asItem(), Models.GENERATED);
 
         itemModelGenerator.register(ModItems.CAREPAD_INGOT, Models.GENERATED);
+
+        itemModelGenerator.register(ModItems.PURSUER_SPAWN_EGG,
+                new Model(Optional.of(Identifier.of("item/template_spawn_egg")), Optional.empty()));
 
     }
 }

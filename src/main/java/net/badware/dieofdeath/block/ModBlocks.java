@@ -15,6 +15,7 @@ import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
@@ -93,10 +94,16 @@ public static final Block TUNDRA_TRENCH_SAPLING = registerBlock("tundra_trench_s
         new StoneSaplingBlock(TUNDRA_TRENCH_GENERATING, AbstractBlock.Settings.copy(Blocks.SPRUCE_SAPLING)));
 
 public static final Block BONUSPAD = registerBlock("bonuspad",
-        new BonuspadBlock(AbstractBlock.Settings.create().strength(3f,3f).requiresTool().nonOpaque()));
+        new BonuspadBlock(AbstractBlock.Settings.create().strength(3.0f,3.0f).requiresTool().nonOpaque()));
 
 public static final Block CAREPAD = registerBlock("carepad",
-        new CarepadBlock(AbstractBlock.Settings.create().strength(3f, 3f).requiresTool().nonOpaque()));
+        new CarepadBlock(AbstractBlock.Settings.create().strength(3.0f, 3.0f).requiresTool().nonOpaque()));
+
+public static final Block BONUSPAD_BLOCK = registerBlock("bonuspad_block",
+        new Block(AbstractBlock.Settings.create().strength(4.0f, 5.0f).requiresTool().sounds(BlockSoundGroup.TUFF_BRICKS)));
+
+public static final Block CAREPAD_BLOCK = registerBlock("carepad_block",
+        new Block(AbstractBlock.Settings.create().strength(4.0f, 5.0f).requiresTool().sounds(BlockSoundGroup.TUFF_BRICKS)));
 
     private static Block registerBlock(String name, Block block) {
         registerBlockItem(name, block);

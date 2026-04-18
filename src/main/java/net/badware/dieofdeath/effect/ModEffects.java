@@ -9,6 +9,7 @@ import net.minecraft.util.Identifier;
 
 public class ModEffects {
     public static final RegistryEntry<StatusEffect> TANGLED = register("tangled", new TangledEffect());
+    public static final RegistryEntry<StatusEffect> BLEED = register("bleed", new BleedEffect());
 
     private static RegistryEntry<StatusEffect> register(String name, StatusEffect effect) {
         return Registry.registerReference(Registries.STATUS_EFFECT,

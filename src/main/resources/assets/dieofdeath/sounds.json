@@ -190,5 +190,68 @@
     "sounds": [
       "dieofdeath:carepad_heal"
     ]
+  },
+  "blocked": {
+    "subtitle": "subtitles.dieofdeath.blocked",
+    "sounds": [
+      "dieofdeath:blocked"
+    ]
+  },
+  "entangled_critical": {
+    "subtitle": "subtitles.dieofdeath.entangled_critical",
+    "sounds": [
+      "dieofdeath:entangled_critical"
+    ]
+  },
+  "entangled_end": {
+    "subtitle": "subtitles.dieofdeath.entangled_end",
+    "sounds": [
+      "dieofdeath:entangled_end"
+    ]
+  },
+  "bleeding": {
+    "subtitle": "subtitles.dieofdeath.bleeding",
+    "sounds": [
+      "dieofdeath:bleeding"
+    ]
+  },
+  "pursuer_swinging": {
+    "subtitle": "subtitles.dieofdeath.pursuer_swinging",
+    "sounds": [
+      "dieofdeath:pursuer_swinging"
+    ]
+  },
+  "pursuer_cleave_start": {
+    "subtitle": "subtitles.dieofdeath.pursuer_cleave_start",
+    "sounds": [
+      "dieofdeath:pursuer_cleave_start"
+    ]
+  },
+  "pursuer_cleave_end": {
+    "subtitle": "subtitles.dieofdeath.pursuer_cleave_end",
+    "sounds": [
+      "dieofdeath:pursuer_cleave_end"
+    ]
+  },
+  "pursuer_scream": {
+    "subtitle": "subtitles.dieofdeath.pursuer_scream",
+    "sounds": [
+      "dieofdeath:pursuer_scream"
+    ]
+  },
+  "pursuer_shockwave": {
+    "subtitle": "subtitles.dieofdeath.pursuer_shockwave",
+    "sounds": [
+      "dieofdeath:pursuer_shockwave"
+    ]
+  },
+  "starvation_v3": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/starvation_v3",
+        "stream": true
+      }
+    ]
   }
 }

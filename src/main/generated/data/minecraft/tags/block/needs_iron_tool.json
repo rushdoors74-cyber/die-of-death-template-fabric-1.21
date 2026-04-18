@@ -1,5 +1,7 @@
 {
   "values": [
-    "dieofdeath:bonuspad_ore"
+    "dieofdeath:bonuspad_ore",
+    "dieofdeath:bonuspad_block",
+    "dieofdeath:carepad_block"
   ]
 }

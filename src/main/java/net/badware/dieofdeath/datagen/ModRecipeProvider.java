@@ -61,9 +61,9 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .pattern("BB ")
                 .pattern("BD ")
                 .pattern(" D ")
-                .input('B', ModItems.BONUSPAD_SHARD)
+                .input('B', ModItems.BONUSPAD_INGOT)
                 .input('D', Items.STICK)
-                .criterion(hasItem(ModItems.BONUSPAD_SHARD), conditionsFromItem(ModItems.BONUSPAD_SHARD))
+                .criterion(hasItem(ModItems.BONUSPAD_INGOT), conditionsFromItem(ModItems.BONUSPAD_INGOT))
                 .criterion(hasItem(Items.STICK), conditionsFromItem(Items.STICK))
                 .offerTo(exporter);
 
@@ -71,9 +71,9 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .pattern(" BB")
                 .pattern(" DB")
                 .pattern(" D ")
-                .input('B', ModItems.BONUSPAD_SHARD)
+                .input('B', ModItems.BONUSPAD_INGOT)
                 .input('D', Items.STICK)
-                .criterion(hasItem(ModItems.BONUSPAD_SHARD), conditionsFromItem(ModItems.BONUSPAD_SHARD))
+                .criterion(hasItem(ModItems.BONUSPAD_INGOT), conditionsFromItem(ModItems.BONUSPAD_INGOT))
                 .criterion(hasItem(Items.STICK), conditionsFromItem(Items.STICK))
                 .offerTo(exporter, Identifier.of(DieOfDeath.MOD_ID, "blue_axe_mirrored"));
 
@@ -147,5 +147,71 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .criterion(hasItem(ModItems.BONUSPAD_INGOT), conditionsFromItem(ModItems.BONUSPAD_INGOT))
                 .criterion(hasItem(Items.GLISTERING_MELON_SLICE), conditionsFromItem(Items.GLISTERING_MELON_SLICE))
                 .offerTo(exporter);
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModBlocks.BONUSPAD_BLOCK)
+                .pattern("AAA")
+                .pattern("AAA")
+                .pattern("AAA")
+                .input('A', ModItems.BONUSPAD_INGOT)
+                .criterion(hasItem(ModItems.BONUSPAD_INGOT), conditionsFromItem(ModItems.BONUSPAD_INGOT))
+                .offerTo(exporter);
+
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.BONUSPAD_INGOT, 9)
+                .input(ModBlocks.BONUSPAD_BLOCK)
+                .criterion(hasItem(ModBlocks.BONUSPAD_BLOCK), conditionsFromItem(ModBlocks.BONUSPAD_BLOCK))
+                .offerTo(exporter, Identifier.of(DieOfDeath.MOD_ID, "bonuspad_ingot_from_bonuspad_block"));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModBlocks.CAREPAD_BLOCK)
+                .pattern("AAA")
+                .pattern("AAA")
+                .pattern("AAA")
+                .input('A', ModItems.CAREPAD_INGOT)
+                .criterion(hasItem(ModItems.CAREPAD_INGOT), conditionsFromItem(ModItems.CAREPAD_INGOT))
+                .offerTo(exporter);
+
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.CAREPAD_INGOT, 9)
+                .input(ModBlocks.CAREPAD_BLOCK)
+                .criterion(hasItem(ModBlocks.CAREPAD_BLOCK), conditionsFromItem(ModBlocks.CAREPAD_BLOCK))
+                .offerTo(exporter, Identifier.of(DieOfDeath.MOD_ID, "carepad_ingot_from_carepad_block"));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.CEMENT, 5)
+                .pattern("ABC")
+                .input('A', Items.COBBLESTONE)
+                .input('B', Items.WATER_BUCKET)
+                .input('C',Items.SAND)
+                .criterion(hasItem(Items.COBBLESTONE), conditionsFromItem(Items.COBBLESTONE))
+                .criterion(hasItem(Items.WATER_BUCKET), conditionsFromItem(Items.WATER_BUCKET))
+                .criterion(hasItem(Items.SAND), conditionsFromItem(Items.SAND))
+                .offerTo(exporter, Identifier.of(DieOfDeath.MOD_ID, "cement_from_cobblestone_and_water"));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.CEMENT, 5)
+                .pattern("ABC")
+                .input('A', Items.COBBLESTONE)
+                .input('B', ModItems.BOILING_WATER)
+                .input('C',Items.SAND)
+                .criterion(hasItem(Items.COBBLESTONE), conditionsFromItem(Items.COBBLESTONE))
+                .criterion(hasItem(ModItems.BOILING_WATER), conditionsFromItem(ModItems.BOILING_WATER))
+                .criterion(hasItem(Items.SAND), conditionsFromItem(Items.SAND))
+                .offerTo(exporter, Identifier.of(DieOfDeath.MOD_ID,"cement_from_cobblestone_and_boiling_water"));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.CEMENT, 5)
+                .pattern("ABC")
+                .input('A', Items.STONE)
+                .input('B', Items.WATER_BUCKET)
+                .input('C',Items.SAND)
+                .criterion(hasItem(Items.STONE), conditionsFromItem(Items.STONE))
+                .criterion(hasItem(Items.WATER_BUCKET), conditionsFromItem(Items.WATER_BUCKET))
+                .criterion(hasItem(Items.SAND), conditionsFromItem(Items.SAND))
+                .offerTo(exporter, Identifier.of(DieOfDeath.MOD_ID, "cement_from_stone_and_water"));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.CEMENT, 5)
+                .pattern("ABC")
+                .input('A', Items.STONE)
+                .input('B', ModItems.BOILING_WATER)
+                .input('C',Items.SAND)
+                .criterion(hasItem(Items.STONE), conditionsFromItem(Items.STONE))
+                .criterion(hasItem(ModItems.BOILING_WATER), conditionsFromItem(ModItems.BOILING_WATER))
+                .criterion(hasItem(Items.SAND), conditionsFromItem(Items.SAND))
+                .offerTo(exporter, Identifier.of(DieOfDeath.MOD_ID, "cement_from_stone_and_boiling_water"));
     }
 }

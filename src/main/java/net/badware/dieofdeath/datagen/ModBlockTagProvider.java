@@ -22,7 +22,9 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .add(ModBlocks.IMPLEMENT_WALL)
                 .add(ModBlocks.TEST_RAIL)
                 .add(ModBlocks.BONUSPAD)
-                .add(ModBlocks.CAREPAD);
+                .add(ModBlocks.CAREPAD)
+                .add(ModBlocks.BONUSPAD_BLOCK)
+                .add(ModBlocks.CAREPAD_BLOCK);
 
         getOrCreateTagBuilder(BlockTags.AXE_MINEABLE)
                 .add(ModBlocks.WOOD_BOX);
@@ -33,7 +35,9 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
                 .add(ModBlocks.CAREPAD);
 
         getOrCreateTagBuilder(BlockTags.NEEDS_IRON_TOOL)
-                .add(ModBlocks.BONUSPAD_ORE);
+                .add(ModBlocks.BONUSPAD_ORE)
+                .add(ModBlocks.BONUSPAD_BLOCK)
+                .add(ModBlocks.CAREPAD_BLOCK);
 
         getOrCreateTagBuilder(BlockTags.NEEDS_DIAMOND_TOOL)
                 .add(ModBlocks.BONUSPAD_DEEPSLATE_ORE);

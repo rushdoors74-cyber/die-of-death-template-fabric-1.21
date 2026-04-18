@@ -1,5 +1,6 @@
 package net.badware.dieofdeath.item.advanced;
 
+import net.badware.dieofdeath.sound.ModSounds;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -43,9 +44,8 @@ public class ModArmorItem extends ArmorItem {
                 entity.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 40, 4));
 
                 if (entity instanceof PlayerEntity player) {
-                    player.sendMessage(Text.literal("§a§lBLOCK SUCCESSFUL!"), true);
                     player.getWorld().playSound(null, player.getBlockPos(),
-                            SoundEvents.ITEM_SHIELD_BLOCK, SoundCategory.PLAYERS, 1.0f, 0.5f);
+                            ModSounds.BLOCKED, SoundCategory.PLAYERS, 1.0f, 1.0f);
                 }
 
                 chest.damage(1, entity, EquipmentSlot.CHEST);

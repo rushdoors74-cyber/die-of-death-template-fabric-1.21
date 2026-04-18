@@ -6,7 +6,7 @@ import net.minecraft.entity.effect.StatusEffectCategory;
 
 public class TangledEffect extends StatusEffect {
     public TangledEffect() {
-        super(StatusEffectCategory.HARMFUL, 0x708090);
+        super(StatusEffectCategory.HARMFUL, 0xE3AF2C);
     }
 
     @Override

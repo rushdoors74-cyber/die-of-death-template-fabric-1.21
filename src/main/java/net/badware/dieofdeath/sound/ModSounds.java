@@ -37,6 +37,16 @@ public class ModSounds {
     public static final SoundEvent PURSUER_CLEAVE_SFX = registerSoundEvent("pursuer_cleave_sfx");
     public static final SoundEvent BONUSPAD_STEPPED = registerSoundEvent("bonuspad_stepped");
     public static final SoundEvent CAREPAD_HEAL = registerSoundEvent("carepad_heal");
+    public static final SoundEvent BLOCKED = registerSoundEvent("blocked");
+    public static final SoundEvent ENTANGLED_CRITICAL = registerSoundEvent("entangled_critical");
+    public static final SoundEvent ENTANGLED_END = registerSoundEvent("entangled_end");
+    public static final SoundEvent BLEEDING = registerSoundEvent("bleeding");
+    public static final SoundEvent PURSUER_SWINGING = registerSoundEvent("pursuer_swinging");
+    public static final SoundEvent PURSUER_CLEAVE_START = registerSoundEvent("pursuer_cleave_start");
+    public static final SoundEvent PURSUER_CLEAVE_END = registerSoundEvent("pursuer_cleave_end");
+    public static final SoundEvent PURSUER_SCREAM = registerSoundEvent("pursuer_scream");
+    public static final SoundEvent PURSUER_SHOCKWAVE = registerSoundEvent("pursuer_shockwave");
+    public static final SoundEvent STARVATION_V3 = registerSoundEvent("starvation_v3");
 
     public static SoundEvent ETERNITY_V2 = registerSoundEvent("eternity_v2");
     public static final RegistryKey<JukeboxSong> ETERNITY_V2_KEY =

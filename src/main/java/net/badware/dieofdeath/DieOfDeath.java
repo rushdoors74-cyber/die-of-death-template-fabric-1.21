@@ -3,6 +3,8 @@ package net.badware.dieofdeath;
 import net.badware.dieofdeath.block.ModBlocks;
 import net.badware.dieofdeath.effect.ModEffects;
 import net.badware.dieofdeath.enchantment.custom.EntanglementEnchantmentEffect;
+import net.badware.dieofdeath.entity.ModEntities;
+import net.badware.dieofdeath.entity.custom.PursuerEntity;
 import net.badware.dieofdeath.item.ModItemGroups;
 import net.badware.dieofdeath.item.ModItems;
 import net.badware.dieofdeath.item.advanced.ModArmorItem;
@@ -14,6 +16,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.client.render.RenderLayer;
@@ -54,5 +57,9 @@ public class DieOfDeath implements ModInitializer {
 		ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
 			return ModArmorItem.onPlayerDamage(entity, source, amount);
 		});
+
+		ModEntities.registerModEntities();
+
+		FabricDefaultAttributeRegistry.register(ModEntities.PURSUER, PursuerEntity.createPursuerAttributes());
 	}
 }

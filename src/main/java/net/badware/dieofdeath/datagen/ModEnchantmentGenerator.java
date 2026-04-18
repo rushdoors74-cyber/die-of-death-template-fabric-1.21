@@ -25,25 +25,27 @@ public class ModEnchantmentGenerator extends FabricDynamicRegistryProvider {
 
         Enchantment.Builder builder = Enchantment.builder(Enchantment.definition(
                 itemLookup.getOrThrow(ItemTags.WEAPON_ENCHANTABLE),
-                1,
-                1,
-                Enchantment.constantCost(25),
-                Enchantment.constantCost(75),
-                8,
+                itemLookup.getOrThrow(ItemTags.SWORD_ENCHANTABLE),
+                4,
+                6,
+                Enchantment.leveledCost(10, 6),
+                Enchantment.leveledCost(20, 6),
+                2,
                 AttributeModifierSlot.MAINHAND
         ));
 
-        builder.addEffect(EnchantmentEffectComponentTypes.POST_ATTACK,
+        builder.addEffect(
+                EnchantmentEffectComponentTypes.POST_ATTACK,
                 EnchantmentEffectTarget.ATTACKER,
                 EnchantmentEffectTarget.VICTIM,
-                new EntanglementEnchantmentEffect());
+                new EntanglementEnchantmentEffect()
+        );
 
         entries.add(ModEnchantments.ENTANGLEMENT, builder.build(ModEnchantments.ENTANGLEMENT.getValue()));
-
     }
 
     @Override
     public String getName() {
-        return "Enchantments";
+        return "Enchantment Generator";
     }
 }

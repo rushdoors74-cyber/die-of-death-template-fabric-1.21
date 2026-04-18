@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_bonuspad_shard": {
+    "has_bonuspad_ingot": {
       "conditions": {
         "items": [
           {
-            "items": "dieofdeath:bonuspad_shard"
+            "items": "dieofdeath:bonuspad_ingot"
           }
         ]
       },
@@ -31,7 +31,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_bonuspad_shard",
+      "has_bonuspad_ingot",
       "has_stick"
     ]
   ],
