@@ -264,5 +264,37 @@
         "attenuation_distance": 64
       }
     ]
+  },
+  "pursuer_stunned": {
+    "subtitle": "subtitles.dieofdeath.pursuer_stunned",
+    "sounds": [
+      "dieofdeath:pursuer_stunned"
+    ]
+  },
+  "a_friends_bro": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/a_friends_bro",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "phantasm_howl": {
+    "subtitle": "subtitles.dieofdeath.phantasm_howl",
+    "sounds": [
+      "dieofdeath:phantasm_howl"
+    ]
+  },
+  "frightened": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/frightened",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
   }
 }

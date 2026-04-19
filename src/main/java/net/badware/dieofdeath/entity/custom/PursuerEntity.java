@@ -6,6 +6,7 @@ import net.badware.dieofdeath.sound.ModSounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -57,7 +58,8 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
     }
 
     public int getVariant() {
-        return this.dataTracker.get(VARIANT);
+        int v = this.dataTracker.get(VARIANT);
+        return v == -1 ? 0 : v;
     }
 
     public void setVariant(int variant) {
@@ -67,13 +69,15 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Variant", this.getVariant());
+        nbt.putInt("variant", this.getVariant());
     }
 
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setVariant(nbt.getInt("Variant"));
+        if (nbt.contains("variant")) {
+            this.setVariant(nbt.getInt("variant"));
+        }
     }
 
     @Override
@@ -101,7 +105,7 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
     @Override
     protected void initDataTracker(DataTracker.Builder builder) {
         super.initDataTracker(builder);
-        builder.add(VARIANT, 0);
+        builder.add(VARIANT, -1);
         builder.add(IS_CLEAVING, false);
         builder.add(IS_HOWLING, false);
     }
@@ -110,14 +114,31 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
     public net.minecraft.entity.EntityData initialize(net.minecraft.world.ServerWorldAccess world, net.minecraft.world.LocalDifficulty difficulty, net.minecraft.entity.SpawnReason spawnReason, @org.jetbrains.annotations.Nullable net.minecraft.entity.EntityData entityData) {
         entityData = super.initialize(world, difficulty, spawnReason, entityData);
 
-        if (spawnReason != net.minecraft.entity.SpawnReason.SPAWN_EGG) {
-            if (this.random.nextInt(100) < 50) {
-                this.setVariant(1);
+        boolean hasVariantBeenSet = this.dataTracker.get(VARIANT) != -1;
+
+        if (!hasVariantBeenSet) {
+            if (spawnReason != SpawnReason.SPAWN_EGG) {
+                if (this.random.nextBoolean()) {
+                    this.setVariant(0);
+                } else {
+                    int[] weights = {50, 45, 40};
+                    int totalWeight = 0;
+                    for (int w : weights) totalWeight += w;
+
+                    int roll = this.random.nextInt(totalWeight);
+                    int cursor = 0;
+
+                    for (int i = 0; i < weights.length; i++) {
+                        cursor += weights[i];
+                        if (roll < cursor) {
+                            this.setVariant(i + 1);
+                            break;
+                        }
+                    }
+                }
             } else {
-                this.setVariant(0);
+                this.setVariant(this.random.nextInt(4));
             }
-        } else {
-            this.setVariant(this.random.nextBoolean() ? 1 : 0);
         }
 
         return entityData;
@@ -142,7 +163,7 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
         Box hitbox = this.getBoundingBox().expand(2.0, 0, 2.0).offset(this.getRotationVec(1.0f).multiply(2.0));
         this.getWorld().getEntitiesByClass(LivingEntity.class, hitbox, EntityPredicates.EXCEPT_SPECTATOR).forEach(target -> {
             if (target != this) {
-                target.damage(this.getDamageSources().mobAttack(this), 20.0f);
+                target.damage(this.getDamageSources().mobAttack(this), 4.0f);
                 target.addStatusEffect(new StatusEffectInstance(ModEffects.BLEED, 100, 1));
                 target.takeKnockback(0.5, -this.getX() + target.getX(), -this.getZ() + target.getZ());
             }
@@ -155,10 +176,17 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
         this.dataTracker.set(IS_HOWLING, true);
         this.triggerAnim("attack_controller", "howl");
 
-        this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
-                ModSounds.PURSUER_SCREAM, this.getSoundCategory(), 2.0f, 1.0f);
-        this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
-                ModSounds.PURSUER_SHOCKWAVE, this.getSoundCategory(), 2.0f, 1.0f);
+        if (this.getVariant() == 3) {
+            this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
+                    ModSounds.PHANTASM_HOWL, this.getSoundCategory(), 2.0f, 1.0f);
+            this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
+                    ModSounds.PURSUER_SHOCKWAVE, this.getSoundCategory(), 2.0f, 1.0f);
+        } else {
+            this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
+                    ModSounds.PURSUER_SCREAM, this.getSoundCategory(), 2.0f, 1.0f);
+            this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
+                    ModSounds.PURSUER_SHOCKWAVE, this.getSoundCategory(), 2.0f, 1.0f);
+        }
 
         this.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 40, 10));
 
@@ -196,11 +224,19 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController<>(this, "movement_controller", 5, state -> {
+            if (this.dataTracker.get(IS_HOWLING) || this.dataTracker.get(IS_CLEAVING)) {
+                return PlayState.STOP;
+            }
+
             if (state.isMoving()) {
                 state.getController().setAnimationSpeed(1.0);
-                return state.setAndContinue(RawAnimation.begin().thenLoop("animation.pursuer.run"));
+                String walkAnim = (this.getVariant() == 2) ? "animation.pursuer.classic.walk" : "animation.pursuer.run";
+                return state.setAndContinue(RawAnimation.begin().thenLoop(walkAnim));
             }
-            return state.setAndContinue(RawAnimation.begin().thenLoop("animation.pursuer.idle"));
+
+            state.getController().setAnimationSpeed(1.0);
+            String idleAnim = (this.getVariant() == 2) ? "animation.pursuer.classic.idle" : "animation.pursuer.idle";
+            return state.setAndContinue(RawAnimation.begin().thenLoop(idleAnim));
         }));
 
         controllers.add(new AnimationController<>(this, "attack_controller", 2, state -> PlayState.STOP)
@@ -251,6 +287,11 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
         if (this.dataTracker.get(IS_CLEAVING) && this.hasStatusEffect(StatusEffects.SLOWNESS)) {
             this.setSprinting(false);
         }
+    }
+
+    @Override
+    protected net.minecraft.sound.SoundEvent getDeathSound() {
+        return ModSounds.PURSUER_STUNNED;
     }
 
     @Override

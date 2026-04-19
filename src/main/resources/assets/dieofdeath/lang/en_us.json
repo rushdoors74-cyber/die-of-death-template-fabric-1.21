@@ -53,8 +53,6 @@
   "item.dieofdeath.one_bounce_music_disc": "ONE BOUNCE",
   "item.dieofdeath.one_bounce_music_disc.desc": "Imperfect - ONE BOUNCE (8 Killers Vs 1 Survivor)",
   "item.dieofdeath.pursuer_spawn_egg": "Pursuer Spawn Egg",
-  "item.dieofdeath.pursuer_avoider_spawn_egg": "Avoider Spawn Egg",
-
 
   "effect.dieofdeath.tangled": "Tangled",
   "effect.dieofdeath.bleed": "Bleed",
@@ -102,6 +100,8 @@
 
   "entity.dieofdeath.pursuer": "Pursuer",
   "entity.dieofdeath.pursuer_avoider": "Avoider",
+  "entity.dieofdeath.pursuer_classic": "Classic",
+  "entity.dieofdeath.pursuer_phantasm": "Phantasm",
 
   "With a flick of my wand- I bring your wildest dreams- into reality...!": "With a flick of my wand- I bring your wildest dreams- §9into reality...!§r",
   "The only thing stopping you from achieving your dreams are the mental roadblocks you set before yourself!": "The only thing stopping you from achieving your dreams are §9the mental roadblocks you set before yourself!§r"

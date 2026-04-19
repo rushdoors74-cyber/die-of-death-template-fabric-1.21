@@ -4,12 +4,14 @@ import net.badware.dieofdeath.entity.custom.PursuerEntity;
 import net.badware.dieofdeath.sound.ModSounds;
 import net.minecraft.client.sound.MovingSoundInstance;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.Identifier;
 
 public class ChaseThemeSound extends MovingSoundInstance {
     private final PursuerEntity pursuer;
 
     public ChaseThemeSound(PursuerEntity pursuer) {
-        super(pursuer.getVariant() == 1 ? ModSounds.INAPPETENCE : ModSounds.STARVATION_V3, SoundCategory.HOSTILE, pursuer.getWorld().getRandom());
+        super(getVariantSound(pursuer), SoundCategory.HOSTILE, pursuer.getWorld().getRandom());
 
         this.pursuer = pursuer;
         this.repeat = true;
@@ -57,5 +59,13 @@ public class ChaseThemeSound extends MovingSoundInstance {
         }
 
         return 0.0f;
+    }
+    private static SoundEvent getVariantSound(PursuerEntity pursuer) {
+        return switch (pursuer.getVariant()) {
+            case 1 -> ModSounds.INAPPETENCE;
+            case 2 -> ModSounds.A_FRIENDS_BRO;
+            case 3 -> ModSounds.FRIGHTENED;
+            default -> ModSounds.STARVATION_V3;
+        };
     }
 }
