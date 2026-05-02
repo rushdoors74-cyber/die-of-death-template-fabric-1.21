@@ -5,7 +5,6 @@ import net.badware.dieofdeath.item.ModItems;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -24,14 +23,16 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity {
 
     @Inject(method = "getFovMultiplier", at = @At(value = "TAIL"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
     private void getFovMultiplierMixin(CallbackInfoReturnable<Float> info, float f) {
-        Item item = this.getActiveItem().getItem();
         ItemStack itemStack = this.getActiveItem();
+
         if (this.isUsingItem() && itemStack.isOf(ModItems.HARKEN_BOW)) {
             int i = this.getItemUseTime();
             float g = (float)i / 20.0f;
             g = g > 1.0f ? 1.0f : g * g;
             f *= 1.0f - g * 0.15f;
-            info.setReturnValue(MathHelper.lerp(MinecraftClient.getInstance().options.getFovEffectScale().getValue().floatValue(), 1.0f, f));
+
+            float fovEffectScale = MinecraftClient.getInstance().options.getFovEffectScale().getValue().floatValue();
+            info.setReturnValue(MathHelper.lerp(fovEffectScale, 1.0f, f));
         }
     }
 }

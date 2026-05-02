@@ -296,5 +296,169 @@
         "attenuation_distance": 64
       }
     ]
+  },
+  "apocalypse": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/apocalypse",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "zombie_howl": {
+    "subtitle": "subtitles.dieofdeath.zombie_howl",
+    "sounds": [
+      "dieofdeath:zombie_howl"
+    ]
+  },
+  "zombie_stunned": {
+    "subtitle": "subtitles.dieofdeath.zombie_stunned",
+    "sounds": [
+      "dieofdeath:zombie_stunned"
+    ]
+  },
+  "zombie_2_howl": {
+    "subtitle": "subtitles.dieofdeath.zombie_2_howl",
+    "sounds": [
+      "dieofdeath:zombie_2_howl"
+    ]
+  },
+  "stalker_howl": {
+    "subtitle": "subtitles.dieofdeath.stalker_howl",
+    "sounds": [
+      "dieofdeath:stalker_howl"
+    ]
+  },
+  "stalker_stunned": {
+    "subtitle": "subtitles.dieofdeath.stalker_stunned",
+    "sounds": [
+      "dieofdeath:stalker_stunned"
+    ]
+  },
+  "stalker_chase_theme": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/stalker_chase_theme",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "mequot_howl": {
+    "subtitle": "subtitles.dieofdeath.mequot_howl",
+    "sounds": [
+      "dieofdeath:mequot_howl"
+    ]
+  },
+  "mequot_stunned": {
+    "subtitle": "subtitles.dieofdeath.mequot_stunned",
+    "sounds": [
+      "dieofdeath:mequot_stunned"
+    ]
+  },
+  "insanely": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/insanely",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "play_my_maze_game": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/play_my_maze_game",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "beyond_the_bounds_of_possibility": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/beyond_the_bounds_of_possibility",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "acidulus_v2": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/acidulus_v2",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "claws_pierce": {
+    "subtitle": "subtitles.dieofdeath.claws_pierce",
+    "sounds": [
+      "dieofdeath:claws_pierce"
+    ]
+  },
+  "clawsguy_howl": {
+    "subtitle": "subtitles.dieofdeath.clawsguy_howl",
+    "sounds": [
+      "dieofdeath:clawsguy_howl"
+    ]
+  },
+  "seesaws_hit": {
+    "subtitle": "subtitles.dieofdeath.seesaws_hit",
+    "sounds": [
+      "dieofdeath:seesaws_hit"
+    ]
+  },
+  "thec_chase_theme": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/thec_chase_theme",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "thec_howl": {
+    "subtitle": "subtitles.dieofdeath.thec_howl",
+    "sounds": [
+      "dieofdeath:thec_howl"
+    ]
+  },
+  "thec_stunned": {
+    "subtitle": "subtitles.dieofdeath.thec_stunned",
+    "sounds": [
+      "dieofdeath:thec_stunned"
+    ]
+  },
+  "monetization": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/monetization",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "bling_hit": {
+    "subtitle": "subtitles.dieofdeath.bling_hit",
+    "sounds": [
+      "dieofdeath:bling_hit"
+    ]
+  },
+  "bling_stunned": {
+    "subtitle": "subtitles.dieofdeath.bling_stunned",
+    "sounds": [
+      "dieofdeath:bling_stunned"
+    ]
   }
 }

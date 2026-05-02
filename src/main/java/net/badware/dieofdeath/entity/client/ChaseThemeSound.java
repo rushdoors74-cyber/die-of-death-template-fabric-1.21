@@ -22,29 +22,33 @@ public class ChaseThemeSound extends MovingSoundInstance {
 
     @Override
     public void tick() {
-        if (this.pursuer == null || this.pursuer.isRemoved() || !this.pursuer.isAlive()) {
+        boolean shouldStop = this.pursuer == null || this.pursuer.isRemoved() || !this.pursuer.isAlive();
+
+        if (!shouldStop) {
+            net.minecraft.client.network.ClientPlayerEntity player = net.minecraft.client.MinecraftClient.getInstance().player;
+            if (player != null) {
+                double distanceSq = this.pursuer.squaredDistanceTo(player);
+                if (distanceSq > 4000) {
+                    shouldStop = true;
+                }
+            } else {
+                shouldStop = true;
+            }
+        }
+
+        if (shouldStop) {
+            if (this.pursuer != null) {
+                this.pursuer.isThemePlayingClient = false;
+                this.pursuer.setThemePlaying(false);
+            }
             this.setDone();
-            if (this.pursuer != null) this.pursuer.setThemePlaying(false);
             return;
         }
 
         this.x = (float) this.pursuer.getX();
         this.y = (float) this.pursuer.getY();
         this.z = (float) this.pursuer.getZ();
-
-        net.minecraft.client.network.ClientPlayerEntity player = net.minecraft.client.MinecraftClient.getInstance().player;
-
-        if (player != null) {
-            double distanceSq = this.pursuer.squaredDistanceTo(player);
-            if (distanceSq > 4000) {
-                this.setDone();
-                this.pursuer.setThemePlaying(false);
-            }
-        } else {
-            this.setDone();
-        }
     }
-
     @Override
     public float getVolume() {
         net.minecraft.client.network.ClientPlayerEntity player = net.minecraft.client.MinecraftClient.getInstance().player;
@@ -65,6 +69,14 @@ public class ChaseThemeSound extends MovingSoundInstance {
             case 1 -> ModSounds.INAPPETENCE;
             case 2 -> ModSounds.A_FRIENDS_BRO;
             case 3 -> ModSounds.FRIGHTENED;
+            case 4, 5, 6 -> ModSounds.APOCALYPSE;
+            case 7 -> ModSounds.STALKER_CHASE_THEME;
+            case 8, 9 -> ModSounds.INSANELY;
+            case 10 -> ModSounds.PLAY_MY_MAZE_GAME;
+            case 11 -> ModSounds.BEYOND_THE_BOUNDS_OF_POSSIBILITY;
+            case 12, 13 -> ModSounds.ACIDULUS_V2;
+            case 14 -> ModSounds.THEC_CHASE_THEME;
+            case 15 -> ModSounds.MONETIZATION;
             default -> ModSounds.STARVATION_V3;
         };
     }

@@ -113,6 +113,9 @@ public static final Item CAREPAD_INGOT = registerItem("carepad_ingot",
 public static final Item PURSUER_SPAWN_EGG = registerItem("pursuer_spawn_egg",
             new SpawnEggItem(ModEntities.PURSUER,0x1B1B1B, 0x143306, new Item.Settings()));
 
+public static final Item BLING_POINT = registerItem("bling_point",
+        new Item(new Item.Settings()));
+
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(DieOfDeath.MOD_ID, name), item);

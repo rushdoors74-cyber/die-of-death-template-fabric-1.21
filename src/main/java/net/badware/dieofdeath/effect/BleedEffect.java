@@ -14,7 +14,12 @@ public class BleedEffect extends StatusEffect {
     public boolean applyUpdateEffect(LivingEntity entity, int amplifier) {
         if (entity.getHealth() > 1.0f) {
             float damageAmount = (amplifier >= 1) ? 2.0f : 1.0f;
-            entity.damage(entity.getDamageSources().magic(), damageAmount);
+
+            float safeDamage = Math.min(damageAmount, entity.getHealth() - 1.01f);
+
+            if (safeDamage > 0) {
+                entity.damage(entity.getDamageSources().magic(), safeDamage);
+            }
         }
 
         if (entity.age % 20 == 0) {

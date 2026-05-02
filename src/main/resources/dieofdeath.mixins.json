@@ -19,7 +19,8 @@
 	"package": "net.badware.dieofdeath.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"LivingEntityMixin"
+		"LivingEntityMixin",
+		"PursuerDeathMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

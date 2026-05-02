@@ -13,7 +13,7 @@ public class ModEntities {
             Registries.ENTITY_TYPE,
             Identifier.of(DieOfDeath.MOD_ID, "pursuer"),
             EntityType.Builder.create(PursuerEntity::new, SpawnGroup.MONSTER)
-                    .dimensions(1.25f, 2.3f)
+                    .dimensions(1.9f, 2.3f).eyeHeight(1.9f)
                     .build()
     );
 

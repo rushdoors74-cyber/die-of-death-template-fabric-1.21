@@ -27,7 +27,11 @@
 		]
 	},
 	"mixins": [
-		"dieofdeath.mixins.json"
+		"dieofdeath.mixins.json",
+		{
+			"config": "dieofdeath.client.mixins.json",
+			"environment": "client"
+		}
 	],
 	"depends": {
 		"fabricloader": ">=0.15-SNAPSHOT",

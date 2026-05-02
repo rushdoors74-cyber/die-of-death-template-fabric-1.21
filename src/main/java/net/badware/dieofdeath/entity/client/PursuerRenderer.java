@@ -23,5 +23,4 @@ public class PursuerRenderer extends GeoEntityRenderer<PursuerEntity> {
 
         poseStack.pop();
     }
-
 }

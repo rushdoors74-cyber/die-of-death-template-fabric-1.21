@@ -99,9 +99,11 @@
   "itemgroup.dieofdeath.killers": "Killers",
 
   "entity.dieofdeath.pursuer": "Pursuer",
-  "entity.dieofdeath.pursuer_avoider": "Avoider",
-  "entity.dieofdeath.pursuer_classic": "Classic",
-  "entity.dieofdeath.pursuer_phantasm": "Phantasm",
+
+  "death.attack.pursuer": "%1$s was slain by Pursuer",
+  "death.attack.pursuer_maze_guy": "%1$s destroyed their monitor",
+  "death.attack.pursuer_thec": "%1$s went to sleep",
+  "death.attack.pursuer_bling": "%1$s quit their goal",
 
   "With a flick of my wand- I bring your wildest dreams- into reality...!": "With a flick of my wand- I bring your wildest dreams- §9into reality...!§r",
   "The only thing stopping you from achieving your dreams are the mental roadblocks you set before yourself!": "The only thing stopping you from achieving your dreams are §9the mental roadblocks you set before yourself!§r"

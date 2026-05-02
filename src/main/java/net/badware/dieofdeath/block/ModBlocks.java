@@ -35,8 +35,9 @@ public class ModBlocks {
             });
 
     public static final Block KILLER_ONLY_BLOCK = registerBlock("killer_only_block",
-            new Block(AbstractBlock.Settings.create().strength(-1f, 982500000)
-                    .noCollision().nonOpaque().emissiveLighting((state, world, pos) -> true)));
+            new KillerOnlyBlock(AbstractBlock.Settings.create().strength(-1f, 982500000).nonOpaque()
+                    .emissiveLighting((state, world, pos) -> true).suffocates((state, world, pos) -> false)
+                    .blockVision((state, world, pos) -> false)));
 
     public static final Block WOOD_BOX = registerBlock("wood_box",
             new Block(AbstractBlock.Settings.create().strength(1.5f, 1f).sounds(ModSounds.WOOD_BREAKING_FIRE)));

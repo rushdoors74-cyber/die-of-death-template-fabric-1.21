@@ -8,18 +8,17 @@ import net.badware.dieofdeath.entity.custom.PursuerEntity;
 import net.badware.dieofdeath.item.ModItemGroups;
 import net.badware.dieofdeath.item.ModItems;
 import net.badware.dieofdeath.item.advanced.ModArmorItem;
+import net.badware.dieofdeath.particle.ModParticles;
 import net.badware.dieofdeath.sound.ModSounds;
 import net.badware.dieofdeath.util.HammerUsageEvent;
 import net.badware.dieofdeath.world.gen.ModWorldGeneration;
 import net.fabricmc.api.ModInitializer;
 
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -48,8 +47,6 @@ public class DieOfDeath implements ModInitializer {
 				Identifier.of("dieofdeath", "entanglement"),
 				EntanglementEnchantmentEffect.CODEC);
 
-		BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.KILLER_ONLY_BLOCK, RenderLayer.getTranslucent());
-
 		FuelRegistry.INSTANCE.add(ModItems.BOILING_WATER, 6020);
 
 		PlayerBlockBreakEvents.BEFORE.register(new HammerUsageEvent());
@@ -61,5 +58,7 @@ public class DieOfDeath implements ModInitializer {
 		ModEntities.registerModEntities();
 
 		FabricDefaultAttributeRegistry.register(ModEntities.PURSUER, PursuerEntity.createPursuerAttributes());
+
+		ModParticles.registerParticles();
 	}
 }

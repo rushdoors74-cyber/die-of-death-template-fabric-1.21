@@ -1,13 +1,13 @@
 package net.badware.dieofdeath.entity.custom;
 
 import net.badware.dieofdeath.effect.ModEffects;
-import net.badware.dieofdeath.entity.client.ChaseThemeSound;
+import net.badware.dieofdeath.entity.client.ClientMusicHandler;
 import net.badware.dieofdeath.sound.ModSounds;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.brain.MemoryModuleType;
+import net.minecraft.entity.ai.brain.WalkTarget;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -17,10 +17,14 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.passive.IronGolemEntity;
+import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -30,16 +34,25 @@ import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import java.util.List;
+
 public class PursuerEntity extends HostileEntity implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private static final TrackedData<Integer> VARIANT = DataTracker.registerData(PursuerEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
     private int howlTicks = 0;
     private int cleaveTicks = 0;
-    private boolean isThemePlaying = false;
+    private int swingTicks = 0;
+    public transient boolean isThemePlayingClient = false;
+    public boolean isCleaving() {
+        return this.dataTracker.get(IS_CLEAVING);
+    }
+    public boolean isThemePlaying = false;
 
     public PursuerEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
+        this.setPathfindingPenalty(PathNodeType.RAIL, 0.0F);
+        this.setPathfindingPenalty(PathNodeType.WATER, 0.0F);
     }
 
     public static DefaultAttributeContainer.Builder createPursuerAttributes() {
@@ -84,21 +97,50 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
     public void tick() {
         super.tick();
         if (this.getWorld().isClient) {
-            checkAndPlayChaseMusic();
+            this.checkAndPlayChaseMusic();
+        }
+        if (!this.getWorld().isClient && this.age % 5 == 0 && this.isAlive()) {
+            double fearRange = 16.0;
+            List<VillagerEntity> victims = this.getWorld().getEntitiesByClass(
+                    VillagerEntity.class,
+                    this.getBoundingBox().expand(fearRange),
+                    Entity::isAlive
+            );
+
+            for (VillagerEntity villager : victims) {
+                Vec3d fleeVec = villager.getPos().subtract(this.getPos()).normalize();
+
+                Vec3d targetPos = villager.getPos().add(fleeVec.multiply(10.0));
+                villager.getBrain().remember(MemoryModuleType.WALK_TARGET, new WalkTarget(targetPos, 0.7f, 0));
+
+                villager.getBrain().remember(MemoryModuleType.IS_PANICKING, true, 100L);
+
+                villager.getLookControl().lookAt(this);
+            }
+        }
+        if (this.getWorld().isClient && this.getVariant() == 15 && this.isAlive()) {
+            if (this.random.nextFloat() < 0.4f) {
+                float bodyYaw = this.bodyYaw;
+                double radians = Math.toRadians(bodyYaw);
+
+                double offsetX = -Math.cos(radians) * 0.4 + Math.sin(radians) * 0.6;
+                double offsetZ = -Math.sin(radians) * 0.4 - Math.cos(radians) * 0.6;
+                double sparkY = this.getY() + 0.5 + (this.random.nextDouble() * 2.0);
+
+                this.getWorld().addParticle(
+                        net.badware.dieofdeath.particle.ModParticles.GREEN_STAR,
+                        this.getX() + offsetX,
+                        sparkY,
+                        this.getZ() + offsetZ,
+                        0, 0.02, 0
+                );
+            }
         }
     }
 
     private void checkAndPlayChaseMusic() {
-        if (!this.isAlive()) return;
-
-        net.minecraft.client.MinecraftClient client = net.minecraft.client.MinecraftClient.getInstance();
-        if (client.player == null) return;
-
-        double dist = this.squaredDistanceTo(client.player);
-
-        if (dist < 2500 && !isThemePlaying) {
-            client.getSoundManager().play(new ChaseThemeSound(this));
-            this.isThemePlaying = true;
+        if (this.isAlive()) {
+            ClientMusicHandler.handlePursuerMusic(this);
         }
     }
 
@@ -121,7 +163,7 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
                 if (this.random.nextBoolean()) {
                     this.setVariant(0);
                 } else {
-                    int[] weights = {50, 45, 40};
+                    int[] weights = {50, 45, 40, 35, 33, 32, 30, 25, 23, 20, 17, 15, 12, 10, 5};
                     int totalWeight = 0;
                     for (int w : weights) totalWeight += w;
 
@@ -137,7 +179,7 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
                     }
                 }
             } else {
-                this.setVariant(this.random.nextInt(4));
+                this.setVariant(this.random.nextInt(16));
             }
         }
 
@@ -148,7 +190,18 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
         if (this.getWorld().isClient) return;
 
         this.dataTracker.set(IS_CLEAVING, true);
-        this.triggerAnim("attack_controller", "cleave");
+
+        if (this.getVariant() == 14) {
+            this.triggerAnim("attack_controller", "thec_cleave");
+        } else if (this.getVariant() == 13) {
+            this.triggerAnim("attack_controller", "seesaws_cleave");
+        } else if (this.getVariant() == 12) {
+            this.triggerAnim("attack_controller", "clawsguy_cleave");
+        } else if (this.getVariant() == 8) {
+            this.triggerAnim("attack_controller", "mequot_cleave");
+        } else {
+            this.triggerAnim("attack_controller", "cleave");
+        }
 
         this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
                 ModSounds.PURSUER_CLEAVE_START, this.getSoundCategory(), 2.0f, 1.0f);
@@ -174,9 +227,59 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
 
     public void performHowl() {
         this.dataTracker.set(IS_HOWLING, true);
-        this.triggerAnim("attack_controller", "howl");
+        if (this.getVariant() == 14) {
+            this.triggerAnim("attack_controller", "thec_howl");
+        } else if (this.getVariant() == 12 || this.getVariant() == 13) {
+            this.triggerAnim("attack_controller", "clawsguy_howl");
+        } else {
+            this.triggerAnim("attack_controller", "howl");
+        }
 
-        if (this.getVariant() == 3) {
+        int variant = this.getVariant();
+
+        if (variant == 14) {
+            this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
+                    ModSounds.THEC_HOWL, this.getSoundCategory(), 2.0f, 1.0f);
+        }
+
+        if (variant == 12 || variant == 13) {
+            this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
+                    ModSounds.CLAWSGUY_HOWL, this.getSoundCategory(), 2.0f, 1.0f);
+        }
+
+        if (variant == 11) {
+            this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
+                    ModSounds.PURSUER_SHOCKWAVE, this.getSoundCategory(), 2.0f, 1.0f);
+            this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
+                    ModSounds.PURSUER_SCREAM, this.getSoundCategory(), 2.0f, 1.5f);
+        }
+
+        if (variant == 10) {
+            this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
+                    ModSounds.PURSUER_SHOCKWAVE, this.getSoundCategory(), 2.0f, 1.0f);
+            this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
+                    ModSounds.PURSUER_SCREAM, this.getSoundCategory(), 2.0f, 0.5f);
+        }
+
+        if (variant == 8 || variant == 9) {
+            this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
+                    ModSounds.MEQUOT_HOWL, this.getSoundCategory(), 2.0f, 1.0f);
+        }
+
+        else if (variant == 7) {
+            this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
+                    ModSounds.STALKER_HOWL, this.getSoundCategory(), 2.0f, 1.0f);
+        }
+
+        else if (variant == 6) {
+            this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
+                    ModSounds.ZOMBIE_2_HOWL, this.getSoundCategory(), 2.0f, 1.0f);
+
+        } else if (variant == 4 || variant == 5) {
+            this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
+                    ModSounds.ZOMBIE_HOWL, this.getSoundCategory(), 3.0f, 1.0f);
+
+        } else if (variant == 3) {
             this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
                     ModSounds.PHANTASM_HOWL, this.getSoundCategory(), 2.0f, 1.0f);
             this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
@@ -190,10 +293,9 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
 
         this.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 40, 10));
 
-        this.getWorld().getPlayers().forEach(player -> {
-            if (player.squaredDistanceTo(this) < 4000) {
-                player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 120, 3));
-            }
+        this.getWorld().getEntitiesByClass(LivingEntity.class, this.getBoundingBox().expand(20.0),
+                entity -> entity != this).forEach(target -> {
+            target.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 120, 3));
         });
 
         this.howlTicks = 40;
@@ -209,16 +311,82 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
 
         this.targetSelector.add(1, new RevengeGoal(this));
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true,
+                (entity) -> this.getVariant() != 8));
+
+        this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, true,
+                (entity) -> this.getVariant() != 8));
+        this.goalSelector.add(3, new MoveThroughVillageGoal(this, 1.0D, false, 4, () -> true));
     }
 
     @Override
     public boolean tryAttack(Entity target) {
         if (this.dataTracker.get(IS_CLEAVING) || this.dataTracker.get(IS_HOWLING)) return false;
+        if (this.swingTicks == 0) {
+            this.swingTicks = 23;
 
-        this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
-                ModSounds.PURSUER_SWINGING, this.getSoundCategory(), 1.0f, 1.0f);
-        this.triggerAnim("attack_controller", "swing");
-        return super.tryAttack(target);
+            if (this.getVariant() == 14) this.triggerAnim("attack_controller", "thec_swing");
+            else if (this.getVariant() == 13) this.triggerAnim("attack_controller", "seesaws_swing");
+            else if (this.getVariant() == 12) this.triggerAnim("attack_controller", "clawsguy_swing");
+            else if (this.getVariant() == 7) this.triggerAnim("attack_controller", "stalker_swing");
+            else if (this.getVariant() == 6) this.triggerAnim("attack_controller", "zombie_2_swing");
+            else this.triggerAnim("attack_controller", "swing");
+
+            this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
+                   this.getVariant() == 15 ? ModSounds.BLING_HIT : this.getVariant() == 13 ? ModSounds.SEESAWS_HIT : (this.getVariant() == 12 ? ModSounds.CLAWS_PIERCE : ModSounds.PURSUER_SWINGING),
+                    this.getSoundCategory(), 1.0f, 1.0f);
+
+            if (this.getVariant() == 15 && !this.getWorld().isClient) {
+                for (int i = 0; i < 4; i++) {
+                    net.minecraft.entity.ItemEntity point = new net.minecraft.entity.ItemEntity(this.getWorld(),
+                            target.getX(), target.getY() + 0.5, target.getZ(),
+                            new net.minecraft.item.ItemStack(net.badware.dieofdeath.item.ModItems.BLING_POINT));
+
+                    point.setPickupDelay(32767);
+
+                    point.setVelocity(
+                            (this.random.nextDouble() - 0.5) * 0.4,
+                            0.3,
+                            (this.random.nextDouble() - 0.5) * 0.4
+                    );
+
+                    NbtCompound nbt = new NbtCompound();
+                    point.writeCustomDataToNbt(nbt);
+                    nbt.putShort("Age", (short) 5860);
+                    point.readCustomDataFromNbt(nbt);
+
+                    this.getWorld().spawnEntity(point);
+                }
+            }
+
+            return true;
+        }
+
+        if (this.swingTicks > 10) {
+            float damage = (float)this.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+
+            if (this.getVariant() == 12 && target instanceof PursuerEntity) {
+                damage *= 2.0f;
+            }
+
+            return target.damage(this.getDamageSources().mobAttack(this), damage);
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean damage(DamageSource source, float amount) {
+        if (this.getVariant() == 12) {
+            Entity attacker = source.getAttacker();
+
+            if (attacker != null && (attacker instanceof PursuerEntity)) {
+
+                amount *= 0.8f;
+            }
+        }
+
+        return super.damage(source, amount);
     }
 
     @Override
@@ -228,14 +396,74 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
                 return PlayState.STOP;
             }
 
+            int variant = this.getVariant();
+            state.getController().setAnimationSpeed(1.0);
+
             if (state.isMoving()) {
-                state.getController().setAnimationSpeed(1.0);
-                String walkAnim = (this.getVariant() == 2) ? "animation.pursuer.classic.walk" : "animation.pursuer.run";
-                return state.setAndContinue(RawAnimation.begin().thenLoop(walkAnim));
+                boolean isChasing = this.getTarget() != null || this.isAttacking();
+                String anim;
+
+                if (variant == 15) {
+                    if (isChasing) {
+                        anim = "animation.pursuer.bling.run";
+                    }  else {
+                        anim = "animation.pursuer.bling.walk";
+                    }
+                } else if (variant == 14) {
+                    if (isChasing) {
+                        anim = "animation.pursuer.thec.run";
+                    }  else {
+                        anim = "animation.pursuer.thec.walk";
+                    }
+                } else if (variant == 13) {
+                    if (isChasing) {
+                        anim = "animation.pursuer.seesaws.run";
+                    } else {
+                        anim = "animation.pursuer.seesaws.walk";
+                    }
+                } else if (variant == 12) {
+                    if (isChasing) {
+                        anim = "animation.pursuer.clawsguy.run";
+                    } else {
+                        anim = "animation.pursuer.clawsguy.walk";
+                    }
+                } else if (variant == 8 || variant == 9) {
+                    if (isChasing) {
+                        anim = "animation.pursuer.mequot.run";
+                    } else {
+                        anim = "animation.pursuer.mequot.walk";
+                    }
+                } else if (variant == 7) {
+                    anim = "animation.pursuer.stalker.run";
+                } else if (variant == 6) {
+                    anim = "animation.pursuer.zombie_2.run";
+                } else if (variant == 5) {
+                    if (isChasing) {
+                        anim = "animation.pursuer.zombie_1.run";
+                    } else {
+                        anim = "animation.pursuer.zombie_1.walk";
+                    }
+                } else if (variant == 2 || variant == 10 || variant == 11) {
+                    anim = "animation.pursuer.classic.walk";
+                } else {
+                    anim = "animation.pursuer.run";
+                }
+
+                return state.setAndContinue(RawAnimation.begin().thenLoop(anim));
+            }
+            String idleAnim = "animation.pursuer.idle";
+            if (variant == 9) {
+                idleAnim = "animation.pursuer.iquot.idle";
+            } else if (variant == 7) {
+                idleAnim = "animation.pursuer.stalker.idle";
+            } else if (variant == 6) {
+                idleAnim = "animation.pursuer.zombie_2.idle";
+            } else if (variant == 5) {
+                idleAnim = "animation.pursuer.zombie_1.idle";
+            } else if (variant == 2 || variant == 10 || variant == 11) {
+                idleAnim = "animation.pursuer.classic.idle";
             }
 
-            state.getController().setAnimationSpeed(1.0);
-            String idleAnim = (this.getVariant() == 2) ? "animation.pursuer.classic.idle" : "animation.pursuer.idle";
             return state.setAndContinue(RawAnimation.begin().thenLoop(idleAnim));
         }));
 
@@ -243,6 +471,22 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
                 .triggerableAnim("swing", RawAnimation.begin().thenPlay("animation.pursuer.swing"))
                 .triggerableAnim("howl", RawAnimation.begin().thenPlay("animation.pursuer.howl"))
                 .triggerableAnim("cleave", RawAnimation.begin().thenPlay("animation.pursuer.cleave"))
+
+                .triggerableAnim("zombie_2_swing", RawAnimation.begin().thenPlay("animation.pursuer.zombie_2.swing"))
+                .triggerableAnim("stalker_swing", RawAnimation.begin().thenPlay("animation.pursuer.stalker.swing"))
+
+                .triggerableAnim("mequot_cleave", RawAnimation.begin().thenPlay("animation.pursuer.mequot.cleave"))
+
+                .triggerableAnim("clawsguy_swing", RawAnimation.begin().thenPlay("animation.pursuer.clawsguy.swing"))
+                .triggerableAnim("clawsguy_howl", RawAnimation.begin().thenPlay("animation.pursuer.clawsguy.howl"))
+                .triggerableAnim("clawsguy_cleave", RawAnimation.begin().thenPlay("animation.pursuer.clawsguy.cleave"))
+
+                .triggerableAnim("seesaws_swing", RawAnimation.begin().thenPlay("animation.pursuer.seesaws.swing"))
+                .triggerableAnim("seesaws_cleave", RawAnimation.begin().thenPlay("animation.pursuer.seesaws.cleave"))
+
+                .triggerableAnim("thec_swing", RawAnimation.begin().thenPlay("animation.pursuer.thec.swing"))
+                .triggerableAnim("thec_howl", RawAnimation.begin().thenPlay("animation.pursuer.thec.howl"))
+                .triggerableAnim("thec_cleave", RawAnimation.begin().thenPlay("animation.pursuer.thec.cleave"))
         );
     }
 
@@ -287,10 +531,53 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
         if (this.dataTracker.get(IS_CLEAVING) && this.hasStatusEffect(StatusEffects.SLOWNESS)) {
             this.setSprinting(false);
         }
+
+        if (this.swingTicks > 0) {
+            this.swingTicks--;
+
+            if (this.swingTicks > 20) {
+                this.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 10, 2, false, false));
+            }
+
+            else if (this.swingTicks > 10) {
+                Vec3d lungeDir = this.getRotationVec(1.0f).multiply(0.3);
+                this.setVelocity(lungeDir.x, this.getVelocity().y, lungeDir.z);
+
+                Box hitbox = this.getBoundingBox().expand(0.5);
+                this.getWorld().getEntitiesByClass(LivingEntity.class, hitbox, EntityPredicates.EXCEPT_SPECTATOR).forEach(target -> {
+                    if (target != this && this.swingTicks > 10) {
+                        if (this.tryAttack(target)) {
+                            this.swingTicks = 10;
+                        }
+                    }
+                });
+            }
+
+            else if (this.swingTicks > 0) {
+                this.removeStatusEffect(StatusEffects.SPEED);
+                this.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 10, 1, false, false));
+            }
+        }
     }
 
     @Override
     protected net.minecraft.sound.SoundEvent getDeathSound() {
+        int variant = this.getVariant();
+        if (variant == 15) {
+            return ModSounds.BLING_STUNNED;
+        }
+        else if (variant == 14) {
+            return ModSounds.THEC_STUNNED;
+        }
+        else if (variant == 8 || variant == 9) {
+            return ModSounds.MEQUOT_STUNNED;
+        }
+        else if (variant == 7) {
+            return ModSounds.STALKER_STUNNED;
+        }
+        else if (variant == 4 || variant == 5 || variant == 6) {
+            return ModSounds.ZOMBIE_STUNNED;
+        }
         return ModSounds.PURSUER_STUNNED;
     }
 
@@ -300,6 +587,37 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
         if (causedByPlayer) {
             this.dropStack(new net.minecraft.item.ItemStack(net.badware.dieofdeath.item.ModItems.PURSUER_CLEAVE));
         }
+    }
+
+    @Override
+    public Text getDisplayName() {
+        int variant = this.getVariant();
+        return switch (variant) {
+            case 1 -> Text.literal("Avoider");
+            case 2 -> Text.literal("Classic");
+            case 3 -> Text.literal("Phantasm");
+            case 4 -> Text.literal("Zombie");
+            case 5 -> Text.literal("Zombie_1");
+            case 6 -> Text.literal("Zombie_2");
+            case 7 -> Text.literal("The Stalker");
+            case 8 -> Text.literal("MeQuot");
+            case 9 -> Text.literal("IQuot");
+            case 10 -> Text.literal("Maze Guy");
+            case 11 -> Text.literal("Hardest Game");
+            case 12 -> Text.literal("Clawsguy");
+            case 13 -> Text.literal("Seesaws");
+            case 14 -> Text.literal("Thec");
+            case 15 -> Text.literal("Bling Pursuer");
+            default -> Text.translatable("entity.dieofdeath.pursuer");
+        };
+    }
+
+    @Override
+    protected int getXpToDrop() {
+        if (this.getVariant() == 15) {
+            return 40;
+        }
+        return 20;
     }
 
     @Override
