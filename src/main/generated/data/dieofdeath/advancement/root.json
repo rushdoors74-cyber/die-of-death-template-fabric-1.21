@@ -1,0 +1,29 @@
+{
+  "criteria": {
+    "tick": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:air"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "minecraft:textures/block/black_concrete.png",
+    "description": "The digital plague begins",
+    "icon": {
+      "count": 1,
+      "id": "dieofdeath:badware_pc_spawn_egg"
+    },
+    "title": "Die of Death"
+  },
+  "requirements": [
+    [
+      "tick"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

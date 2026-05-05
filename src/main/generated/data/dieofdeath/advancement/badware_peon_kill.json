@@ -1,0 +1,22 @@
+{
+  "parent": "dieofdeath:badware_first_kill",
+  "criteria": {
+    "manual": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "description": "Kill a peon of Badware.",
+    "icon": {
+      "count": 1,
+      "id": "dieofdeath:badware_spawn_egg"
+    },
+    "title": "Badware again..?"
+  },
+  "requirements": [
+    [
+      "manual"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

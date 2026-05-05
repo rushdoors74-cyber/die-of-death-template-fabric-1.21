@@ -1,8 +1,12 @@
 package net.badware.dieofdeath.entity.custom;
 
+import net.badware.dieofdeath.DieOfDeath;
 import net.badware.dieofdeath.effect.ModEffects;
 import net.badware.dieofdeath.entity.client.ClientMusicHandler;
+import net.badware.dieofdeath.item.ModItems;
 import net.badware.dieofdeath.sound.ModSounds;
+import net.minecraft.advancement.AdvancementEntry;
+import net.minecraft.advancement.AdvancementProgress;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.brain.MemoryModuleType;
 import net.minecraft.entity.ai.brain.WalkTarget;
@@ -20,9 +24,12 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -48,6 +55,9 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
         return this.dataTracker.get(IS_CLEAVING);
     }
     public boolean isThemePlaying = false;
+    private int swingCooldown = 0;
+    private int cleaveCooldown = 0;
+    private int howlCooldown = 0;
 
     public PursuerEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
@@ -96,6 +106,10 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
+        if (this.swingCooldown > 0) this.swingCooldown--;
+        if (this.cleaveCooldown > 0) this.cleaveCooldown--;
+        if (this.howlCooldown > 0) this.howlCooldown--;
+
         if (this.getWorld().isClient) {
             this.checkAndPlayChaseMusic();
         }
@@ -322,8 +336,9 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
     @Override
     public boolean tryAttack(Entity target) {
         if (this.dataTracker.get(IS_CLEAVING) || this.dataTracker.get(IS_HOWLING)) return false;
-        if (this.swingTicks == 0) {
+        if (this.swingTicks == 0 && this.swingCooldown <= 0) {
             this.swingTicks = 23;
+            this.swingCooldown = 20;
 
             if (this.getVariant() == 14) this.triggerAnim("attack_controller", "thec_swing");
             else if (this.getVariant() == 13) this.triggerAnim("attack_controller", "seesaws_swing");
@@ -365,7 +380,7 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
         if (this.swingTicks > 10) {
             float damage = (float)this.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
 
-            if (this.getVariant() == 12 && target instanceof PursuerEntity) {
+            if (this.getVariant() == 12 && target instanceof PursuerEntity || target instanceof BadwareEntity) {
                 damage *= 2.0f;
             }
 
@@ -380,7 +395,7 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
         if (this.getVariant() == 12) {
             Entity attacker = source.getAttacker();
 
-            if (attacker != null && (attacker instanceof PursuerEntity)) {
+            if (attacker != null && (attacker instanceof PursuerEntity || attacker instanceof BadwareEntity)) {
 
                 amount *= 0.8f;
             }
@@ -498,10 +513,13 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
             double distance = this.squaredDistanceTo(this.getTarget());
             if (distance > 25 && distance < 100) {
                 int randomMove = this.random.nextInt(100);
-                if (randomMove < 5) {
+                if (randomMove < 5 && this.howlCooldown <= 0) {
                     this.performHowl();
-                } else if (randomMove < 15) {
+                    this.howlCooldown = 700;
+                }
+                else if (randomMove < 15 && this.cleaveCooldown <= 0) {
                     this.performCleave();
+                    this.cleaveCooldown = 400;
                 }
             }
         }
@@ -584,8 +602,46 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
     @Override
     protected void dropLoot(DamageSource damageSource, boolean causedByPlayer) {
         super.dropLoot(damageSource, causedByPlayer);
-        if (causedByPlayer) {
-            this.dropStack(new net.minecraft.item.ItemStack(net.badware.dieofdeath.item.ModItems.PURSUER_CLEAVE));
+
+        if (causedByPlayer && damageSource.getAttacker() instanceof ServerPlayerEntity player) {
+            var scoreboard = player.getScoreboard();
+            var objective = scoreboard.getNullableObjective("pursuer_kills");
+
+            if (objective == null) {
+                objective = scoreboard.addObjective("pursuer_kills",
+                        net.minecraft.scoreboard.ScoreboardCriterion.DUMMY,
+                        Text.literal("Pursuer Kills"),
+                        net.minecraft.scoreboard.ScoreboardCriterion.RenderType.INTEGER,
+                        true, null);
+            }
+
+            var score = scoreboard.getOrCreateScore(player, objective);
+            int currentScore = score.getScore() + 1;
+            score.setScore(currentScore);
+
+            if (currentScore >= 1) {
+                this.dropStack(new ItemStack(ModItems.PURSUER_CLEAVE));
+            }
+
+            if (currentScore == 1) {
+                grantAdvancement(player, "pursuer_first_kill");
+            }
+
+            if (this.getVariant() > 0) {
+                grantAdvancement(player, "pursuer_variant_kill");
+            }
+        }
+    }
+
+    private void grantAdvancement(ServerPlayerEntity player, String name) {
+        AdvancementEntry advancementEntry = player.getServer().getAdvancementLoader()
+                .get(Identifier.of(DieOfDeath.MOD_ID, name));
+
+        if (advancementEntry != null) {
+            AdvancementProgress progress = player.getAdvancementTracker().getProgress(advancementEntry);
+            for (String criterion : progress.getUnobtainedCriteria()) {
+                player.getAdvancementTracker().grantCriterion(advancementEntry, criterion);
+            }
         }
     }
 

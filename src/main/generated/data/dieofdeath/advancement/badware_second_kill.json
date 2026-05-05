@@ -1,0 +1,23 @@
+{
+  "parent": "dieofdeath:badware_first_kill",
+  "criteria": {
+    "manual": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "description": "Defeat the Badware for the second time.",
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "dieofdeath:y2k_music_disc"
+    },
+    "title": "How is it still alive?!"
+  },
+  "requirements": [
+    [
+      "manual"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

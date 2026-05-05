@@ -1,6 +1,8 @@
 package net.badware.dieofdeath.entity;
 
 import net.badware.dieofdeath.DieOfDeath;
+import net.badware.dieofdeath.entity.custom.BadwareEntity;
+import net.badware.dieofdeath.entity.custom.BadwarePCEntity;
 import net.badware.dieofdeath.entity.custom.PursuerEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
@@ -14,6 +16,22 @@ public class ModEntities {
             Identifier.of(DieOfDeath.MOD_ID, "pursuer"),
             EntityType.Builder.create(PursuerEntity::new, SpawnGroup.MONSTER)
                     .dimensions(1.9f, 2.3f).eyeHeight(1.9f)
+                    .build()
+    );
+
+    public static final EntityType<BadwareEntity> BADWARE = Registry.register(
+            Registries.ENTITY_TYPE,
+            Identifier.of(DieOfDeath.MOD_ID, "badware"),
+            EntityType.Builder.create(BadwareEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(1.0f, 2.38f).eyeHeight(2.15f)
+                    .build()
+    );
+
+    public static final EntityType<BadwarePCEntity> BADWARE_PC = Registry.register(
+            Registries.ENTITY_TYPE,
+            Identifier.of(DieOfDeath.MOD_ID,"badware_pc"),
+            EntityType.Builder.create(BadwarePCEntity::new, SpawnGroup.CREATURE)
+                    .dimensions(2.0f, 2.38f)
                     .build()
     );
 

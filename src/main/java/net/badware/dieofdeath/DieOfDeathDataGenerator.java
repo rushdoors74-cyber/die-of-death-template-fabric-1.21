@@ -21,6 +21,7 @@ public class DieOfDeathDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(ModEnchantmentGenerator::new);
 		pack.addProvider(ModEnchantmentTagProvider::new);
 		pack.addProvider(ModRegistryDataGenerator::new);
+		pack.addProvider(ModAdvancementProvider::new);
 
 	}
 

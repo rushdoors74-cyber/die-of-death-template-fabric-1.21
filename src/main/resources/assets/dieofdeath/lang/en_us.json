@@ -53,9 +53,12 @@
   "item.dieofdeath.one_bounce_music_disc": "ONE BOUNCE",
   "item.dieofdeath.one_bounce_music_disc.desc": "Imperfect - ONE BOUNCE (8 Killers Vs 1 Survivor)",
   "item.dieofdeath.pursuer_spawn_egg": "Pursuer Spawn Egg",
+  "item.dieofdeath.badware_spawn_egg": "Badware Spawn Egg",
+  "item.dieofdeath.badware_pc_spawn_egg": "Badware's PC Spawn Egg",
 
   "effect.dieofdeath.tangled": "Tangled",
   "effect.dieofdeath.bleed": "Bleed",
+  "effect.dieofdeath.ragdolled": "Ragdolled",
 
   "enchantment.dieofdeath.entanglement": "Entanglement",
 
@@ -99,11 +102,15 @@
   "itemgroup.dieofdeath.killers": "Killers",
 
   "entity.dieofdeath.pursuer": "Pursuer",
+  "entity.dieofdeath.badware": "Badware",
+  "entity.dieofdeath.badware_pc": "Badware's PC",
 
   "death.attack.pursuer": "%1$s was slain by Pursuer",
   "death.attack.pursuer_maze_guy": "%1$s destroyed their monitor",
   "death.attack.pursuer_thec": "%1$s went to sleep",
   "death.attack.pursuer_bling": "%1$s quit their goal",
+
+  "death.attack.badware": "%1$s was slain by Badware",
 
   "With a flick of my wand- I bring your wildest dreams- into reality...!": "With a flick of my wand- I bring your wildest dreams- §9into reality...!§r",
   "The only thing stopping you from achieving your dreams are the mental roadblocks you set before yourself!": "The only thing stopping you from achieving your dreams are §9the mental roadblocks you set before yourself!§r"

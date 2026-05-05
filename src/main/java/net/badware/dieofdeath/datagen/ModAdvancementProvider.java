@@ -1,0 +1,77 @@
+package net.badware.dieofdeath.datagen;
+
+import net.badware.dieofdeath.DieOfDeath;
+import net.badware.dieofdeath.item.ModItems;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
+import net.minecraft.advancement.Advancement;
+import net.minecraft.advancement.AdvancementEntry;
+import net.minecraft.advancement.AdvancementFrame;
+import net.minecraft.advancement.criterion.Criteria;
+import net.minecraft.advancement.criterion.ImpossibleCriterion;
+import net.minecraft.advancement.criterion.InventoryChangedCriterion;
+import net.minecraft.item.Items;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
+
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
+
+public class ModAdvancementProvider extends FabricAdvancementProvider {
+    public ModAdvancementProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+        super(output, registriesFuture);
+    }
+
+    @Override
+    public void generateAdvancement(RegistryWrapper.WrapperLookup registryLookup, Consumer<AdvancementEntry> consumer) {
+        AdvancementEntry root = Advancement.Builder.create()
+                .display(ModItems.BADWARE_PC_SPAWN_EGG,
+                        Text.literal("Die of Death"),
+                        Text.literal("The digital plague begins"),
+                        Identifier.of("minecraft", "textures/block/black_concrete.png"),
+                        AdvancementFrame.TASK, true, true, false)
+                .criterion("tick", InventoryChangedCriterion.Conditions.items(Items.AIR))
+                .build(consumer, DieOfDeath.MOD_ID + ":root");
+
+        AdvancementEntry badwareKill = Advancement.Builder.create().parent(root)
+                .display(Items.WATER_BUCKET,
+                        Text.literal("Virus Neutralized...?"),
+                        Text.literal("Defeat the Badware for the first time."),
+                        null, AdvancementFrame.CHALLENGE, true, true, false)
+                .criterion("manual", Criteria.IMPOSSIBLE.create(new ImpossibleCriterion.Conditions()))
+                .build(consumer, DieOfDeath.MOD_ID + ":badware_first_kill");
+
+        AdvancementEntry badwareSecondKill = Advancement.Builder.create().parent(badwareKill)
+                .display(ModItems.Y2K,
+                        Text.literal("How is it still alive?!"),
+                        Text.literal("Defeat the Badware for the second time."),
+                        null, AdvancementFrame.CHALLENGE, true, true, false)
+                .criterion("manual", Criteria.IMPOSSIBLE.create(new ImpossibleCriterion.Conditions()))
+                .build(consumer, DieOfDeath.MOD_ID + ":badware_second_kill");
+
+        AdvancementEntry pursuerKill = Advancement.Builder.create().parent(root)
+                .display(ModItems.PURSUER_CLEAVE,
+                        Text.literal("AHH, FRESH MEAT!"),
+                        Text.literal("Defeat the Pursuer for the first time."),
+                        null, AdvancementFrame.CHALLENGE, true, true, false)
+                .criterion("manual", Criteria.IMPOSSIBLE.create(new ImpossibleCriterion.Conditions()))
+                .build(consumer, DieOfDeath.MOD_ID + ":pursuer_first_kill");
+
+        AdvancementEntry pursuerVariantKill = Advancement.Builder.create().parent(pursuerKill)
+                .display(ModItems.PURSUER_SPAWN_EGG,
+                        Text.literal("Pursuer again..?"),
+                        Text.literal("Kill a variant of Pursuer."),
+                        null, AdvancementFrame.TASK, true, true, false)
+                .criterion("manual", Criteria.IMPOSSIBLE.create(new ImpossibleCriterion.Conditions()))
+                .build(consumer, DieOfDeath.MOD_ID + ":pursuer_variant_kill");
+
+        AdvancementEntry badwarePeonKill = Advancement.Builder.create().parent(badwareKill)
+                .display(ModItems.BADWARE_SPAWN_EGG,
+                        Text.literal("Badware again..?"),
+                        Text.literal("Kill a peon of Badware."),
+                        null, AdvancementFrame.TASK, true, true, false)
+                .criterion("manual", Criteria.IMPOSSIBLE.create(new ImpossibleCriterion.Conditions()))
+                .build(consumer, DieOfDeath.MOD_ID + ":badware_peon_kill");
+    }
+}

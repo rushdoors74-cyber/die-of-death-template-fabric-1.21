@@ -5,7 +5,6 @@ import net.badware.dieofdeath.sound.ModSounds;
 import net.minecraft.client.sound.MovingSoundInstance;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Identifier;
 
 public class ChaseThemeSound extends MovingSoundInstance {
     private final PursuerEntity pursuer;

@@ -74,6 +74,19 @@ public class ModSounds {
     public static final SoundEvent MONETIZATION = registerSoundEvent("monetization");
     public static final SoundEvent BLING_HIT = registerSoundEvent("bling_hit");
     public static final SoundEvent BLING_STUNNED = registerSoundEvent("bling_stunned");
+    public static final SoundEvent BADWARE_SWING = registerSoundEvent("badware_swing");
+    public static final SoundEvent BADWARE_PC_MAKING = registerSoundEvent("badware_pc_making");
+    public static final SoundEvent BADWARE_PC_EXPLODE_BY_PLAYER = registerSoundEvent("badware_pc_explode_by_player");
+    public static final SoundEvent BADWARE_PC_EXPLODE = registerSoundEvent("badware_pc_explode");
+    public static final SoundEvent BOLT_START = registerSoundEvent("bolt_start");
+    public static final SoundEvent BOLT_BEGIN = registerSoundEvent("bolt_begin");
+    public static final SoundEvent BOLT_BEGIN_2 = registerSoundEvent("bolt_begin_2");
+    public static final SoundEvent BOLT_MISS = registerSoundEvent("bolt_miss");
+    public static final SoundEvent BOLT_HIT = registerSoundEvent("bolt_hit");
+    public static final SoundEvent RIFT_TELEPORT = registerSoundEvent("rift_teleport");
+    public static final SoundEvent BADWARE_STUNNED = registerSoundEvent("badware_stunned");
+    public static final SoundEvent POLYMORPHIC = registerSoundEvent("polymorphic");
+    public static final SoundEvent INSCRIPTUS = registerSoundEvent("inscriptus");
 
     public static SoundEvent ETERNITY_V2 = registerSoundEvent("eternity_v2");
     public static final RegistryKey<JukeboxSong> ETERNITY_V2_KEY =

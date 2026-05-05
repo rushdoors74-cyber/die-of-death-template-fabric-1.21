@@ -1,0 +1,23 @@
+{
+  "parent": "dieofdeath:root",
+  "criteria": {
+    "manual": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "description": "Defeat the Badware for the first time.",
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:water_bucket"
+    },
+    "title": "Virus Neutralized...?"
+  },
+  "requirements": [
+    [
+      "manual"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -116,6 +116,12 @@ public static final Item PURSUER_SPAWN_EGG = registerItem("pursuer_spawn_egg",
 public static final Item BLING_POINT = registerItem("bling_point",
         new Item(new Item.Settings()));
 
+public static final Item BADWARE_SPAWN_EGG = registerItem("badware_spawn_egg",
+        new SpawnEggItem(ModEntities.BADWARE, 0x00FF00, 0xFFFFFF, new Item.Settings()));
+
+public static final Item BADWARE_PC_SPAWN_EGG = registerItem("badware_pc_spawn_egg",
+        new BadwarePCSpawnItem(new Item.Settings()));
+
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(DieOfDeath.MOD_ID, name), item);

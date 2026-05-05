@@ -460,5 +460,91 @@
     "sounds": [
       "dieofdeath:bling_stunned"
     ]
+  },
+  "badware_swing": {
+    "subtitle": "subtitles.dieofdeath.badware_swing",
+    "sounds": [
+      "dieofdeath:badware_swing"
+    ]
+  },
+  "badware_pc_making": {
+    "subtitle": "subtitles.dieofdeath.badware_pc_making",
+    "sounds": [
+      "dieofdeath:badware_pc_making"
+    ]
+  },
+  "badware_pc_explode_by_player": {
+    "subtitle": "subtitles.dieofdeath.badware_pc_explode_by_player",
+    "sounds": [
+      "dieofdeath:badware_pc_explode_by_player"
+    ]
+  },
+  "badware_pc_explode": {
+    "subtitle": "subtitles.dieofdeath.badware_pc_explode",
+    "sounds": [
+      "dieofdeath:badware_pc_explode"
+    ]
+  },
+  "bolt_start": {
+    "subtitle": "subtitles.dieofdeath.bolt_start",
+    "sounds": [
+      "dieofdeath:bolt_start"
+    ]
+  },
+  "bolt_begin": {
+    "subtitle": "subtitles.dieofdeath.bolt_begin",
+    "sounds": [
+      "dieofdeath:bolt_begin"
+    ]
+  },
+  "bolt_begin_2": {
+    "subtitle": "subtitles.dieofdeath.bolt_begin_2",
+    "sounds": [
+      "dieofdeath:bolt_begin_2"
+    ]
+  },
+  "bolt_miss": {
+    "subtitle": "subtitles.dieofdeath.bolt_miss",
+    "sounds": [
+      "dieofdeath:bolt_miss"
+    ]
+  },
+  "bolt_hit": {
+    "subtitle": "subtitles.dieofdeath.bolt_hit",
+    "sounds": [
+      "dieofdeath:bolt_hit"
+    ]
+  },
+  "rift_teleport": {
+    "subtitle": "subtitles.dieofdeath.rift_teleport",
+    "sounds": [
+      "dieofdeath:rift_teleport"
+    ]
+  },
+  "badware_stunned": {
+    "subtitle": "subtitles.dieofdeath.badware_stunned",
+    "sounds": [
+      "dieofdeath:badware_stunned"
+    ]
+  },
+  "polymorphic": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/polymorphic",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "inscriptus": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/inscriptus",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
   }
 }
