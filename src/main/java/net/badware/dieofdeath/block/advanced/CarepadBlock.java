@@ -37,7 +37,9 @@ public class CarepadBlock extends Block {
             long currentTime = world.getTime();
             UUID id = player.getUuid();
 
-            if (!COOLDOWN.containsKey(id) || currentTime - COOLDOWN.get(id) >= 20) {
+            COOLDOWN.entrySet().removeIf(entry -> currentTime - entry.getValue() > 500);
+
+            if (!COOLDOWN.containsKey(id) || currentTime - COOLDOWN.get(id) >= 100) {
 
                 if (!player.hasStatusEffect(StatusEffects.SPEED)) {
 
@@ -58,7 +60,7 @@ public class CarepadBlock extends Block {
 
     @Override
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
-        world.scheduleBlockTick(pos, this, 3000);
+        world.scheduleBlockTick(pos, this, 500);
     }
 
     @Override

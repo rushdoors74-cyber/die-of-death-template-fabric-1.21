@@ -1,0 +1,23 @@
+{
+  "parent": "dieofdeath:any_killer_kill",
+  "criteria": {
+    "manual": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "description": "You're a strong one!",
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "dieofdeath:eternity_music_disc"
+    },
+    "title": "Double Trouble"
+  },
+  "requirements": [
+    [
+      "manual"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

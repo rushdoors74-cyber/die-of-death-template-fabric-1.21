@@ -1,0 +1,22 @@
+{
+  "parent": "dieofdeath:root",
+  "criteria": {
+    "manual": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "description": "Take down any one of the killers.",
+    "icon": {
+      "count": 1,
+      "id": "dieofdeath:eternity_v2_music_disc"
+    },
+    "title": "Killer gets killed"
+  },
+  "requirements": [
+    [
+      "manual"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

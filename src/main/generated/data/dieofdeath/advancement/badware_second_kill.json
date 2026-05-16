@@ -6,7 +6,7 @@
     }
   },
   "display": {
-    "description": "Defeat the Badware for the second time.",
+    "description": "Defeat 2 Badwares.",
     "frame": "challenge",
     "icon": {
       "count": 1,

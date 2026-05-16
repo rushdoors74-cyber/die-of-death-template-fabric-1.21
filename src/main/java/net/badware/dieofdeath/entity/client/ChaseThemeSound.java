@@ -26,10 +26,10 @@ public class ChaseThemeSound extends MovingSoundInstance {
         if (!shouldStop) {
             net.minecraft.client.network.ClientPlayerEntity player = net.minecraft.client.MinecraftClient.getInstance().player;
             if (player != null) {
+                if (this.pursuer.isLmsSuppressed()) shouldStop = true;
+
                 double distanceSq = this.pursuer.squaredDistanceTo(player);
-                if (distanceSq > 4000) {
-                    shouldStop = true;
-                }
+                if (distanceSq > 4000) shouldStop = true;
             } else {
                 shouldStop = true;
             }
@@ -48,6 +48,7 @@ public class ChaseThemeSound extends MovingSoundInstance {
         this.y = (float) this.pursuer.getY();
         this.z = (float) this.pursuer.getZ();
     }
+
     @Override
     public float getVolume() {
         net.minecraft.client.network.ClientPlayerEntity player = net.minecraft.client.MinecraftClient.getInstance().player;

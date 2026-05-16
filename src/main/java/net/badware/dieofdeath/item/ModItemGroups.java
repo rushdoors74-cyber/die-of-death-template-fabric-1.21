@@ -111,6 +111,7 @@ public class ModItemGroups {
                         entries.add(ModItems.ETERNITY);
                         entries.add(ModItems.Y2K);
                         entries.add(ModItems.ONE_BOUNCE);
+                        entries.add(ModItems.VOYAGE_TO);
                     })).build());
 
     public static final ItemGroup Killers = Registry.register(Registries.ITEM_GROUP,

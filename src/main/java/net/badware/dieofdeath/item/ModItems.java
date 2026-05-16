@@ -122,6 +122,9 @@ public static final Item BADWARE_SPAWN_EGG = registerItem("badware_spawn_egg",
 public static final Item BADWARE_PC_SPAWN_EGG = registerItem("badware_pc_spawn_egg",
         new BadwarePCSpawnItem(new Item.Settings()));
 
+public static final Item VOYAGE_TO = registerItem("voyage_to_music_disc",
+        new Item(new Item.Settings().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.VOYAGE_TO_KEY).maxCount(1)));
+
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(DieOfDeath.MOD_ID, name), item);

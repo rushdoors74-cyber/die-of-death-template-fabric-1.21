@@ -1,0 +1,23 @@
+{
+  "parent": "dieofdeath:double_trouble",
+  "criteria": {
+    "manual": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "description": "How did you do it?",
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "dieofdeath:one_bounce_music_disc"
+    },
+    "title": "One Bounce"
+  },
+  "requirements": [
+    [
+      "manual"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,6 +1,9 @@
-// 1.21	2026-05-05T18:15:37.753335	Die Of Death/Advancements
-adab06ff240fb99b9e25cc643e5a73ee0f6841a6 data\dieofdeath\advancement\badware_second_kill.json
+// 1.21	2026-05-14T18:34:28.9745095	Die Of Death/Advancements
+8458a73f425da6ff8c5fdf4b93b3b464f965cc5e data\dieofdeath\advancement\any_killer_kill.json
+9c062b51131fef65351c4d9beff922680cb440a9 data\dieofdeath\advancement\double_trouble.json
+0ce1de72b4812f95c80678ab1c68d056b2920113 data\dieofdeath\advancement\one_bounce.json
 65c92b488229ff521433a7a048eee1c6e690b69c data\dieofdeath\advancement\pursuer_variant_kill.json
+29d101d4cecd57b9392cef56afacdab740061a0b data\dieofdeath\advancement\badware_second_kill.json
 5337f35b945b4d39f611344153dd928156fe9d51 data\dieofdeath\advancement\badware_peon_kill.json
 db8b174015d4f19156c0746ab1cf54dc4117ddf8 data\dieofdeath\advancement\pursuer_first_kill.json
 1c137b9b496cb49c64241e34fef2fde68c822667 data\dieofdeath\advancement\badware_first_kill.json

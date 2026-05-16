@@ -2,6 +2,7 @@ package net.badware.dieofdeath;
 
 import net.badware.dieofdeath.block.ModBlocks;
 import net.badware.dieofdeath.effect.ModEffects;
+import net.badware.dieofdeath.enchantment.ModEnchantments;
 import net.badware.dieofdeath.enchantment.custom.EntanglementEnchantmentEffect;
 import net.badware.dieofdeath.entity.ModEntities;
 import net.badware.dieofdeath.entity.custom.BadwareEntity;
@@ -21,13 +22,22 @@ import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
+import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.minecraft.item.Items;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTables;
+import net.minecraft.loot.condition.RandomChanceLootCondition;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.function.SetEnchantmentsLootFunction;
+import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
@@ -51,7 +61,7 @@ public class DieOfDeath implements ModInitializer {
 
 		ModEffects.registerEffects();
 
-        ModWorldGeneration.generateModWorldGen();
+		ModWorldGeneration.generateModWorldGen();
 
 		Registry.register(Registries.ENCHANTMENT_ENTITY_EFFECT_TYPE,
 				Identifier.of("dieofdeath", "entanglement"),
@@ -104,5 +114,33 @@ public class DieOfDeath implements ModInitializer {
 			}
 			return ActionResult.PASS;
 		});
+
+		LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
+			if (source.isBuiltin() && (
+					key.equals(LootTables.STRONGHOLD_LIBRARY_CHEST) ||
+							key.equals(LootTables.STRONGHOLD_CORRIDOR_CHEST) ||
+							key.equals(LootTables.STRONGHOLD_CROSSING_CHEST) ||
+							key.equals(LootTables.ANCIENT_CITY_CHEST) ||
+							key.equals(LootTables.END_CITY_TREASURE_CHEST))) {
+
+				var enchantmentRegistry = registries.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
+				var entanglementKey = enchantmentRegistry.getOrThrow(ModEnchantments.ENTANGLEMENT);
+
+				LootPool.Builder poolBuilder = LootPool.builder()
+						.rolls(ConstantLootNumberProvider.create(1))
+						.conditionally(RandomChanceLootCondition.builder(0.20f))
+						.with(ItemEntry.builder(Items.ENCHANTED_BOOK).weight(20)
+								.apply(new SetEnchantmentsLootFunction.Builder().enchantment(entanglementKey, ConstantLootNumberProvider.create(1))))
+						.with(ItemEntry.builder(Items.ENCHANTED_BOOK).weight(15)
+								.apply(new SetEnchantmentsLootFunction.Builder().enchantment(entanglementKey, ConstantLootNumberProvider.create(2))))
+						.with(ItemEntry.builder(Items.ENCHANTED_BOOK).weight(10)
+								.apply(new SetEnchantmentsLootFunction.Builder().enchantment(entanglementKey, ConstantLootNumberProvider.create(3))))
+						.with(ItemEntry.builder(Items.ENCHANTED_BOOK).weight(5)
+								.apply(new SetEnchantmentsLootFunction.Builder().enchantment(entanglementKey, ConstantLootNumberProvider.create(4))));
+
+				tableBuilder.pool(poolBuilder);
+			}
+		});
+
 	}
 }

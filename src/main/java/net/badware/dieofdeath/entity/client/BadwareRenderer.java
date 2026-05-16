@@ -1,9 +1,12 @@
 package net.badware.dieofdeath.entity.client;
 
 import net.badware.dieofdeath.entity.custom.BadwareEntity;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class BadwareRenderer extends GeoEntityRenderer<BadwareEntity> {
@@ -15,7 +18,12 @@ public class BadwareRenderer extends GeoEntityRenderer<BadwareEntity> {
                        VertexConsumerProvider bufferSource, int packedLight) {
 
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
+    }
 
-        ClientMusicHandler.handleBadwareMusic(entity);
+    @Override
+    public RenderLayer getRenderType(BadwareEntity animatable, Identifier texture,
+                                     @Nullable VertexConsumerProvider bufferSource,
+                                     float partialTick) {
+        return RenderLayer.getEntityTranslucent(getTextureLocation(animatable));
     }
 }

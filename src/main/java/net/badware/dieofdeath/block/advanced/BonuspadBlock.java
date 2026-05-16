@@ -39,6 +39,8 @@ public class BonuspadBlock extends Block {
         if (!world.isClient && entity instanceof PlayerEntity player) {
             long currentTime = world.getTime();
             UUID id = player.getUuid();
+            COOLDOWN.entrySet().removeIf(entry -> currentTime - entry.getValue() > 600);
+
             if (!COOLDOWN.containsKey(id) || currentTime - COOLDOWN.get(id) >= 100) {
 
                 player.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 60, 1));
@@ -59,7 +61,7 @@ public class BonuspadBlock extends Block {
 
     @Override
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
-        world.scheduleBlockTick(pos, this, 6000);
+        world.scheduleBlockTick(pos, this, 600);
     }
 
     @Override

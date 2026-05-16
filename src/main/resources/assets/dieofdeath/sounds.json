@@ -491,18 +491,6 @@
       "dieofdeath:bolt_start"
     ]
   },
-  "bolt_begin": {
-    "subtitle": "subtitles.dieofdeath.bolt_begin",
-    "sounds": [
-      "dieofdeath:bolt_begin"
-    ]
-  },
-  "bolt_begin_2": {
-    "subtitle": "subtitles.dieofdeath.bolt_begin_2",
-    "sounds": [
-      "dieofdeath:bolt_begin_2"
-    ]
-  },
   "bolt_miss": {
     "subtitle": "subtitles.dieofdeath.bolt_miss",
     "sounds": [
@@ -544,6 +532,253 @@
         "name": "dieofdeath:music/inscriptus",
         "stream": true,
         "attenuation_distance": 64
+      }
+    ]
+  },
+  "spyware_stunned": {
+    "subtitle": "subtitles.dieofdeath.spyware_stunned",
+    "sounds": [
+      "dieofdeath:spyware_stunned"
+    ]
+  },
+  "eyespy": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/eyespy",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "i_heart_you": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/i_heart_you",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "devilware_stunned": {
+    "subtitle": "subtitles.dieofdeath.devilware_stunned",
+    "sounds": [
+      "dieofdeath:devilware_stunned"
+    ]
+  },
+  "pandemic_pandemonium": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/pandemic_pandemonium",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "purified": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/purified",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "thorns_that_pierce": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/thorns_that_pierce",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "made_with_care": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/made_with_care",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "aeroware_swing": {
+    "subtitle": "subtitles.dieofdeath.aeroware_swing",
+    "sounds": [
+      "dieofdeath:aeroware_swing"
+    ]
+  },
+  "aeroware_pc_making": {
+    "subtitle": "subtitles.dieofdeath.aeroware_pc_making",
+    "sounds": [
+      "dieofdeath:aeroware_pc_making"
+    ]
+  },
+  "aeroware_pc_making_2": {
+    "subtitle": "subtitles.dieofdeath.aeroware_pc_making_2",
+    "sounds": [
+      "dieofdeath:aeroware_pc_making_2"
+    ]
+  },
+  "aeroware_bolt_start": {
+    "subtitle": "subtitles.dieofdeath.aeroware_bolt_start",
+    "sounds": [
+      "dieofdeath:aeroware_bolt_start"
+    ]
+  },
+  "aeroware_bolt_start_2": {
+    "subtitle": "subtitles.dieofdeath.aeroware_bolt_start_2",
+    "sounds": [
+      "dieofdeath:aeroware_bolt_start_2"
+    ]
+  },
+  "aeroware_bolt_start_3": {
+    "subtitle": "subtitles.dieofdeath.aeroware_bolt_start_3",
+    "sounds": [
+      "dieofdeath:aeroware_bolt_start_3"
+    ]
+  },
+  "aeroware_bolt_hit": {
+    "subtitle": "subtitles.dieofdeath.aeroware_bolt_hit",
+    "sounds": [
+      "dieofdeath:aeroware_bolt_hit"
+    ]
+  },
+  "aeroware_bolt_hit_2": {
+    "subtitle": "subtitles.dieofdeath.aeroware_bolt_hit_2",
+    "sounds": [
+      "dieofdeath:aeroware_bolt_hit_2"
+    ]
+  },
+  "aeroware_bolt_miss": {
+    "subtitle": "subtitles.dieofdeath.aeroware_bolt_miss",
+    "sounds": [
+      "dieofdeath:aeroware_bolt_miss"
+    ]
+  },
+  "aeroware_rift_teleport": {
+    "subtitle": "subtitles.dieofdeath.aeroware_rift_teleport",
+    "sounds": [
+      "dieofdeath:aeroware_rift_teleport"
+    ]
+  },
+  "aeroware_pc_explode": {
+    "subtitle": "subtitles.dieofdeath.aeroware_pc_explode",
+    "sounds": [
+      "dieofdeath:aeroware_pc_explode"
+    ]
+  },
+  "aeroware_kill": {
+    "subtitle": "subtitles.dieofdeath.aeroware_kill",
+    "sounds": [
+      "dieofdeath:aeroware_kill"
+    ]
+  },
+  "aeroware_kill_2": {
+    "subtitle": "subtitles.dieofdeath.aeroware_kill_2",
+    "sounds": [
+      "dieofdeath:aeroware_kill_2"
+    ]
+  },
+  "aeroware_pc_spawn_1": {
+    "subtitle": "subtitles.dieofdeath.aeroware_pc_spawn_1",
+    "sounds": [
+      "dieofdeath:aeroware_pc_spawn_1"
+    ]
+  },
+  "aeroware_pc_spawn_2": {
+    "subtitle": "subtitles.dieofdeath.aeroware_pc_spawn_2",
+    "sounds": [
+      "dieofdeath:aeroware_pc_spawn_2"
+    ]
+  },
+  "aeroware_pc_spawn_3": {
+    "subtitle": "subtitles.dieofdeath.aeroware_pc_spawn_3",
+    "sounds": [
+      "dieofdeath:aeroware_pc_spawn_3"
+    ]
+  },
+  "aeroware_pc_spawn_4": {
+    "subtitle": "subtitles.dieofdeath.aeroware_pc_spawn_4",
+    "sounds": [
+      "dieofdeath:aeroware_pc_spawn_4"
+    ]
+  },
+  "aeroware_pc_spawn_5": {
+    "subtitle": "subtitles.dieofdeath.aeroware_pc_spawn_5",
+    "sounds": [
+      "dieofdeath:aeroware_pc_spawn_5"
+    ]
+  },
+  "aeroware_pc_spawn_6": {
+    "subtitle": "subtitles.dieofdeath.aeroware_pc_spawn_6",
+    "sounds": [
+      "dieofdeath:aeroware_pc_spawn_6"
+    ]
+  },
+  "aeroware_pc_spawn_7": {
+    "subtitle": "subtitles.dieofdeath.aeroware_pc_spawn_7",
+    "sounds": [
+      "dieofdeath:aeroware_pc_spawn_7"
+    ]
+  },
+  "aeroware_stunned": {
+    "subtitle": "subtitles.dieofdeath.aeroware_stunned",
+    "sounds": [
+      "dieofdeath:aeroware_stunned"
+    ]
+  },
+  "aeroware_stunned_2": {
+    "subtitle": "subtitles.dieofdeath.aeroware_stunned_2",
+    "sounds": [
+      "dieofdeath:aeroware_stunned_2"
+    ]
+  },
+  "heated_rocks_from_mar": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/heated_rocks_from_mar",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "to_b3_3ra5ed": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/to_b3_3ra5ed",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "died_of_death": {
+    "sounds": [
+      {
+        "name": "dieofdeath:died_of_death",
+        "stream": true
+      }
+    ]
+  },
+  "loveware_stunned": {
+    "subtitle": "subtitles.dieofdeath.loveware_stunned",
+    "sounds": [
+      "dieofdeath:loveware_stunned"
+    ]
+  },
+  "voyage_to": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "dieofdeath:voyage_to",
+        "stream": true
       }
     ]
   }

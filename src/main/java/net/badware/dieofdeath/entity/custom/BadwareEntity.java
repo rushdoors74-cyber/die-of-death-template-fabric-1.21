@@ -4,7 +4,9 @@ import net.badware.dieofdeath.DieOfDeath;
 import net.badware.dieofdeath.effect.ModEffects;
 import net.badware.dieofdeath.entity.ModEntities;
 import net.badware.dieofdeath.entity.client.ClientMusicHandler;
+import net.badware.dieofdeath.entity.client.LMSDiscCache;
 import net.badware.dieofdeath.item.ModItems;
+import net.badware.dieofdeath.particle.ModParticles;
 import net.badware.dieofdeath.sound.ModSounds;
 import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.advancement.AdvancementProgress;
@@ -29,11 +31,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.TitleFadeS2CPacket;
 import net.minecraft.network.packet.s2c.play.TitleS2CPacket;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
@@ -50,6 +54,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BadwareEntity extends HostileEntity implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -71,17 +76,25 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
     private int riftCooldown = 0;
     public transient boolean isThemePlayingClient = false;
     public boolean isThemePlaying = false;
+    public int computerPlacementCount = 0;
+
+    public int getHitFaceTimer() {
+        return this.dataTracker.get(HIT_FACE_TIMER);
+    }
+
+    public void setHitFaceTimer(int value) {
+        this.dataTracker.set(HIT_FACE_TIMER, value);
+    }
 
 
     public BadwareEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
-        this.setPathfindingPenalty(net.minecraft.entity.ai.pathing.PathNodeType.WATER, -1.0F);
     }
 
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return HostileEntity.createHostileAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 134.0)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 101.0)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.23)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 64.0);
@@ -91,6 +104,15 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
     public static final TrackedData<Boolean> IS_RIFTING = DataTracker.registerData(BadwareEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IN_ENDLAG = DataTracker.registerData(BadwareEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Integer> VARIANT = DataTracker.registerData(BadwareEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<Boolean> LMS_SUPPRESSED = DataTracker.registerData(BadwareEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Integer> HIT_FACE_TIMER = DataTracker.registerData(BadwareEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private final LMSDiscCache lmsDiscCache = new LMSDiscCache();
+
+    private static final Map<String, Identifier> ADVANCEMENT_IDS = new java.util.HashMap<>();
+
+    private static Identifier getAdvancementId(String name) {
+        return ADVANCEMENT_IDS.computeIfAbsent(name, n -> Identifier.of(DieOfDeath.MOD_ID, n));
+    }
 
     public void setThemePlaying(boolean playing) {
         this.isThemePlaying = playing;
@@ -103,6 +125,16 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
         builder.add(IS_RIFTING, false);
         builder.add(IN_ENDLAG, false);
         builder.add(VARIANT, -1);
+        builder.add(LMS_SUPPRESSED, false);
+        builder.add(HIT_FACE_TIMER, 0);
+    }
+
+    public boolean isLmsSuppressed() {
+        return this.dataTracker.get(LMS_SUPPRESSED);
+    }
+
+    public void setLmsSuppressed(boolean suppressed) {
+        this.dataTracker.set(LMS_SUPPRESSED, suppressed);
     }
 
     public void tryPlaceComputer() {
@@ -131,7 +163,14 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
             pc.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), 0, 0);
             pc.setOwner(this.getUuid());
             pc.setVariant(this.getVariant());
-            this.getWorld().playSound(null, this.getBlockPos(), ModSounds.BADWARE_PC_MAKING, SoundCategory.HOSTILE, 1.0f, 1.0f);
+            if (this.getVariant() == 8) {
+                SoundEvent makingSound = this.random.nextBoolean()
+                        ? ModSounds.AEROWARE_PC_MAKING
+                        : ModSounds.AEROWARE_PC_MAKING_2;
+                this.getWorld().playSound(null, this.getBlockPos(), makingSound, SoundCategory.HOSTILE, 1.0f, 1.0f);
+            } else {
+                this.getWorld().playSound(null, this.getBlockPos(), ModSounds.BADWARE_PC_MAKING, SoundCategory.HOSTILE, 1.0f, 1.0f);
+            }
 
             this.getWorld().spawnEntity(pc);
             this.addComputer(pc.getBlockPos());
@@ -158,7 +197,7 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
 
     @Override
     public boolean tryAttack(Entity target) {
-        if (this.dataTracker.get(IS_BOLTING) || this.dataTracker.get(IS_RIFTING)) return false;
+        if (this.dataTracker.get(IS_BOLTING) || this.dataTracker.get(IS_RIFTING) || this.placementEndlag > 0  || this.dataTracker.get(IN_ENDLAG)) return false;
 
         if (this.swingTicks == 0 && this.swingCooldown <= 0) {
             this.swingTicks = 23;
@@ -166,8 +205,13 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
 
             this.triggerAnim("attack_controller", "swing");
 
+            if (this.isOnFire()) {
+                target.setOnFireFor(5);
+            }
+
             this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
-                    ModSounds.BADWARE_SWING, this.getSoundCategory(), 1.0f, 1.0f);
+                    this.getVariant() == 8 ? ModSounds.AEROWARE_SWING : ModSounds.BADWARE_SWING,
+                    this.getSoundCategory(), 1.0f, 1.0f);
 
             return true;
         }
@@ -183,8 +227,46 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
 
     @Override
     public void tick() {
+        if (this.getWorld().isClient && this.getVariant() == 3) {
+            for (int i = 0; i < 2; i++) {
+                this.getWorld().addParticle(
+                        ModParticles.LOVE_HEART,
+                        this.getParticleX(0.5),
+                        this.getRandomBodyY(),
+                        this.getParticleZ(0.5),
+                        (this.random.nextDouble() - 0.5) * 0.1,
+                        0.1,
+                        (this.random.nextDouble() - 0.5) * 0.1
+                );
+            }
+        }
+
         super.tick();
-        if (this.getWorld().isClient) return;
+
+        if (this.getHitFaceTimer() > 0) {
+            this.setHitFaceTimer(this.getHitFaceTimer() - 1);
+        }
+
+        if (!this.isAlive()) return;
+        if (this.getWorld().isClient) {
+            this.checkAndPlayChaseMusic();
+            return;
+        }
+
+        if (!this.getWorld().isClient && this.isAlive() && this.getVariant() == 9) {
+
+            if (this.random.nextFloat() < 0.001f) {
+                for (PlayerEntity player : this.getWorld().getPlayers()) {
+                    player.sendMessage(Text.literal("§4Erase user data and ensure it can't be recovered."), false);
+                }
+            }
+
+            if (this.random.nextFloat() < 0.0005f) {
+                for (PlayerEntity player : this.getWorld().getPlayers()) {
+                    player.sendMessage(Text.literal("§4YOUR PC LOOKED A BIT FULL SO I WIPED OUT SOME SPACE HOPE IT WASN'T ANYTHING IMPORTANT :)"), false);
+                }
+            }
+        }
 
         var speedAttr = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
         if (speedAttr != null) {
@@ -212,7 +294,10 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
             this.getNavigation().stop();
             if (this.boltWindup == 0) {
                 this.boltLinger = 40;
-                this.boltHasHit = false;
+
+                if (this.getHitFaceTimer() > 0) {
+                    this.setHitFaceTimer(this.getHitFaceTimer() - 1);
+                }
             }
         }
 
@@ -236,7 +321,8 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
 
             if (this.boltLinger == 0 && !this.boltHasHit) {
                 this.placementEndlag = 20;
-                this.getWorld().playSound(null, this.getBlockPos(), ModSounds.BOLT_MISS, SoundCategory.HOSTILE, 1.0f, 1.0f);
+                SoundEvent missSound = this.getVariant() == 8 ? ModSounds.AEROWARE_BOLT_MISS : ModSounds.BOLT_MISS;
+                this.getWorld().playSound(null, this.getBlockPos(), missSound, SoundCategory.HOSTILE, 1.0f, 1.0f);
             }
         }
 
@@ -267,7 +353,7 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
             }
         }
 
-        if (this.teleportWindup > 0) {
+        if (this.teleportWindup > 0 && this.isAlive()) {
             this.teleportWindup--;
             if (this.teleportWindup == 0) performTeleport();
         }
@@ -276,10 +362,43 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
             this.drawDataChains();
         }
 
+        if (this.isSubmergedInWater() || this.isTouchingWater()) {
+            if (this.age % 20 == 0) {
+                this.damage(this.getDamageSources().magic(), 1.0f);
+
+                this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(),
+                        SoundEvents.BLOCK_FIRE_EXTINGUISH,
+                        SoundCategory.BLOCKS, 0.8f, 1.5f);
+            }
+            if (!this.getWorld().isClient && this.age % 10 == 0) {
+                BlockPos escapePos = this.getBlockPos();
+                for (int attempts = 0; attempts < 8; attempts++) {
+                    BlockPos candidate = escapePos.add(
+                            this.random.nextInt(7) - 3,
+                            1,
+                            this.random.nextInt(7) - 3
+                    );
+                    if (!this.getWorld().getBlockState(candidate).isLiquid() &&
+                            !this.getWorld().getBlockState(candidate.down()).isLiquid()) {
+                        this.getNavigation().startMovingTo(
+                                candidate.getX(), candidate.getY(), candidate.getZ(), 1.5
+                        );
+                        break;
+                    }
+                }
+            }
+        }
+
         this.dataTracker.set(IS_BOLTING, this.boltLinger > 0 || this.boltWindup > 0);
         this.dataTracker.set(IS_RIFTING, this.riftStanceTimer > 0 || this.teleportWindup > 0);
         this.dataTracker.set(IN_ENDLAG, this.placementEndlag > 0);
+
+        if (this.age % 40 == 0) {
+            this.setLmsSuppressed(lmsDiscCache.isLMSDiscNearby(this.getWorld(), this.getBlockPos()));
+        }
     }
+
+
 
     private static class BadwareSpecialAttackGoal extends Goal {
         private final BadwareEntity badware;
@@ -287,6 +406,7 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
 
         public BadwareSpecialAttackGoal(BadwareEntity badware) {
             this.badware = badware;
+            this.updateCountdownTicks = badware.getRandom().nextInt(30) + 1;
         }
 
         @Override
@@ -297,7 +417,7 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
         @Override
         public void tick() {
             if (--updateCountdownTicks <= 0) {
-                updateCountdownTicks = 30;
+                updateCountdownTicks = badware.getRandom().nextInt(20) + 200;
                 double distSq = badware.squaredDistanceTo(badware.getTarget());
 
                 if (badware.getComputerCount() >= 1 && distSq > 400 && badware.riftCooldown <= 0) {
@@ -336,12 +456,18 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
                 for (LivingEntity target : targets) {
                     if (target != this) {
                         if (target.damage(this.getDamageSources().mobAttack(this), (float) this.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE))) {
+                            if (this.getVariant() == 8 && target.isDead()) {
+                                SoundEvent killSound = this.random.nextBoolean()
+                                        ? ModSounds.AEROWARE_KILL
+                                        : ModSounds.AEROWARE_KILL_2;
+                                this.getWorld().playSound(null, this.getBlockPos(), killSound, SoundCategory.HOSTILE, 1.0f, 1.0f);
+                            }
                             this.swingTicks = 10;
                             break;
                         }
                     }
                 }
-            } else if (this.swingTicks == 0) {
+            } else if (this.swingTicks == 1) {
                 this.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 10, 1, false, false));
             }
         }
@@ -357,12 +483,34 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Variant", this.getVariant());
+
+        var list = new net.minecraft.nbt.NbtList();
+        for (BlockPos pos : activeComputers) {
+            var posNbt = new NbtCompound();
+            posNbt.putInt("x", pos.getX());
+            posNbt.putInt("y", pos.getY());
+            posNbt.putInt("z", pos.getZ());
+            list.add(posNbt);
+        }
+        nbt.put("ActiveComputers", list);
+        nbt.putInt("ComputerPlacementCount", this.computerPlacementCount);
     }
 
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setVariant(nbt.getInt("Variant"));
+
+        if (nbt.contains("Variant")) {
+            this.setVariant(nbt.getInt("Variant"));
+        }
+
+        activeComputers.clear();
+        var list = nbt.getList("ActiveComputers", net.minecraft.nbt.NbtElement.COMPOUND_TYPE);
+        for (int i = 0; i < list.size(); i++) {
+            var posNbt = list.getCompound(i);
+            activeComputers.add(new BlockPos(posNbt.getInt("x"), posNbt.getInt("y"), posNbt.getInt("z")));
+        }
+        this.computerPlacementCount = nbt.getInt("ComputerPlacementCount");
     }
 
     @Override
@@ -376,7 +524,7 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
                 if (this.random.nextBoolean()) {
                     this.setVariant(0);
                 } else {
-                    int[] weights = {50};
+                    int[] weights = {50, 45, 40, 35, 30, 25, 20, 15, 10};
                     int totalWeight = 0;
                     for (int w : weights) totalWeight += w;
 
@@ -392,7 +540,7 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
                     }
                 }
             } else {
-                this.setVariant(this.random.nextInt(2));
+                this.setVariant(this.random.nextInt(10));
             }
         }
 
@@ -405,31 +553,78 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
             this.boltCooldown = 400;
             this.triggerAnim("attack_controller", "bolt");
             this.getNavigation().stop();
-            this.getWorld().playSound(null, this.getBlockPos(), ModSounds.BOLT_START, SoundCategory.HOSTILE, 1.0f, 1.0f);
+            if (this.getVariant() == 8) {
+                int roll = this.random.nextInt(3);
+                SoundEvent boltStartSound = switch (roll) {
+                    case 0 -> ModSounds.AEROWARE_BOLT_START;
+                    case 1 -> ModSounds.AEROWARE_BOLT_START_2;
+                    default -> ModSounds.AEROWARE_BOLT_START_3;
+                };
+                this.getWorld().playSound(null, this.getBlockPos(), boltStartSound, SoundCategory.HOSTILE, 1.0f, 1.0f);
+            } else {
+                this.getWorld().playSound(null, this.getBlockPos(), ModSounds.BOLT_START, SoundCategory.HOSTILE, 1.0f, 1.0f);
+            }
         }
     }
 
     private void checkBoltCollision() {
-        List<PlayerEntity> targets = this.getWorld().getEntitiesByClass(PlayerEntity.class, this.getBoundingBox().expand(1.2), EntityPredicates.EXCEPT_CREATIVE_OR_SPECTATOR);
+        List<LivingEntity> targets = this.getWorld().getEntitiesByClass(
+                LivingEntity.class,
+                this.getBoundingBox().expand(1.2),
+                entity -> entity != this
+                        && !(entity instanceof BadwarePCEntity)
+                        && EntityPredicates.EXCEPT_CREATIVE_OR_SPECTATOR.test(entity)
+        );
 
         if (!targets.isEmpty()) {
             this.boltHasHit = true;
             this.boltLinger = 0;
-            this.getWorld().playSound(null, this.getBlockPos(), ModSounds.BOLT_HIT, SoundCategory.HOSTILE, 1.0f, 1.0f);
+            this.onBoltHit();
+            SoundEvent hitSound = (this.getVariant() == 8)
+                    ? (this.random.nextBoolean() ? ModSounds.AEROWARE_BOLT_HIT : ModSounds.AEROWARE_BOLT_HIT_2)
+                    : ModSounds.BOLT_HIT;
+            this.getWorld().playSound(null, this.getBlockPos(), hitSound, SoundCategory.HOSTILE, 1.0f, 1.0f);
 
             float totalDamage = 2.0f + (getComputerCount() * 1.0f);
 
-            for (PlayerEntity player : targets) {
-                player.damage(this.getDamageSources().mobAttack(this), totalDamage);
+            LivingEntity closest = null;
+            double minDist = Double.MAX_VALUE;
+            for (LivingEntity t : targets) {
+                double d = this.squaredDistanceTo(t);
+                if (d < minDist) {
+                    minDist = d;
+                    closest = t;
+                }
+            }
 
-                player.addStatusEffect(new StatusEffectInstance(ModEffects.RAGDOLLED, 40, 0));
-                Vec3d launch = this.getRotationVec(1.0f).multiply(1.5).add(0, 0.8, 0);
-                player.addVelocity(launch.x, launch.y, launch.z);
-                player.velocityModified = true;
+            for (LivingEntity target : targets) {
+                target.damage(this.getDamageSources().mobAttack(this), totalDamage);
+                if (this.getVariant() == 8 && target.isDead()) {
+                    SoundEvent killSound = this.random.nextBoolean()
+                            ? ModSounds.AEROWARE_KILL
+                            : ModSounds.AEROWARE_KILL_2;
+                    this.getWorld().playSound(null, this.getBlockPos(), killSound, SoundCategory.HOSTILE, 1.0f, 1.0f);
+                }
+                if (this.isOnFire()) {
+                    target.setOnFireFor(5);
+                }
+
+                if (target == closest) {
+                    target.addStatusEffect(new StatusEffectInstance(ModEffects.RAGDOLLED, 40, 0));
+                    Vec3d launch = this.getRotationVec(1.0f).multiply(1.5).add(0, 0.8, 0);
+                    target.addVelocity(launch.x, launch.y, launch.z);
+                    target.velocityModified = true;
+                }
             }
 
             this.addStatusEffect(new StatusEffectInstance(ModEffects.RAGDOLLED, 60, 0));
             this.placementEndlag = 60;
+        }
+    }
+
+    public void onBoltHit() {
+        if (this.getVariant() == 6) {
+            this.setHitFaceTimer(100);
         }
     }
 
@@ -440,26 +635,46 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
         }
 
         if (this.riftCooldown <= 0) {
-            this.riftStanceTimer = 40 + this.random.nextInt(61);
+            this.riftStanceTimer = 60;
             this.riftCooldown = 500;
             this.triggerAnim("attack_controller", "rift");
             this.getNavigation().stop();
 
-            Text riftMessage = this.random.nextFloat() < 0.10f ? Text.literal("§8I'm the one who made this mod") : Text.literal("§8YOUR PC HAS BEEN INFECTED!");
+            Text riftMessage;
+
+            if (this.getVariant() == 1) {
+                riftMessage = Text.literal("§8Our phone has been cured!");
+            } else if (this.getVariant() == 2) {
+                riftMessage = Text.literal("§8Need an anti-virus? Make sure to tell me!");
+            } else if (this.getVariant() == 3) {
+                riftMessage = Text.literal("§8How amusing, nice letters!");
+            } else if (this.getVariant() == 4) {
+                riftMessage = Text.literal("§8YOU WILL SUFFER FOR ETERNITY");
+            } else if (this.getVariant() == 5) {
+                riftMessage = Text.literal("§8You will be taken care of.");
+            } else if (this.getVariant() == 6) {
+                riftMessage = Text.literal("§8Hello, you're in danger, good riddance to your behavior!");
+            } else if (this.getVariant() == 7) {
+                riftMessage = Text.literal("§8...Ding! Its done!");
+            } else if (this.getVariant() == 8) {
+                riftMessage = this.random.nextFloat() < 0.33f
+                        ? Text.literal("§8Minecrafters are a thing of the past.")
+                        : Text.literal("§8Robloxians are a thing of the past.");
+            } else if (this.getVariant() == 9) {
+                riftMessage = Text.literal("§8[DATA ERASED]");
+            }
+            else {
+                riftMessage = this.random.nextFloat() < 0.10f
+                        ? Text.literal("§8I'm the one who made this mod")
+                        : Text.literal("§8YOUR PC HAS BEEN INFECTED!");
+            }
+
             for (PlayerEntity player : this.getWorld().getPlayers()) {
                 if (player instanceof ServerPlayerEntity sp) {
                     sp.networkHandler.sendPacket(new TitleS2CPacket(riftMessage));
                     sp.networkHandler.sendPacket(new TitleFadeS2CPacket(10, 40, 10));
                 }
             }
-        }
-    }
-
-    public void selectPC(BlockPos pos) {
-        if (this.riftStanceTimer > 0 && activeComputers.contains(pos)) {
-            this.selectedPC = pos;
-            this.teleportWindup = 20;
-            this.riftStanceTimer = 0;
         }
     }
 
@@ -482,7 +697,7 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
                 );
 
                 for (PlayerEntity p : victims) {
-                    p.addStatusEffect(new StatusEffectInstance(ModEffects.BLEED, 200, 0));
+                    p.addStatusEffect(new StatusEffectInstance(ModEffects.BLEED, 40, 1));
                     p.sendMessage(Text.literal("§c[A COMPUTER WAS ELIMINATED]"), false);
                 }
             } else {
@@ -496,9 +711,9 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
 
     @Override
     protected void initGoals() {
-        this.goalSelector.add(0, new EscapeDangerGoal(this, 1.5D));
+        this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new BadwareSpecialAttackGoal(this));
-        this.goalSelector.add(2, new MeleeAttackGoal(this, 1.2D, false));
+        this.goalSelector.add(2, new BadwareMeleeGoal(this));
         this.goalSelector.add(3, new WanderAroundFarGoal(this, 1.0D));
         this.goalSelector.add(4, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(5, new LookAroundGoal(this));
@@ -507,6 +722,20 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
         this.targetSelector.add(2, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, IronGolemEntity.class, true));
         this.targetSelector.add(4, new ActiveTargetGoal<>(this, GiantEntity.class, true));
+    }
+
+    private static class BadwareMeleeGoal extends MeleeAttackGoal {
+        public BadwareMeleeGoal(BadwareEntity entity) {
+            super(entity, 1.2D, true);
+        }
+    }
+
+    @Override
+    protected net.minecraft.entity.ai.pathing.EntityNavigation createNavigation(World world) {
+        net.minecraft.entity.ai.pathing.MobNavigation nav =
+                new net.minecraft.entity.ai.pathing.MobNavigation(this, world);
+        nav.setCanSwim(true);
+        return nav;
     }
 
     @Override
@@ -553,8 +782,16 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
 
     @Override
     public Text getDisplayName() {
-        int variant = this.getVariant();
+        int variant = this.dataTracker == null ? 0 : this.getVariant();
         return switch (variant) {
+            case 9 -> Text.literal("Wiperware");
+            case 8 -> Text.literal("Aeroware");
+            case 7 -> Text.literal("Cookieware");
+            case 6 -> Text.literal("Runicware");
+            case 5 -> Text.literal("Angelware");
+            case 4 -> Text.literal("Devilware");
+            case 3 -> Text.literal("Loveware");
+            case 2 -> Text.literal("Spyware");
             case 1 -> Text.literal("Goodware");
             default -> Text.literal("Badware");
         };
@@ -564,45 +801,85 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
     protected void dropLoot(DamageSource damageSource, boolean causedByPlayer) {
         super.dropLoot(damageSource, causedByPlayer);
 
-        if (causedByPlayer && damageSource.getAttacker() instanceof ServerPlayerEntity player) {
-            var scoreboard = player.getScoreboard();
-            var objective = scoreboard.getNullableObjective("badware_kills");
+        if (!(causedByPlayer && damageSource.getAttacker() instanceof ServerPlayerEntity player)) return;
 
-            if (objective == null) {
-                objective = scoreboard.addObjective("badware_kills",
-                        net.minecraft.scoreboard.ScoreboardCriterion.DUMMY,
-                        Text.literal("Badware Kills"),
-                        net.minecraft.scoreboard.ScoreboardCriterion.RenderType.INTEGER,
-                        true, null);
-            }
+        var scoreboard = player.getScoreboard();
 
-            var score = scoreboard.getOrCreateScore(player, objective);
-            int currentScore = score.getScore() + 1;
-            score.setScore(currentScore);
+        var badwareObj = scoreboard.getNullableObjective("badware_kills");
+        if (badwareObj == null) {
+            badwareObj = scoreboard.addObjective("badware_kills",
+                    net.minecraft.scoreboard.ScoreboardCriterion.DUMMY,
+                    Text.literal("Badware Kills"),
+                    net.minecraft.scoreboard.ScoreboardCriterion.RenderType.INTEGER, true, null);
+        }
+        var pursuerObj = scoreboard.getNullableObjective("pursuer_kills");
+        if (pursuerObj == null) {
+            pursuerObj = scoreboard.addObjective("pursuer_kills",
+                    net.minecraft.scoreboard.ScoreboardCriterion.DUMMY,
+                    Text.literal("Pursuer Kills"),
+                    net.minecraft.scoreboard.ScoreboardCriterion.RenderType.INTEGER, true, null);
+        }
 
-            if (currentScore == 1) {
-                grantAdvancement(player, "badware_first_kill");
-            }
+        int currentBadwareKills = scoreboard.getOrCreateScore(player, badwareObj).getScore() + 1;
+        scoreboard.getOrCreateScore(player, badwareObj).setScore(currentBadwareKills);
 
-            if (currentScore >= 2) {
-                this.dropStack(new ItemStack(ModItems.Y2K));
-                grantAdvancement(player, "badware_second_kill");
-                score.setScore(0);
+        int currentPursuerKills = scoreboard.getOrCreateScore(player, pursuerObj).getScore();
+        int totalKillersKilled = currentBadwareKills + currentPursuerKills;
+
+        grantAdvancement(player, "any_killer_kill");
+
+        if (totalKillersKilled % 5 == 0) {
+            player.giveItemStack(new ItemStack(ModItems.ETERNITY_V2_MUSIC_DISC));
+        }
+
+        int variant = this.getVariant();
+
+        if (variant == 0) {
+            grantAdvancement(player, "badware_first_kill");
+
+            AdvancementEntry badwareAdv = player.getServer().getAdvancementLoader()
+                    .get(getAdvancementId("badware_first_kill"));
+            if (badwareAdv != null && player.getAdvancementTracker().getProgress(badwareAdv).isDone()) {
+                this.dropStack(new ItemStack(ModItems.ETERNITY_V2_MUSIC_DISC));
             }
-            if (this.getVariant() > 0) {
-                grantAdvancement(player, "badware_peon_kill");
+        }
+
+        if (currentBadwareKills % 2 == 0) {
+            this.dropStack(new ItemStack(ModItems.Y2K));
+            grantAdvancement(player, "badware_second_kill");
+        }
+
+        if (variant > 0) {
+            grantAdvancement(player, "badware_peon_kill");
+
+            AdvancementEntry peonAdv = player.getServer().getAdvancementLoader()
+                    .get(getAdvancementId("badware_peon_kill"));
+            if (peonAdv != null && player.getAdvancementTracker().getProgress(peonAdv).isDone()) {
+                this.dropStack(new ItemStack(ModItems.ETERNITY_V2_MUSIC_DISC));
             }
+        }
+
+        if (totalKillersKilled % 2 == 0) {
+            grantAdvancement(player, "double_trouble");
+            player.giveItemStack(new ItemStack(ModItems.ETERNITY));
+        }
+
+        if (totalKillersKilled % 8 == 0) {
+            grantAdvancement(player, "one_bounce");
+            player.giveItemStack(new ItemStack(ModItems.ONE_BOUNCE));
         }
     }
 
     private void grantAdvancement(ServerPlayerEntity player, String name) {
         AdvancementEntry advancementEntry = player.getServer().getAdvancementLoader()
-                .get(Identifier.of(DieOfDeath.MOD_ID, name));
+                .get(getAdvancementId(name));
 
         if (advancementEntry != null) {
             AdvancementProgress progress = player.getAdvancementTracker().getProgress(advancementEntry);
-            for (String criterion : progress.getUnobtainedCriteria()) {
-                player.getAdvancementTracker().grantCriterion(advancementEntry, criterion);
+            if (!progress.isDone()) {
+                for (String criterion : progress.getUnobtainedCriteria()) {
+                    player.getAdvancementTracker().grantCriterion(advancementEntry, criterion);
+                }
             }
         }
     }
@@ -614,6 +891,19 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
 
     @Override
     protected SoundEvent getDeathSound() {
+        int variant = this.getVariant();
+        if (variant == 8) {
+            return this.random.nextBoolean() ? ModSounds.AEROWARE_STUNNED : ModSounds.AEROWARE_STUNNED_2;
+        }
+        if (variant == 4) {
+            return ModSounds.DEVILWARE_STUNNED;
+        }
+        if (variant == 3) {
+            return ModSounds.LOVEWARE_STUNNED;
+        }
+        if (variant == 2) {
+            return ModSounds.SPYWARE_STUNNED;
+        }
         return ModSounds.BADWARE_STUNNED;
     }
 
@@ -624,8 +914,9 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
 
     private void drawDataChains() {
         if (this.getWorld().isClient || this.activeComputers.isEmpty()) return;
-
         if (this.age % 2 != 0) return;
+
+        ServerWorld serverWorld = (ServerWorld) this.getWorld();
 
         for (BlockPos pcPos : activeComputers) {
             Vec3d start = this.getPos().add(0, 1.5, 0);
@@ -633,15 +924,14 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
 
             Vec3d direction = end.subtract(start);
             double distance = direction.length();
-            direction = direction.normalize();
+            Vec3d normDir = direction.normalize();
 
-            for (double d = 0; d < distance; d += 0.5) {
-                Vec3d particlePos = start.add(direction.multiply(d));
-
-                ((ServerWorld) this.getWorld()).spawnParticles(
-                        net.minecraft.particle.ParticleTypes.GLOW,
+            for (double d = 0; d < distance; d += 1.0) {
+                Vec3d particlePos = start.add(normDir.multiply(d));
+                serverWorld.spawnParticles(
+                        ParticleTypes.GLOW,
                         particlePos.x, particlePos.y, particlePos.z,
-                        1, 0, 0, 0, 0.0
+                        1, 0.1, 0.1, 0.1, 0.0
                 );
             }
         }

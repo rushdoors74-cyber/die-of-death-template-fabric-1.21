@@ -1,7 +1,5 @@
 package net.badware.dieofdeath.datagen;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import net.badware.dieofdeath.block.ModBlocks;
 import net.badware.dieofdeath.block.advanced.BackyardBushBlock;
 import net.badware.dieofdeath.item.ModItems;
@@ -102,6 +100,7 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.ETERNITY, Models.GENERATED);
         itemModelGenerator.register(ModItems.Y2K, Models.GENERATED);
         itemModelGenerator.register(ModItems.ONE_BOUNCE, Models.GENERATED);
+        itemModelGenerator.register(ModItems.VOYAGE_TO, Models.GENERATED);
 
         itemModelGenerator.register(ModBlocks.BACKYARD_BUSH.asItem(), Models.GENERATED);
 

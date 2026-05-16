@@ -45,7 +45,7 @@ public class ModAdvancementProvider extends FabricAdvancementProvider {
         AdvancementEntry badwareSecondKill = Advancement.Builder.create().parent(badwareKill)
                 .display(ModItems.Y2K,
                         Text.literal("How is it still alive?!"),
-                        Text.literal("Defeat the Badware for the second time."),
+                        Text.literal("Defeat 2 Badwares."),
                         null, AdvancementFrame.CHALLENGE, true, true, false)
                 .criterion("manual", Criteria.IMPOSSIBLE.create(new ImpossibleCriterion.Conditions()))
                 .build(consumer, DieOfDeath.MOD_ID + ":badware_second_kill");
@@ -73,5 +73,29 @@ public class ModAdvancementProvider extends FabricAdvancementProvider {
                         null, AdvancementFrame.TASK, true, true, false)
                 .criterion("manual", Criteria.IMPOSSIBLE.create(new ImpossibleCriterion.Conditions()))
                 .build(consumer, DieOfDeath.MOD_ID + ":badware_peon_kill");
+
+        AdvancementEntry killerFirstKill = Advancement.Builder.create().parent(root)
+                .display(ModItems.ETERNITY_V2_MUSIC_DISC,
+                        Text.literal("Killer gets killed"),
+                        Text.literal("Take down any one of the killers."),
+                        null, AdvancementFrame.TASK, true, true, false)
+                .criterion("manual", Criteria.IMPOSSIBLE.create(new ImpossibleCriterion.Conditions()))
+                .build(consumer, DieOfDeath.MOD_ID + ":any_killer_kill");
+
+        AdvancementEntry doubleTrouble = Advancement.Builder.create().parent(killerFirstKill)
+                .display(ModItems.ETERNITY,
+                        Text.literal("Double Trouble"),
+                        Text.literal("You're a strong one!"),
+                        null, AdvancementFrame.GOAL, true, true, false)
+                .criterion("manual", Criteria.IMPOSSIBLE.create(new ImpossibleCriterion.Conditions()))
+                .build(consumer, DieOfDeath.MOD_ID + ":double_trouble");
+
+        AdvancementEntry oneBounce = Advancement.Builder.create().parent(doubleTrouble)
+                .display(ModItems.ONE_BOUNCE,
+                        Text.literal("One Bounce"),
+                        Text.literal("How did you do it?"),
+                        null, AdvancementFrame.CHALLENGE, true, true, false)
+                .criterion("manual", Criteria.IMPOSSIBLE.create(new ImpossibleCriterion.Conditions()))
+                .build(consumer, DieOfDeath.MOD_ID + ":one_bounce");
     }
 }

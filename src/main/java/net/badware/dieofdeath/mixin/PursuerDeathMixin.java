@@ -19,7 +19,6 @@ public abstract class PursuerDeathMixin {
     @Inject(method = "getDeathMessage", at = @At("HEAD"), cancellable = true)
     private void pursuer$customDeathMessage(CallbackInfoReturnable<Text> cir) {
         LivingEntity attacker = this.entity.getPrimeAdversary();
-
         if (attacker instanceof PursuerEntity pursuer) {
             if (pursuer.getVariant() == 10) {
                 Text msg = Text.translatable("death.attack.pursuer_maze_guy", this.entity.getDisplayName())

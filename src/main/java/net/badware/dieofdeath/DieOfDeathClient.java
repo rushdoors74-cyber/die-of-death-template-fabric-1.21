@@ -37,6 +37,7 @@ public class DieOfDeathClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.KILLER_ONLY_BLOCK, RenderLayer.getTranslucent());
 
         ParticleFactoryRegistry.getInstance().register(ModParticles.GREEN_STAR, SpellParticle.DefaultFactory::new);
+        ParticleFactoryRegistry.getInstance().register(ModParticles.LOVE_HEART, SpellParticle.DefaultFactory::new);
 
         HudRenderCallback.EVENT.register((context, tickDelta) -> {
             PlayerEntity player = MinecraftClient.getInstance().player;

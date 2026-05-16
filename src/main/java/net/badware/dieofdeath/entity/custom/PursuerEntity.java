@@ -40,8 +40,10 @@ import software.bernie.geckolib.animation.AnimationController;
 import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
+import net.badware.dieofdeath.entity.client.LMSDiscCache;
 
 import java.util.List;
+import java.util.Map;
 
 public class PursuerEntity extends HostileEntity implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -75,6 +77,14 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
 
     private static final TrackedData<Boolean> IS_CLEAVING = DataTracker.registerData(PursuerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_HOWLING = DataTracker.registerData(PursuerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Boolean> LMS_SUPPRESSED = DataTracker.registerData(PursuerEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private final LMSDiscCache lmsDiscCache = new LMSDiscCache();
+
+    private static final Map<String, Identifier> ADVANCEMENT_IDS = new java.util.HashMap<>();
+
+    private static Identifier getAdvancementId(String name) {
+        return ADVANCEMENT_IDS.computeIfAbsent(name, n -> Identifier.of(DieOfDeath.MOD_ID, n));
+    }
 
     public void setThemePlaying(boolean playing) {
         this.isThemePlaying = playing;
@@ -103,6 +113,14 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
         }
     }
 
+    public boolean isLmsSuppressed() {
+        return this.dataTracker.get(LMS_SUPPRESSED);
+    }
+
+    public void setLmsSuppressed(boolean suppressed) {
+        this.dataTracker.set(LMS_SUPPRESSED, suppressed);
+    }
+
     @Override
     public void tick() {
         super.tick();
@@ -113,25 +131,23 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
         if (this.getWorld().isClient) {
             this.checkAndPlayChaseMusic();
         }
-        if (!this.getWorld().isClient && this.age % 5 == 0 && this.isAlive()) {
-            double fearRange = 16.0;
+        if (!this.getWorld().isClient && this.age % 60 == 0 && this.isAlive()) {
             List<VillagerEntity> victims = this.getWorld().getEntitiesByClass(
                     VillagerEntity.class,
-                    this.getBoundingBox().expand(fearRange),
+                    this.getBoundingBox().expand(16.0),
                     Entity::isAlive
             );
 
-            for (VillagerEntity villager : victims) {
-                Vec3d fleeVec = villager.getPos().subtract(this.getPos()).normalize();
-
-                Vec3d targetPos = villager.getPos().add(fleeVec.multiply(10.0));
-                villager.getBrain().remember(MemoryModuleType.WALK_TARGET, new WalkTarget(targetPos, 0.7f, 0));
-
-                villager.getBrain().remember(MemoryModuleType.IS_PANICKING, true, 100L);
-
-                villager.getLookControl().lookAt(this);
+            if (!victims.isEmpty()) {
+                for (VillagerEntity villager : victims) {
+                    Vec3d fleeVec = villager.getPos().subtract(this.getPos()).normalize();
+                    Vec3d targetPos = villager.getPos().add(fleeVec.multiply(10.0));
+                    villager.getBrain().remember(MemoryModuleType.WALK_TARGET, new WalkTarget(targetPos, 0.7f, 0));
+                    villager.getBrain().remember(MemoryModuleType.IS_PANICKING, true, 100L);
+                }
             }
         }
+
         if (this.getWorld().isClient && this.getVariant() == 15 && this.isAlive()) {
             if (this.random.nextFloat() < 0.4f) {
                 float bodyYaw = this.bodyYaw;
@@ -150,6 +166,10 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
                 );
             }
         }
+
+        if (!this.getWorld().isClient() && this.isAlive() && this.age % 40 == 0) {
+            this.setLmsSuppressed(lmsDiscCache.isLMSDiscNearby(this.getWorld(), this.getBlockPos()));
+        }
     }
 
     private void checkAndPlayChaseMusic() {
@@ -164,6 +184,7 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
         builder.add(VARIANT, -1);
         builder.add(IS_CLEAVING, false);
         builder.add(IS_HOWLING, false);
+        builder.add(LMS_SUPPRESSED, false);
     }
 
     @Override
@@ -227,11 +248,11 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
     }
 
     private void applyCleaveDamage() {
-        Box hitbox = this.getBoundingBox().expand(2.0, 0, 2.0).offset(this.getRotationVec(1.0f).multiply(2.0));
+        Box hitbox = this.getBoundingBox().expand(1.86, 0.0, 1.86).offset(this.getRotationVec(1.0f).multiply(2.0));
         this.getWorld().getEntitiesByClass(LivingEntity.class, hitbox, EntityPredicates.EXCEPT_SPECTATOR).forEach(target -> {
             if (target != this) {
                 target.damage(this.getDamageSources().mobAttack(this), 4.0f);
-                target.addStatusEffect(new StatusEffectInstance(ModEffects.BLEED, 100, 1));
+                target.addStatusEffect(new StatusEffectInstance(ModEffects.BLEED, 40, 1));
                 target.takeKnockback(0.5, -this.getX() + target.getX(), -this.getZ() + target.getZ());
             }
         });
@@ -318,7 +339,7 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
     @Override
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
-        this.goalSelector.add(2, new MeleeAttackGoal(this, 1.2D, false));
+        this.goalSelector.add(2, new MeleeAttackGoal(this, 1.2D, true));
         this.goalSelector.add(3, new WanderAroundFarGoal(this, 1.0D));
         this.goalSelector.add(4, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(5, new LookAroundGoal(this));
@@ -330,7 +351,6 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
 
         this.targetSelector.add(3, new ActiveTargetGoal<>(this, VillagerEntity.class, true,
                 (entity) -> this.getVariant() != 8));
-        this.goalSelector.add(3, new MoveThroughVillageGoal(this, 1.0D, false, 4, () -> true));
     }
 
     @Override
@@ -380,7 +400,7 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
         if (this.swingTicks > 10) {
             float damage = (float)this.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
 
-            if (this.getVariant() == 12 && target instanceof PursuerEntity || target instanceof BadwareEntity) {
+            if (this.getVariant() == 12 && (target instanceof PursuerEntity || target instanceof BadwareEntity)) {
                 damage *= 2.0f;
             }
 
@@ -605,37 +625,75 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
 
         if (causedByPlayer && damageSource.getAttacker() instanceof ServerPlayerEntity player) {
             var scoreboard = player.getScoreboard();
-            var objective = scoreboard.getNullableObjective("pursuer_kills");
 
-            if (objective == null) {
-                objective = scoreboard.addObjective("pursuer_kills",
-                        net.minecraft.scoreboard.ScoreboardCriterion.DUMMY,
-                        Text.literal("Pursuer Kills"),
-                        net.minecraft.scoreboard.ScoreboardCriterion.RenderType.INTEGER,
-                        true, null);
+            var pursuerObj = scoreboard.getNullableObjective("pursuer_kills");
+            if (pursuerObj == null) {
+                pursuerObj = scoreboard.addObjective("pursuer_kills", net.minecraft.scoreboard.ScoreboardCriterion.DUMMY, Text.literal("Pursuer Kills"), net.minecraft.scoreboard.ScoreboardCriterion.RenderType.INTEGER, true, null);
+            }
+            var badwareObj = scoreboard.getNullableObjective("badware_kills");
+            if (badwareObj == null) {
+                badwareObj = scoreboard.addObjective("badware_kills", net.minecraft.scoreboard.ScoreboardCriterion.DUMMY, Text.literal("Badware Kills"), net.minecraft.scoreboard.ScoreboardCriterion.RenderType.INTEGER, true, null);
             }
 
-            var score = scoreboard.getOrCreateScore(player, objective);
-            int currentScore = score.getScore() + 1;
-            score.setScore(currentScore);
+            var pursuerScore = scoreboard.getOrCreateScore(player, pursuerObj);
+            int currentPursuerKills = pursuerScore.getScore() + 1;
+            pursuerScore.setScore(currentPursuerKills);
 
-            if (currentScore >= 1) {
-                this.dropStack(new ItemStack(ModItems.PURSUER_CLEAVE));
+            int currentBadwareKills = scoreboard.getOrCreateScore(player, badwareObj).getScore();
+            int totalKillersKilled = currentBadwareKills + currentPursuerKills;
+
+            this.dropStack(new ItemStack(ModItems.PURSUER_CLEAVE));
+            grantAdvancement(player, "any_killer_kill");
+            if (totalKillersKilled % 5 == 0) {
+                player.giveItemStack(new ItemStack(ModItems.ETERNITY_V2_MUSIC_DISC));
             }
 
-            if (currentScore == 1) {
+            if ((this.getVariant() == 0)) {
+
+                grantAdvancement(player, "pursuer_first_kill");
+                AdvancementEntry PursuerAdv = player.getServer().getAdvancementLoader()
+                        .get(Identifier.of(DieOfDeath.MOD_ID, "pursuer_first_kill"));
+
+                if (PursuerAdv != null) {
+                    AdvancementProgress progress = player.getAdvancementTracker().getProgress(PursuerAdv);
+
+                    if (progress.isDone()) {
+                        this.dropStack(new ItemStack(ModItems.ETERNITY_V2_MUSIC_DISC));
+                    }
+                }
+
                 grantAdvancement(player, "pursuer_first_kill");
             }
-
             if (this.getVariant() > 0) {
+                AdvancementEntry variantAdv = player.getServer().getAdvancementLoader()
+                        .get(Identifier.of(DieOfDeath.MOD_ID, "pursuer_variant_kill"));
+
+                if (variantAdv != null) {
+                    AdvancementProgress progress = player.getAdvancementTracker().getProgress(variantAdv);
+
+                    if (!progress.isDone()) {
+                        this.dropStack(new ItemStack(ModItems.ETERNITY_V2_MUSIC_DISC));
+                    }
+                }
+
                 grantAdvancement(player, "pursuer_variant_kill");
+            }
+
+            if (totalKillersKilled % 2 == 0) {
+                grantAdvancement(player, "double_trouble");
+                player.giveItemStack(new ItemStack(ModItems.ETERNITY));
+            }
+
+            if (totalKillersKilled % 8 == 0) {
+                grantAdvancement(player, "one_bounce");
+                player.giveItemStack(new ItemStack(ModItems.ONE_BOUNCE));
             }
         }
     }
 
     private void grantAdvancement(ServerPlayerEntity player, String name) {
         AdvancementEntry advancementEntry = player.getServer().getAdvancementLoader()
-                .get(Identifier.of(DieOfDeath.MOD_ID, name));
+                .get(getAdvancementId(name));
 
         if (advancementEntry != null) {
             AdvancementProgress progress = player.getAdvancementTracker().getProgress(advancementEntry);
@@ -647,7 +705,7 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
 
     @Override
     public Text getDisplayName() {
-        int variant = this.getVariant();
+        int variant = this.dataTracker == null ? 0 : this.getVariant();
         return switch (variant) {
             case 1 -> Text.literal("Avoider");
             case 2 -> Text.literal("Classic");

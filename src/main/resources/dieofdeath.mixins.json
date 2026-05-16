@@ -6,7 +6,8 @@
 		"ExampleMixin"
 	],
 	"client": [
-		"AbstractClientPlayerEntityMixin"
+		"AbstractClientPlayerEntityMixin",
+		"DeathScreenMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
@@ -20,7 +21,8 @@
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
 		"LivingEntityMixin",
-		"PursuerDeathMixin"
+		"PursuerDeathMixin",
+		"BadwareDeathMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

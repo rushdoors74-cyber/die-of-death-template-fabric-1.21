@@ -32,12 +32,11 @@ public class Test_Rail extends Block {
 
     @Override
     public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
-        if(entity instanceof ItemEntity itemEntity) {
-            if(isValidItem(itemEntity.getStack())) {
+        if (!world.isClient && entity instanceof ItemEntity itemEntity) {
+            if (isValidItem(itemEntity.getStack())) {
                 itemEntity.setStack(new ItemStack(ModItems.ARTFUL_WAND, itemEntity.getStack().getCount()));
             }
         }
-
         super.onSteppedOn(world, pos, state, entity);
     }
 

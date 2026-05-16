@@ -26,10 +26,10 @@ public class BadwareChaseThemeSound extends MovingSoundInstance {
         if (!shouldStop) {
             net.minecraft.client.network.ClientPlayerEntity player = net.minecraft.client.MinecraftClient.getInstance().player;
             if (player != null) {
+                if (this.badware.isLmsSuppressed()) shouldStop = true;
+
                 double distanceSq = this.badware.squaredDistanceTo(player);
-                if (distanceSq > 4000) {
-                    shouldStop = true;
-                }
+                if (distanceSq > 4000) shouldStop = true;
             } else {
                 shouldStop = true;
             }
@@ -48,6 +48,7 @@ public class BadwareChaseThemeSound extends MovingSoundInstance {
         this.y = (float) this.badware.getY();
         this.z = (float) this.badware.getZ();
     }
+
     @Override
     public float getVolume() {
         net.minecraft.client.network.ClientPlayerEntity player = net.minecraft.client.MinecraftClient.getInstance().player;
@@ -65,6 +66,14 @@ public class BadwareChaseThemeSound extends MovingSoundInstance {
     }
     private static SoundEvent getVariantSound(BadwareEntity badware) {
         return switch (badware.getVariant()) {
+            case 9 -> ModSounds.T0_B3_3RA5ED;
+            case 8 -> ModSounds.HEATED_ROCKS_FROM_MAR;
+            case 7 -> ModSounds.MADE_WITH_CARE;
+            case 6 -> ModSounds.THORNS_THAT_PIERCE_BY_LEXXIEMOW;
+            case 5 -> ModSounds.PURIFIED;
+            case 4 -> ModSounds.PANDEMIC_PANDEMONIUM;
+            case 3 -> ModSounds.I_HEART_U;
+            case 2 -> ModSounds.EYESPY;
             case 1 -> ModSounds.INSCRIPTUS;
             default -> ModSounds.POLYMORPHIC;
         };

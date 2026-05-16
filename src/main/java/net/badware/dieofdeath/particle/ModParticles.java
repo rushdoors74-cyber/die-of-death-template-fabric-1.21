@@ -8,9 +8,13 @@ import net.minecraft.util.Identifier;
 
 public class ModParticles {
     public static final SimpleParticleType GREEN_STAR = FabricParticleTypes.simple();
+    public static final SimpleParticleType LOVE_HEART = FabricParticleTypes.simple();
 
     public static void registerParticles() {
         Registry.register(Registries.PARTICLE_TYPE,
                 Identifier.of("dieofdeath", "green_star"), GREEN_STAR);
+
+        Registry.register(Registries.PARTICLE_TYPE,
+                Identifier.of("dieofdeath", "love_heart"), LOVE_HEART);
     }
 }

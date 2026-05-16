@@ -55,6 +55,8 @@
   "item.dieofdeath.pursuer_spawn_egg": "Pursuer Spawn Egg",
   "item.dieofdeath.badware_spawn_egg": "Badware Spawn Egg",
   "item.dieofdeath.badware_pc_spawn_egg": "Badware's PC Spawn Egg",
+  "item.dieofdeath.voyage_to_music_disc": "VOYAGE TO",
+  "item.dieofdeath.voyage_to_music_disc.desc": "theonlywhitesofa - VOYAGE TO",
 
   "effect.dieofdeath.tangled": "Tangled",
   "effect.dieofdeath.bleed": "Bleed",
@@ -111,6 +113,11 @@
   "death.attack.pursuer_bling": "%1$s quit their goal",
 
   "death.attack.badware": "%1$s was slain by Badware",
+  "death.attack.badware_spyware": "%1$s got tracked by Spyware",
+  "death.attack.badware_devilware": "%1$s sold their soul to Devilware",
+  "death.attack.badware_angelware": "%1$s got taken care of",
+  "death.attack.badware_cookieware": "%1$s accepted the cookies from Cookieware",
+  "death.attack.badware_wiperware": "%1$s got their player data erased",
 
   "With a flick of my wand- I bring your wildest dreams- into reality...!": "With a flick of my wand- I bring your wildest dreams- §9into reality...!§r",
   "The only thing stopping you from achieving your dreams are the mental roadblocks you set before yourself!": "The only thing stopping you from achieving your dreams are §9the mental roadblocks you set before yourself!§r"

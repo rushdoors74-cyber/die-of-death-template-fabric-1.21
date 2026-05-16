@@ -1,5 +1,6 @@
 package net.badware.dieofdeath.item.advanced;
 
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.MiningToolItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.tag.BlockTags;
@@ -19,7 +20,8 @@ public class HammerItem extends MiningToolItem {
 
     public static List<BlockPos> getBlocksToBeDestroyed(BlockPos initialBlockPos, ServerPlayerEntity player) {
         List<BlockPos> positions = new ArrayList<>();
-        HitResult hit = player.raycast(4.0, 0, false); //
+        double reach = player.getAttributeValue(EntityAttributes.PLAYER_BLOCK_INTERACTION_RANGE);
+        HitResult hit = player.raycast(4.0, 0, false);
 
         if (hit.getType() == HitResult.Type.BLOCK) {
             BlockHitResult blockHit = (BlockHitResult) hit;

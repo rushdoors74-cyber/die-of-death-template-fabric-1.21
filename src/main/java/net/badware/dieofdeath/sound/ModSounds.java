@@ -79,14 +79,46 @@ public class ModSounds {
     public static final SoundEvent BADWARE_PC_EXPLODE_BY_PLAYER = registerSoundEvent("badware_pc_explode_by_player");
     public static final SoundEvent BADWARE_PC_EXPLODE = registerSoundEvent("badware_pc_explode");
     public static final SoundEvent BOLT_START = registerSoundEvent("bolt_start");
-    public static final SoundEvent BOLT_BEGIN = registerSoundEvent("bolt_begin");
-    public static final SoundEvent BOLT_BEGIN_2 = registerSoundEvent("bolt_begin_2");
     public static final SoundEvent BOLT_MISS = registerSoundEvent("bolt_miss");
     public static final SoundEvent BOLT_HIT = registerSoundEvent("bolt_hit");
     public static final SoundEvent RIFT_TELEPORT = registerSoundEvent("rift_teleport");
     public static final SoundEvent BADWARE_STUNNED = registerSoundEvent("badware_stunned");
     public static final SoundEvent POLYMORPHIC = registerSoundEvent("polymorphic");
     public static final SoundEvent INSCRIPTUS = registerSoundEvent("inscriptus");
+    public static final SoundEvent SPYWARE_STUNNED = registerSoundEvent("spyware_stunned");
+    public static final SoundEvent EYESPY = registerSoundEvent("eyespy");
+    public static final SoundEvent I_HEART_U = registerSoundEvent("i_heart_you");
+    public static final SoundEvent DEVILWARE_STUNNED = registerSoundEvent("devilware_stunned");
+    public static final SoundEvent PANDEMIC_PANDEMONIUM = registerSoundEvent("pandemic_pandemonium");
+    public static final SoundEvent PURIFIED = registerSoundEvent("purified");
+    public static final SoundEvent THORNS_THAT_PIERCE_BY_LEXXIEMOW = registerSoundEvent("thorns_that_pierce");
+    public static final SoundEvent MADE_WITH_CARE = registerSoundEvent("made_with_care");
+    public static final SoundEvent AEROWARE_SWING = registerSoundEvent("aeroware_swing");
+    public static final SoundEvent AEROWARE_PC_MAKING = registerSoundEvent("aeroware_pc_making");
+    public static final SoundEvent AEROWARE_PC_MAKING_2 = registerSoundEvent("aeroware_pc_making_2");
+    public static final SoundEvent AEROWARE_BOLT_START = registerSoundEvent("aeroware_bolt_start");
+    public static final SoundEvent AEROWARE_BOLT_START_2 = registerSoundEvent("aeroware_bolt_start_2");
+    public static final SoundEvent AEROWARE_BOLT_START_3 = registerSoundEvent("aeroware_bolt_start_3");
+    public static final SoundEvent AEROWARE_BOLT_HIT = registerSoundEvent("aeroware_bolt_hit");
+    public static final SoundEvent AEROWARE_BOLT_HIT_2 = registerSoundEvent("aeroware_bolt_hit_2");
+    public static final SoundEvent AEROWARE_BOLT_MISS = registerSoundEvent("aeroware_bolt_miss");
+    public static final SoundEvent AEROWARE_RIFT_TELEPORT = registerSoundEvent("aeroware_rift_teleport");
+    public static final SoundEvent AEROWARE_PC_EXPLODE = registerSoundEvent("aeroware_pc_explode");
+    public static final SoundEvent AEROWARE_KILL = registerSoundEvent("aeroware_kill");
+    public static final SoundEvent AEROWARE_KILL_2 = registerSoundEvent("aeroware_kill_2");
+    public static final SoundEvent AEROWARE_PC_SPAWN_1 = registerSoundEvent("aeroware_pc_spawn_1");
+    public static final SoundEvent AEROWARE_PC_SPAWN_2 = registerSoundEvent("aeroware_pc_spawn_2");
+    public static final SoundEvent AEROWARE_PC_SPAWN_3 = registerSoundEvent("aeroware_pc_spawn_3");
+    public static final SoundEvent AEROWARE_PC_SPAWN_4 = registerSoundEvent("aeroware_pc_spawn_4");
+    public static final SoundEvent AEROWARE_PC_SPAWN_5 = registerSoundEvent("aeroware_pc_spawn_5");
+    public static final SoundEvent AEROWARE_PC_SPAWN_6 = registerSoundEvent("aeroware_pc_spawn_6");
+    public static final SoundEvent AEROWARE_PC_SPAWN_7 = registerSoundEvent("aeroware_pc_spawn_7");
+    public static final SoundEvent AEROWARE_STUNNED = registerSoundEvent("aeroware_stunned");
+    public static final SoundEvent AEROWARE_STUNNED_2 = registerSoundEvent("aeroware_stunned_2");
+    public static final SoundEvent HEATED_ROCKS_FROM_MAR = registerSoundEvent("heated_rocks_from_mar");
+    public static final SoundEvent T0_B3_3RA5ED = registerSoundEvent("to_b3_3ra5ed");
+    public static final SoundEvent DIED_OF_DEATH = registerSoundEvent("died_of_death");
+    public static final SoundEvent LOVEWARE_STUNNED = registerSoundEvent("loveware_stunned");
 
     public static SoundEvent ETERNITY_V2 = registerSoundEvent("eternity_v2");
     public static final RegistryKey<JukeboxSong> ETERNITY_V2_KEY =
@@ -151,6 +183,10 @@ public class ModSounds {
     public static final SoundEvent ONE_BOUNCE = registerSoundEvent("one_bounce");
     public static final RegistryKey<JukeboxSong> ONE_BOUNCE_KEY =
             RegistryKey.of(RegistryKeys.JUKEBOX_SONG, Identifier.of(DieOfDeath.MOD_ID, "one_bounce"));
+
+    public static final SoundEvent VOYAGE_TO = registerSoundEvent("voyage_to");
+    public static final RegistryKey<JukeboxSong> VOYAGE_TO_KEY =
+            RegistryKey.of(RegistryKeys.JUKEBOX_SONG, Identifier.of(DieOfDeath.MOD_ID, "voyage_to"));
 
 
     private static SoundEvent registerSoundEvent(String name) {
