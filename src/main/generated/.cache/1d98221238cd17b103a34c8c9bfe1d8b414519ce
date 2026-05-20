@@ -1,4 +1,4 @@
-// 1.21	2026-05-14T18:34:28.9765078	Die Of Death/Model Definitions
+// 1.21	2026-05-20T15:24:49.3991669	Die Of Death/Model Definitions
 8701c2362740c97a7c2fea49c1d0dc075766cd5e assets\dieofdeath\models\item\tundra_trench_lamp.json
 15c30bc3bd83e23a924e294193895e69255f72cc assets\dieofdeath\models\block\door_0_bottom_right_open.json
 2e340e1d9938315dbb305d92b419c69e54eebd32 assets\dieofdeath\blockstates\wall_0.json
@@ -58,8 +58,8 @@ dfff4febf9ed05ee31d655ec08d7e7379eb390f9 assets\dieofdeath\models\block\button_0
 d67cb65cb636c08e264db35e2450929a1d58926c assets\dieofdeath\models\block\fence_0_post.json
 25333ee9276f0e1d135c76c27588441add84ab05 assets\dieofdeath\models\block\door_0_top_left_open.json
 0ed0a9f0464b7989a46093a55e325872e24a2898 assets\dieofdeath\models\block\fence_gate_0.json
-173f84793a9ef6f390cb36acdd1f1ff46b2d29cd assets\dieofdeath\models\item\block_leggings_amethyst_trim.json
 3c4aff3f58a0b7bc0502be6c5bedbe6d57f3bcb4 assets\dieofdeath\models\item\voyage_to_music_disc.json
+173f84793a9ef6f390cb36acdd1f1ff46b2d29cd assets\dieofdeath\models\item\block_leggings_amethyst_trim.json
 a451e278a88052237a50070fe364fac5ef40b1c5 assets\dieofdeath\models\item\trapdoor_0.json
 7944a60d222c875c51f2e25b44345d61f53d48bd assets\dieofdeath\models\block\backyard_bush_stage1.json
 7aa8e807d498dabcf3c708f5d579e524809668c1 assets\dieofdeath\blockstates\backyard_bush.json
@@ -145,6 +145,7 @@ f4a1c29cab7e1ba28e082c7a88c7458abc3393cc assets\dieofdeath\blockstates\slab_0.js
 882e608a5a4331638e7d39dfcd7b58f893ad6d1e assets\dieofdeath\models\item\block_helmet_diamond_trim.json
 09dfe5d0ed1554588ba4c48e90bc00f3c70d7b75 assets\dieofdeath\models\item\block_helmet_quartz_trim.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets\dieofdeath\models\item\badware_spawn_egg.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets\dieofdeath\models\item\artful_spawn_egg.json
 c9f2f8af5bc1cef6d85fa4d99c6a13014c4f0035 assets\dieofdeath\models\item\temple_music_disc.json
 e7fe90224fe55ea79e7895f5a3c3f56384e199e7 assets\dieofdeath\models\item\block_leggings_gold_trim.json
 736065429b583bedae9c00f721d016e816df4658 assets\dieofdeath\blockstates\fence_gate_0.json

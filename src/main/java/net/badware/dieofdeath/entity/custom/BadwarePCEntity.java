@@ -103,8 +103,7 @@ public class BadwarePCEntity extends LivingEntity implements GeoAnimatable {
                 this.getWorld().getEntitiesByClass(
                         LivingEntity.class,
                         this.getBoundingBox().expand(28.0),
-                        entity -> (entity instanceof BadwareEntity || entity instanceof PursuerEntity) && entity.isAlive()
-                ).forEach(killer -> {
+                        entity -> (entity instanceof ArtfulEntity || entity instanceof BadwareEntity || entity instanceof PursuerEntity) && entity.isAlive()).forEach(killer -> {
                     var speedAttr = killer.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
                     if (speedAttr != null) {
                         String modifierId = "badware_pc_speed_" + this.getUuid();
@@ -142,7 +141,7 @@ public class BadwarePCEntity extends LivingEntity implements GeoAnimatable {
         this.getWorld().getEntitiesByClass(
                 LivingEntity.class,
                 this.getBoundingBox().expand(28.0),
-                entity -> (entity instanceof BadwareEntity || entity instanceof PursuerEntity) && entity.isAlive()
+                entity -> (entity instanceof ArtfulEntity || entity instanceof BadwareEntity || entity instanceof PursuerEntity) && entity.isAlive()
         ).forEach(killer -> {
             Vec3d start = Vec3d.ofCenter(this.getBlockPos()).add(0, 0.5, 0);
             Vec3d end = killer.getPos().add(0, 1.5, 0);

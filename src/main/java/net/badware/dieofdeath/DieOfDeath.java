@@ -5,9 +5,7 @@ import net.badware.dieofdeath.effect.ModEffects;
 import net.badware.dieofdeath.enchantment.ModEnchantments;
 import net.badware.dieofdeath.enchantment.custom.EntanglementEnchantmentEffect;
 import net.badware.dieofdeath.entity.ModEntities;
-import net.badware.dieofdeath.entity.custom.BadwareEntity;
-import net.badware.dieofdeath.entity.custom.BadwarePCEntity;
-import net.badware.dieofdeath.entity.custom.PursuerEntity;
+import net.badware.dieofdeath.entity.custom.*;
 import net.badware.dieofdeath.item.ModItemGroups;
 import net.badware.dieofdeath.item.ModItems;
 import net.badware.dieofdeath.item.advanced.ModArmorItem;
@@ -80,6 +78,10 @@ public class DieOfDeath implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ModEntities.PURSUER, PursuerEntity.createPursuerAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.BADWARE, BadwareEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.BADWARE_PC, BadwarePCEntity.createAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.ARTFUL, ArtfulEntity.createArtfulAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.ARTFUL_WALL, ArtfulWallEntity.createWallAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.ARTFUL_MUSIC_BOX, ArtfulMusicBoxEntity.createMusicBoxAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.ARTFUL_PUPPET, ArtfulPuppetEntity.createPuppetAttributes());
 
 		ModParticles.registerParticles();
 

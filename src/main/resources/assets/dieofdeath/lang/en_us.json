@@ -57,6 +57,10 @@
   "item.dieofdeath.badware_pc_spawn_egg": "Badware's PC Spawn Egg",
   "item.dieofdeath.voyage_to_music_disc": "VOYAGE TO",
   "item.dieofdeath.voyage_to_music_disc.desc": "theonlywhitesofa - VOYAGE TO",
+  "item.dieofdeath.artful_spawn_egg": "Artful Spawn Egg",
+  "item.dieofdeath.artful_wall_spawn_egg": "Artful's Wall Spawn Egg",
+  "item.dieofdeath.artful_musicbox_spawn_egg": "Artful's Musicbox Spawn Egg",
+  "item.dieofdeath.artful_puppet_spawn_egg": "Artful's Puppet Spawn Egg",
 
   "effect.dieofdeath.tangled": "Tangled",
   "effect.dieofdeath.bleed": "Bleed",
@@ -106,6 +110,10 @@
   "entity.dieofdeath.pursuer": "Pursuer",
   "entity.dieofdeath.badware": "Badware",
   "entity.dieofdeath.badware_pc": "Badware's PC",
+  "entity.dieofdeath.artful": "Artful",
+  "entity.dieofdeath.artful_wall": "Artful's Wall",
+  "entity.dieofdeath.artful_music_box": "Artful's Musicbox",
+  "entity.dieofdeath.artful_puppet": "Artful's Puppet",
 
   "death.attack.pursuer": "%1$s was slain by Pursuer",
   "death.attack.pursuer_maze_guy": "%1$s destroyed their monitor",

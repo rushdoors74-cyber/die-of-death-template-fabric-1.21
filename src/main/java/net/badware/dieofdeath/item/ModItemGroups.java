@@ -122,6 +122,10 @@ public class ModItemGroups {
                         entries.add(ModItems.PURSUER_SPAWN_EGG);
                         entries.add(ModItems.BADWARE_SPAWN_EGG);
                         entries.add(ModItems.BADWARE_PC_SPAWN_EGG);
+                        entries.add(ModItems.ARTFUL_SPAWN_EGG);
+                        entries.add(ModItems.ARTFUL_WALL_SPAWN_EGG);
+                        entries.add(ModItems.ARTFUL_MUSIC_BOX_SPAWN_EGG);
+                        entries.add(ModItems.ARTFUL_PUPPET_SPAWN_EGG);
                     }))).build());
 
 

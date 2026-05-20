@@ -1,5 +1,6 @@
 package net.badware.dieofdeath.block.advanced;
 
+import net.badware.dieofdeath.entity.custom.ArtfulEntity;
 import net.badware.dieofdeath.entity.custom.BadwareEntity;
 import net.badware.dieofdeath.entity.custom.PursuerEntity;
 import net.minecraft.block.*;
@@ -20,7 +21,7 @@ public class KillerOnlyBlock extends Block {
         if (context instanceof EntityShapeContext entityContext && entityContext.getEntity() != null) {
             Entity entity = entityContext.getEntity();
 
-            if (entity instanceof PursuerEntity || entity instanceof BadwareEntity) {
+            if (entity instanceof PursuerEntity || entity instanceof BadwareEntity || entity instanceof ArtfulEntity) {
                 return VoxelShapes.empty();
             }
         }
@@ -31,7 +32,7 @@ public class KillerOnlyBlock extends Block {
         if (context instanceof EntityShapeContext entityContext) {
             Entity entity = entityContext.getEntity();
 
-            if (entity instanceof PursuerEntity || entity instanceof BadwareEntity) {
+            if (entity instanceof PursuerEntity || entity instanceof BadwareEntity || entity instanceof ArtfulEntity) {
                 return VoxelShapes.empty();
             }
         }

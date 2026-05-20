@@ -119,6 +119,14 @@ public class ModSounds {
     public static final SoundEvent T0_B3_3RA5ED = registerSoundEvent("to_b3_3ra5ed");
     public static final SoundEvent DIED_OF_DEATH = registerSoundEvent("died_of_death");
     public static final SoundEvent LOVEWARE_STUNNED = registerSoundEvent("loveware_stunned");
+    public static final SoundEvent ARTFUL_SWING = registerSoundEvent("artful_swing");
+    public static final SoundEvent ARTFUL_ABILITY_USE = registerSoundEvent("artful_ability_use");
+    public static final SoundEvent ARTFUL_COPYWRITE_PLACED = registerSoundEvent("artful_copywrite_placed");
+    public static final SoundEvent ARTFUL_COPYWRITE_AMBIENCE = registerSoundEvent("artful_copywrite_ambience");
+    public static final SoundEvent ARTFUL_PUPPET_AMBIENCE = registerSoundEvent("artful_puppet_ambience");
+    public static final SoundEvent ARTFUL_STUNNED = registerSoundEvent("artful_stunned");
+    public static final SoundEvent EST_CE_TA_CARTE = registerSoundEvent("est-ce_ta_carte");
+    public static final SoundEvent CONSTRUCTION = registerSoundEvent("construction");
 
     public static SoundEvent ETERNITY_V2 = registerSoundEvent("eternity_v2");
     public static final RegistryKey<JukeboxSong> ETERNITY_V2_KEY =

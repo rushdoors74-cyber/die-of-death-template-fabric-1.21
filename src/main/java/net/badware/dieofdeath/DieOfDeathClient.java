@@ -3,9 +3,7 @@ package net.badware.dieofdeath;
 import net.badware.dieofdeath.block.ModBlocks;
 import net.badware.dieofdeath.client.RiftOverlay;
 import net.badware.dieofdeath.entity.ModEntities;
-import net.badware.dieofdeath.entity.client.BadwarePCRenderer;
-import net.badware.dieofdeath.entity.client.BadwareRenderer;
-import net.badware.dieofdeath.entity.client.PursuerRenderer;
+import net.badware.dieofdeath.entity.client.*;
 import net.badware.dieofdeath.entity.custom.BadwareEntity;
 import net.badware.dieofdeath.particle.ModParticles;
 import net.badware.dieofdeath.util.ModModelPredicates;
@@ -33,6 +31,10 @@ public class DieOfDeathClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.PURSUER, PursuerRenderer::new);
         EntityRendererRegistry.register(ModEntities.BADWARE, BadwareRenderer::new);
         EntityRendererRegistry.register(ModEntities.BADWARE_PC, BadwarePCRenderer::new);
+        EntityRendererRegistry.register(ModEntities.ARTFUL, ArtfulRenderer::new);
+        EntityRendererRegistry.register(ModEntities.ARTFUL_WALL, ArtfulWallRenderer::new);
+        EntityRendererRegistry.register(ModEntities.ARTFUL_MUSIC_BOX, ArtfulMusicBoxRenderer::new);
+        EntityRendererRegistry.register(ModEntities.ARTFUL_PUPPET, ArtfulPuppetRenderer::new);
 
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.KILLER_ONLY_BLOCK, RenderLayer.getTranslucent());
 

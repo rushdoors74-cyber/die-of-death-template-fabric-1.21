@@ -125,6 +125,18 @@ public static final Item BADWARE_PC_SPAWN_EGG = registerItem("badware_pc_spawn_e
 public static final Item VOYAGE_TO = registerItem("voyage_to_music_disc",
         new Item(new Item.Settings().rarity(Rarity.RARE).jukeboxPlayable(ModSounds.VOYAGE_TO_KEY).maxCount(1)));
 
+public static final Item ARTFUL_SPAWN_EGG = registerItem("artful_spawn_egg",
+        new SpawnEggItem(ModEntities.ARTFUL, 0x000000, 0xFFFFFF, new Item.Settings()));
+
+public static final Item ARTFUL_WALL_SPAWN_EGG = registerItem("artful_wall_spawn_egg",
+        new ArtfulWallSpawnItem(new Item.Settings()));
+
+public static final Item ARTFUL_MUSIC_BOX_SPAWN_EGG = registerItem("artful_musicbox_spawn_egg",
+        new ArtfulMusicBoxItem(new Item.Settings()));
+
+public static final Item ARTFUL_PUPPET_SPAWN_EGG = registerItem("artful_puppet_spawn_egg",
+        new ArtfulPuppetSpawnItem(new Item.Settings()));
+
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(DieOfDeath.MOD_ID, name), item);

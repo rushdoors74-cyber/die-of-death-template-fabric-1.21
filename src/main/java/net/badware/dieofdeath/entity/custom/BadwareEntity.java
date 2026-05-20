@@ -15,6 +15,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -89,6 +90,7 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
 
     public BadwareEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
+        this.setPathfindingPenalty(PathNodeType.OPEN, 0.0F);
     }
 
 
@@ -242,6 +244,12 @@ public class BadwareEntity extends HostileEntity implements GeoEntity {
         }
 
         super.tick();
+
+        if (!this.getWorld().isClient() && this.isAlive() && this.getTarget() != null) {
+            if (this.horizontalCollision && this.isOnGround()) {
+                this.getJumpControl().setActive();
+            }
+        }
 
         if (this.getHitFaceTimer() > 0) {
             this.setHitFaceTimer(this.getHitFaceTimer() - 1);

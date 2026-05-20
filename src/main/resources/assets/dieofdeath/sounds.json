@@ -781,5 +781,71 @@
         "stream": true
       }
     ]
+  },
+  "artful_swing": {
+    "subtitle": "subtitles.dieofdeath.artful_swing",
+    "sounds": [
+      "dieofdeath:artful_swing"
+    ]
+  },
+  "artful_ability_use": {
+    "subtitle": "subtitles.dieofdeath.artful_ability_use",
+    "sounds": [
+      "dieofdeath:artful_ability_use"
+    ]
+  },
+  "artful_copywrite_placed": {
+    "subtitle": "subtitles.dieofdeath.artful_copywrite_placed",
+    "sounds": [
+      "dieofdeath:artful_copywrite_placed"
+    ]
+  },
+  "artful_copywrite_ambience": {
+    "category": "hostile",
+    "subtitle": "subtitles.dieofdeath.artful_copywrite_ambience",
+    "sounds": [
+      {
+        "name": "dieofdeath:artful_copywrite_ambience",
+        "stream": true,
+        "volume": 1.0
+      }
+    ]
+  },
+  "artful_puppet_ambience": {
+    "category": "hostile",
+    "subtitle": "subtitles.dieofdeath.artful_puppet_ambience",
+    "sounds": [
+      {
+        "name": "dieofdeath:artful_puppet_ambience",
+        "stream": true,
+        "volume": 1.0
+      }
+    ]
+  },
+  "artful_stunned": {
+    "subtitle": "subtitles.dieofdeath.artful_stunned",
+    "sounds": [
+      "dieofdeath:artful_stunned"
+    ]
+  },
+  "est-ce_ta_carte": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/est-ce_ta_carte",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
+  },
+  "construction": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "dieofdeath:music/construction",
+        "stream": true,
+        "attenuation_distance": 64
+      }
+    ]
   }
 }

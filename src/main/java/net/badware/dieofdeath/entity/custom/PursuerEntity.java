@@ -65,6 +65,7 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
         super(entityType, world);
         this.setPathfindingPenalty(PathNodeType.RAIL, 0.0F);
         this.setPathfindingPenalty(PathNodeType.WATER, 0.0F);
+        this.setPathfindingPenalty(PathNodeType.OPEN, 0.0F);
     }
 
     public static DefaultAttributeContainer.Builder createPursuerAttributes() {
@@ -130,6 +131,11 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
 
         if (this.getWorld().isClient) {
             this.checkAndPlayChaseMusic();
+        }
+        if (!this.getWorld().isClient() && this.isAlive() && this.getTarget() != null) {
+            if (this.horizontalCollision && this.isOnGround()) {
+                this.getJumpControl().setActive();
+            }
         }
         if (!this.getWorld().isClient && this.age % 60 == 0 && this.isAlive()) {
             List<VillagerEntity> victims = this.getWorld().getEntitiesByClass(
@@ -400,7 +406,7 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
         if (this.swingTicks > 10) {
             float damage = (float)this.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
 
-            if (this.getVariant() == 12 && (target instanceof PursuerEntity || target instanceof BadwareEntity)) {
+            if (this.getVariant() == 12 && (target instanceof PursuerEntity || target instanceof BadwareEntity || target instanceof ArtfulEntity)) {
                 damage *= 2.0f;
             }
 
@@ -415,7 +421,7 @@ public class PursuerEntity extends HostileEntity implements GeoEntity {
         if (this.getVariant() == 12) {
             Entity attacker = source.getAttacker();
 
-            if (attacker != null && (attacker instanceof PursuerEntity || attacker instanceof BadwareEntity)) {
+            if (attacker != null && (attacker instanceof PursuerEntity || attacker instanceof BadwareEntity || attacker instanceof  ArtfulEntity)) {
 
                 amount *= 0.8f;
             }

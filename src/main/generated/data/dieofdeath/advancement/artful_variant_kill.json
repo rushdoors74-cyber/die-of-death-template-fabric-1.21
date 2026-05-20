@@ -1,0 +1,22 @@
+{
+  "parent": "dieofdeath:pursuer_first_kill",
+  "criteria": {
+    "manual": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "description": "Kill a variant of Artful.",
+    "icon": {
+      "count": 1,
+      "id": "dieofdeath:artful_spawn_egg"
+    },
+    "title": "Artful again..?"
+  },
+  "requirements": [
+    [
+      "manual"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
