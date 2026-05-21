@@ -106,7 +106,7 @@ public class ModAdvancementProvider extends FabricAdvancementProvider {
                 .criterion("manual", Criteria.IMPOSSIBLE.create(new ImpossibleCriterion.Conditions()))
                 .build(consumer, DieOfDeath.MOD_ID + ":artful_first_kill");
 
-        AdvancementEntry artfulVariantKill = Advancement.Builder.create().parent(pursuerKill)
+        AdvancementEntry artfulVariantKill = Advancement.Builder.create().parent(artfulKill)
                 .display(ModItems.ARTFUL_SPAWN_EGG,
                         Text.literal("Artful again..?"),
                         Text.literal("Kill a variant of Artful."),

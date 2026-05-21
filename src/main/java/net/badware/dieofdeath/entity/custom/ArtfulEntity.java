@@ -31,7 +31,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -72,6 +71,8 @@ public class ArtfulEntity extends HostileEntity implements GeoEntity {
     private int overdriveTicksLeft = 0;
     public transient boolean isThemePlayingClient = false;
     public boolean isThemePlaying = false;
+    private final java.util.List<ArtfulWallEntity> spawnedWalls = new java.util.ArrayList<>();
+    private final java.util.List<ArtfulMusicBoxEntity> spawnedMusicBoxes = new java.util.ArrayList<>();
 
     public ArtfulEntity(EntityType<? extends HostileEntity> entityType, World world) {
         super(entityType, world);
@@ -110,9 +111,25 @@ public class ArtfulEntity extends HostileEntity implements GeoEntity {
     }
 
     @Override
+    public boolean cannotDespawn() {
+        return true;
+    }
+
+    @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("variant", this.getVariant());
+
+        nbt.putInt("swingTicks", this.swingTicks);
+        nbt.putInt("swingCooldown", this.swingCooldown);
+        nbt.putInt("wallTicks", this.wallTicks);
+        nbt.putInt("wallCooldown", this.wallCooldown);
+        nbt.putInt("copywriteTicks", this.copywriteTicks);
+        nbt.putInt("copywriteCooldown", this.copywriteCooldown);
+        nbt.putInt("repurposeTicks", this.repurposeTicks);
+        nbt.putInt("repurposeCooldown", this.repurposeCooldown);
+        nbt.putInt("storedEntityType", this.dataTracker.get(STORED_ENTITY_TYPE));
+        nbt.putInt("overdriveTicksLeft", this.overdriveTicksLeft);
     }
 
     @Override
@@ -121,6 +138,25 @@ public class ArtfulEntity extends HostileEntity implements GeoEntity {
         if (nbt.contains("variant")) {
             this.setVariant(nbt.getInt("variant"));
         }
+
+        this.swingTicks        = nbt.contains("swingTicks")        ? nbt.getInt("swingTicks")        : -1;
+        this.swingCooldown     = nbt.contains("swingCooldown")     ? nbt.getInt("swingCooldown")     : 0;
+        this.wallTicks         = nbt.contains("wallTicks")         ? nbt.getInt("wallTicks")         : -1;
+        this.wallCooldown      = nbt.contains("wallCooldown")      ? nbt.getInt("wallCooldown")      : 0;
+        this.copywriteTicks    = nbt.contains("copywriteTicks")    ? nbt.getInt("copywriteTicks")    : -1;
+        this.copywriteCooldown = nbt.contains("copywriteCooldown") ? nbt.getInt("copywriteCooldown") : 0;
+        this.repurposeTicks    = nbt.contains("repurposeTicks")    ? nbt.getInt("repurposeTicks")    : -1;
+        this.repurposeCooldown = nbt.contains("repurposeCooldown") ? nbt.getInt("repurposeCooldown") : 0;
+        this.overdriveTicksLeft = nbt.contains("overdriveTicksLeft") ? nbt.getInt("overdriveTicksLeft") : 0;
+
+        if (nbt.contains("storedEntityType")) {
+            this.dataTracker.set(STORED_ENTITY_TYPE, nbt.getInt("storedEntityType"));
+        }
+
+        this.dataTracker.set(IS_SWINGING,          this.swingTicks >= 0);
+        this.dataTracker.set(IS_CASTING_WALL,       this.wallTicks >= 0);
+        this.dataTracker.set(IS_CASTING_COPYWRITE,  this.copywriteTicks >= 0);
+        this.dataTracker.set(IS_REPURPOSING,        this.repurposeTicks >= 0);
     }
 
     public boolean isLmsSuppressed() {
@@ -201,10 +237,6 @@ public class ArtfulEntity extends HostileEntity implements GeoEntity {
             }
         }
 
-        if (wallCooldown > 0) {
-            wallCooldown--;
-        }
-
         if (wallTicks >= 0) {
             wallTicks++;
 
@@ -217,12 +249,11 @@ public class ArtfulEntity extends HostileEntity implements GeoEntity {
 
                 if (wallTicks == 30 && !this.getWorld().isClient) {
                     double surfaceY = this.getWorld().getTopY(net.minecraft.world.Heightmap.Type.MOTION_BLOCKING, (int)this.getX(), (int)this.getZ());
-
                     double undergroundY = surfaceY - 1.75;
-
                     ArtfulWallEntity wall = new ArtfulWallEntity(ModEntities.ARTFUL_WALL, this.getWorld());
                     wall.refreshPositionAndAngles(this.getX(), undergroundY, this.getZ(), this.getYaw(), 0.0f);
-                    wall.setVariant(1);
+                    wall.setVariant(this.getVariant());
+                    this.spawnedWalls.add(wall);
                     this.getWorld().spawnEntity(wall);
                     this.getWorld().playSound(null, this.getBlockPos(), ModSounds.IMPLEMENT_PLACE, net.minecraft.sound.SoundCategory.HOSTILE, 1.0f, 1.0f);
                 }
@@ -277,7 +308,7 @@ public class ArtfulEntity extends HostileEntity implements GeoEntity {
 
         if (overdriveTicksLeft > 0) {
             overdriveTicksLeft--;
-            this.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 1, 2, false, false)); // Speed III
+            this.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 1, 2, false, false));
 
             if (this.getWorld() instanceof ServerWorld serverWorld) {
                 Vec3d fakeMusicBoxPos = this.getPos().add(0, this.getHeight() + 1.0, 0);
@@ -323,11 +354,10 @@ public class ArtfulEntity extends HostileEntity implements GeoEntity {
 
                             if (victim instanceof ArtfulWallEntity) {
                                 this.dataTracker.set(STORED_ENTITY_TYPE, 1);
-
                                 this.getWorld().playSound(
                                         null,
                                         this.getX(), this.getY(), this.getZ(),
-                                        net.badware.dieofdeath.sound.ModSounds.IMPLEMENT_BREAK,
+                                        ModSounds.IMPLEMENT_BREAK,
                                         net.minecraft.sound.SoundCategory.HOSTILE,
                                         1.0F, 1.0F
                                 );
@@ -335,10 +365,24 @@ public class ArtfulEntity extends HostileEntity implements GeoEntity {
                             }
                             else if (victim instanceof ArtfulMusicBoxEntity) {
                                 this.dataTracker.set(STORED_ENTITY_TYPE, 2);
+                                this.getWorld().playSound(
+                                        null,
+                                        this.getX(), this.getY(), this.getZ(),
+                                        ModSounds.IMPLEMENT_BREAK,
+                                        net.minecraft.sound.SoundCategory.HOSTILE,
+                                        1.0F, 1.0F
+                                );
                                 victim.discard();
                             }
                             else if (victim instanceof PlayerEntity) {
                                 this.dataTracker.set(STORED_ENTITY_TYPE, 3);
+                                this.getWorld().playSound(
+                                        null,
+                                        this.getX(), this.getY(), this.getZ(),
+                                        ModSounds.IMPLEMENT_BREAK,
+                                        net.minecraft.sound.SoundCategory.HOSTILE,
+                                        1.0F, 1.0F
+                                );
                             }
                         }
                     }
@@ -353,8 +397,16 @@ public class ArtfulEntity extends HostileEntity implements GeoEntity {
                 }
             }
             else if (currentStored == 1) {
-                if (!this.getWorld().isClient) {
-                    this.triggerAnim("attack_controller", "wall_throw");
+                if (repurposeTicks <= 20) {
+                    this.getNavigation().stop();
+                    this.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 1, 2, false, false));
+
+                    if (repurposeTicks == 1 && !this.getWorld().isClient) {
+                        this.triggerAnim("attack_controller", "wall_throw");
+                    }
+                }
+
+                if (repurposeTicks == 21 && !this.getWorld().isClient) {
                     Vec3d lookDir = this.getRotationVec(1.0F);
                     Vec3d brickImpactPoint = this.getEyePos();
 
@@ -376,10 +428,13 @@ public class ArtfulEntity extends HostileEntity implements GeoEntity {
                         }
                     }
                 }
-                this.dataTracker.set(STORED_ENTITY_TYPE, 0);
-                this.repurposeCooldown = 100;
-                this.repurposeTicks = -1;
-                this.dataTracker.set(IS_REPURPOSING, false);
+
+                if (repurposeTicks > 30) {
+                    this.dataTracker.set(STORED_ENTITY_TYPE, 0);
+                    this.repurposeCooldown = 100;
+                    this.repurposeTicks = -1;
+                    this.dataTracker.set(IS_REPURPOSING, false);
+                }
             }
             else if (currentStored == 2) {
                 if (repurposeTicks <= 40) {
@@ -401,6 +456,7 @@ public class ArtfulEntity extends HostileEntity implements GeoEntity {
                                 this.getX(), this.getY() + this.getHeight() + 1.0, this.getZ(),
                                 this.getYaw(), 0.0f);
                         overdriveMusicBox.setOverdriveMode(true);
+                        this.spawnedMusicBoxes.add(overdriveMusicBox);
                         this.getWorld().spawnEntity(overdriveMusicBox);
                     }
                 }
@@ -503,18 +559,6 @@ public class ArtfulEntity extends HostileEntity implements GeoEntity {
         }
     }
 
-    private double findGroundY(double x, double y, double z) {
-        World world = this.getWorld();
-        BlockPos startPos = BlockPos.ofFloored(x, y, z);
-        for (int i = 0; i <= 8; i++) {
-            BlockPos check = startPos.down(i);
-            if (world.getBlockState(check).isSolidBlock(world, check)) {
-                return check.getY() + 1.0;
-            }
-        }
-        return y;
-    }
-
     public void triggerRepurposeAbility() {
         this.repurposeTicks = 0;
         this.dataTracker.set(IS_REPURPOSING, true);
@@ -523,6 +567,10 @@ public class ArtfulEntity extends HostileEntity implements GeoEntity {
 
     public void triggerCopywriteAbility() {
         if (this.getWorld().isClient) return;
+
+        this.getWorld().playSound(null, this.getBlockPos(),
+                ModSounds.ARTFUL_COPYWRITE_PLACED, net.minecraft.sound.SoundCategory.HOSTILE, 1.0f, 1.0f
+        );
 
         List<ArtfulMusicBoxEntity> globalBoxes = this.getWorld().getEntitiesByClass(ArtfulMusicBoxEntity.class,
                 this.getBoundingBox().expand(256.0), Entity::isAlive);
@@ -546,15 +594,13 @@ public class ArtfulEntity extends HostileEntity implements GeoEntity {
 
         if (!this.getWorld().isClient()) {
             ArtfulMusicBoxEntity musicBox = new ArtfulMusicBoxEntity(ModEntities.ARTFUL_MUSIC_BOX, this.getWorld());
-
             double targetX = this.getX() + this.getRotationVec(1.0F).x * 4.0;
             double targetZ = this.getZ() + this.getRotationVec(1.0F).z * 4.0;
-
             double groundY = this.getWorld().getTopY(net.minecraft.world.Heightmap.Type.MOTION_BLOCKING, (int)targetX, (int)targetZ);
 
             musicBox.setPosition(targetX, groundY + 1.5, targetZ);
-
             this.getWorld().spawnEntity(musicBox);
+            this.spawnedMusicBoxes.add(musicBox);
         }
     }
 
@@ -623,7 +669,8 @@ public class ArtfulEntity extends HostileEntity implements GeoEntity {
             } else {
                 anim = "animation.artful.idle";
             }
-            return state.setAndContinue(RawAnimation.begin().thenLoop(anim));
+            state.setAndContinue(RawAnimation.begin().thenLoop(anim));
+            return PlayState.CONTINUE;
         }));
 
         controllerRegistrar.add(new AnimationController<>(this, "attack_controller", 2, state -> PlayState.STOP)
@@ -672,20 +719,16 @@ public class ArtfulEntity extends HostileEntity implements GeoEntity {
             }
 
             if ((this.getVariant() == 0)) {
-
                 grantAdvancement(player, "artful_first_kill");
                 AdvancementEntry PursuerAdv = player.getServer().getAdvancementLoader()
                         .get(Identifier.of(DieOfDeath.MOD_ID, "artful_first_kill"));
 
                 if (PursuerAdv != null) {
                     AdvancementProgress progress = player.getAdvancementTracker().getProgress(PursuerAdv);
-
                     if (progress.isDone()) {
                         this.dropStack(new ItemStack(ModItems.ETERNITY_V2_MUSIC_DISC));
                     }
                 }
-
-                grantAdvancement(player, "artful_first_kill");
             }
             if (this.getVariant() > 0) {
                 AdvancementEntry variantAdv = player.getServer().getAdvancementLoader()
@@ -693,12 +736,10 @@ public class ArtfulEntity extends HostileEntity implements GeoEntity {
 
                 if (variantAdv != null) {
                     AdvancementProgress progress = player.getAdvancementTracker().getProgress(variantAdv);
-
                     if (!progress.isDone()) {
                         this.dropStack(new ItemStack(ModItems.ETERNITY_V2_MUSIC_DISC));
                     }
                 }
-
                 grantAdvancement(player, "artful_variant_kill");
             }
 
@@ -759,6 +800,27 @@ public class ArtfulEntity extends HostileEntity implements GeoEntity {
         @Override
         public boolean shouldContinue() {
             return this.artful.isCurrentlySwinging();
+        }
+    }
+
+    @Override
+    public void remove(Entity.RemovalReason reason) {
+        super.remove(reason);
+
+        if (!this.getWorld().isClient) {
+            for (ArtfulWallEntity wall : spawnedWalls) {
+                if (wall != null && wall.isAlive()) {
+                    wall.discard();
+                }
+            }
+            spawnedWalls.clear();
+
+            for (ArtfulMusicBoxEntity box : spawnedMusicBoxes) {
+                if (box != null && box.isAlive()) {
+                    box.discard();
+                }
+            }
+            spawnedMusicBoxes.clear();
         }
     }
 }

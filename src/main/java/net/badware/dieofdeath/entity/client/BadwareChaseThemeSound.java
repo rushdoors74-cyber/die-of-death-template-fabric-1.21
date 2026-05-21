@@ -17,6 +17,7 @@ public class BadwareChaseThemeSound extends MovingSoundInstance {
         this.repeatDelay = 0;
         this.volume = 1.0f;
         this.relative = false;
+        this.attenuationType = AttenuationType.LINEAR;
     }
 
     @Override

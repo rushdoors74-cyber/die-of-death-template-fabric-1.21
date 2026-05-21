@@ -807,6 +807,7 @@
       {
         "name": "dieofdeath:artful_copywrite_ambience",
         "stream": true,
+        "repeat": true,
         "volume": 1.0
       }
     ]
@@ -818,6 +819,7 @@
       {
         "name": "dieofdeath:artful_puppet_ambience",
         "stream": true,
+        "repeat": true,
         "volume": 1.0
       }
     ]

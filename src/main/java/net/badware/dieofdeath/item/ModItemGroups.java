@@ -55,6 +55,7 @@ public class ModItemGroups {
                         entries.add(ModBlocks.KILLER_ONLY_BLOCK);
                         entries.add(ModBlocks.IMPLEMENT_WALL);
                         entries.add(ModBlocks.WOOD_BOX);
+                        entries.add(ModBlocks.TUNDRA_TRENCH_LAMP);
                         entries.add(ModBlocks.TEST_RAIL);
                         entries.add(ModBlocks.TRAPDOOR_0);
                         entries.add(ModBlocks.BUTTON_0);

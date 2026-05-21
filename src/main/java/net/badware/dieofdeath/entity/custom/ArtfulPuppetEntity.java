@@ -12,17 +12,18 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
-import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 
-public class ArtfulPuppetEntity extends HostileEntity implements GeoAnimatable {
+public class ArtfulPuppetEntity extends HostileEntity implements software.bernie.geckolib.animatable.GeoEntity {
 
     private int lifetimeTicks = 0;
     private boolean spawnSoundPlayed = false;
+    public transient boolean isThemePlayingClient = false;
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
@@ -47,7 +48,11 @@ public class ArtfulPuppetEntity extends HostileEntity implements GeoAnimatable {
     @Override
     public void tick() {
         super.tick();
-        if (this.getWorld().isClient) return;
+
+        if (this.getWorld().isClient) {
+            net.badware.dieofdeath.entity.client.ClientMusicHandler.handlePuppetMusic(this);
+            return;
+        }
 
         if (!spawnSoundPlayed) {
             this.getWorld().playSound(null, this.getBlockPos(), ModSounds.ARTFUL_PUPPET_AMBIENCE,
@@ -91,9 +96,10 @@ public class ArtfulPuppetEntity extends HostileEntity implements GeoAnimatable {
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+    public void registerControllers(software.bernie.geckolib.animation.AnimatableManager.ControllerRegistrar controllerRegistrar) {
         controllerRegistrar.add(new software.bernie.geckolib.animation.AnimationController<>(this, "controller", 2, event -> {
-            return event.setAndContinue(software.bernie.geckolib.animation.RawAnimation.begin().thenLoop("idle"));
+            event.setAndContinue(software.bernie.geckolib.animation.RawAnimation.begin().thenLoop("animation.artful_puppet.idle"));
+            return software.bernie.geckolib.animation.PlayState.CONTINUE;
         }));
     }
 

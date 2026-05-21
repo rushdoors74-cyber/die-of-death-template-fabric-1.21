@@ -1,5 +1,5 @@
 {
-  "parent": "dieofdeath:pursuer_first_kill",
+  "parent": "dieofdeath:artful_first_kill",
   "criteria": {
     "manual": {
       "trigger": "minecraft:impossible"

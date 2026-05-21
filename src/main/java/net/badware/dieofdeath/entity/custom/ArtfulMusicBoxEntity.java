@@ -10,6 +10,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -19,23 +20,25 @@ import net.minecraft.world.World;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.Comparator;
 import java.util.List;
 
-public class ArtfulMusicBoxEntity extends LivingEntity implements GeoAnimatable {
+public class ArtfulMusicBoxEntity extends net.minecraft.entity.mob.PathAwareEntity implements GeoAnimatable {
 
     private int lifetimeTicks = 0;
     private LivingEntity currentTarget = null;
     private int ticksSinceBeam = -1;
+    private int overdriveLifetime = 0;
 
     private static final TrackedData<Boolean> OVERDRIVE_MODE =
             DataTracker.registerData(ArtfulMusicBoxEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-    public ArtfulMusicBoxEntity(EntityType<? extends LivingEntity> entityType, World world) {
+    public ArtfulMusicBoxEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
         this.setNoGravity(true);
     }
@@ -54,9 +57,21 @@ public class ArtfulMusicBoxEntity extends LivingEntity implements GeoAnimatable 
         return this.dataTracker.get(OVERDRIVE_MODE);
     }
 
+    @Override
+    public boolean cannotDespawn() {
+        return true;
+    }
+
+    @Override
+    public boolean isPersistent() {
+        return true;
+    }
+
     public static DefaultAttributeContainer.Builder createMusicBoxAttributes() {
         return LivingEntity.createLivingAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 150.0);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 150.0)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.0)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 16.0);
     }
 
     @Override
@@ -67,6 +82,15 @@ public class ArtfulMusicBoxEntity extends LivingEntity implements GeoAnimatable 
         lifetimeTicks++;
 
         if (this.isOverdriveMode()) {
+            overdriveLifetime++;
+
+            if (overdriveLifetime >= 140) {
+                this.discard();
+                return;
+            }
+        }
+
+        if (this.isOverdriveMode()) {
             List<ArtfulEntity> owners = this.getWorld().getEntitiesByClass(
                     ArtfulEntity.class,
                     this.getBoundingBox().expand(25.0),
@@ -75,14 +99,18 @@ public class ArtfulMusicBoxEntity extends LivingEntity implements GeoAnimatable 
 
             if (!owners.isEmpty()) {
                 ArtfulEntity artful = owners.get(0);
-
                 double targetY = artful.getY() + artful.getHeight() + 1.2;
-
                 this.setPosition(artful.getX(), targetY, artful.getZ());
-
                 this.setVelocity(Vec3d.ZERO);
                 this.velocityModified = true;
+            } else {
+                this.discard();
+                return;
             }
+        }
+
+        if (lifetimeTicks >= 153.85999999999999) {
+            lifetimeTicks = 1;
         }
 
         if (lifetimeTicks == 1) {
@@ -91,11 +119,6 @@ public class ArtfulMusicBoxEntity extends LivingEntity implements GeoAnimatable 
         }
 
         if (isOverdriveMode()) return;
-
-        if (lifetimeTicks > 120) {
-            this.discard();
-            return;
-        }
 
         if (lifetimeTicks < 20) return;
         if (lifetimeTicks % 5 != 0) {
@@ -110,8 +133,13 @@ public class ArtfulMusicBoxEntity extends LivingEntity implements GeoAnimatable 
 
         List<LivingEntity> candidates = this.getWorld().getEntitiesByClass(LivingEntity.class, scanBox, entity -> {
             if (entity == this || !entity.isAlive()) return false;
-            if (entity instanceof PursuerEntity || entity instanceof BadwareEntity || entity instanceof ArtfulEntity) return false;
+            if (entity instanceof PursuerEntity || entity instanceof BadwareEntity
+                    || entity instanceof ArtfulEntity || entity instanceof ArtfulMusicBoxEntity
+                    || entity instanceof ArtfulWallEntity || entity instanceof ArtfulPuppetEntity) return false;
             if (entity instanceof PlayerEntity p && (p.isCreative() || p.isSpectator())) return false;
+            if (entity instanceof net.minecraft.entity.mob.Monster) {
+                return false;
+            }
             return true;
         });
 
@@ -171,7 +199,8 @@ public class ArtfulMusicBoxEntity extends LivingEntity implements GeoAnimatable 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         controllerRegistrar.add(new software.bernie.geckolib.animation.AnimationController<>(this, "controller", 0, event -> {
-            return event.setAndContinue(software.bernie.geckolib.animation.RawAnimation.begin().thenLoop("idle"));
+            event.setAndContinue(software.bernie.geckolib.animation.RawAnimation.begin().thenLoop("idle"));
+            return PlayState.CONTINUE;
         }));
     }
 

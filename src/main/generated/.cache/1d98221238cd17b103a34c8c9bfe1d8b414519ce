@@ -1,4 +1,4 @@
-// 1.21	2026-05-20T15:24:49.3991669	Die Of Death/Model Definitions
+// 1.21	2026-05-21T18:04:38.8951547	Die Of Death/Model Definitions
 8701c2362740c97a7c2fea49c1d0dc075766cd5e assets\dieofdeath\models\item\tundra_trench_lamp.json
 15c30bc3bd83e23a924e294193895e69255f72cc assets\dieofdeath\models\block\door_0_bottom_right_open.json
 2e340e1d9938315dbb305d92b419c69e54eebd32 assets\dieofdeath\blockstates\wall_0.json
@@ -101,8 +101,8 @@ a4975d5156ae678f4a18fd54ac238826a0a0b10d assets\dieofdeath\blockstates\test_rail
 143739116128775e789dcbe0d477f0bd42aa1f8a assets\dieofdeath\models\block\stairs_0_inner.json
 a3a87aeb595806538a9a9ae93cb0bc3b023ca97b assets\dieofdeath\models\item\wood_box.json
 cee8bde59e6e9b83d6bd10adb0d80682a6d737db assets\dieofdeath\models\item\block_boots_netherite_trim.json
-edbf4b75c9c0d82c2c1a9e48757cc13d7ad323c0 assets\dieofdeath\models\item\block_boots_lapis_trim.json
 dc30257cf34c039d0253228a4182edefbc675ab0 assets\dieofdeath\models\block\tundra_trench_sapling.json
+edbf4b75c9c0d82c2c1a9e48757cc13d7ad323c0 assets\dieofdeath\models\item\block_boots_lapis_trim.json
 57228d0569c93b6f9d9302b52148a4c2aebb9d7b assets\dieofdeath\models\item\one_bounce_music_disc.json
 c1f774c8b469419829c602b699e567b96e3df73d assets\dieofdeath\models\item\button_0.json
 0039b0c84aa21384183f1e95f84136ffae2a92e3 assets\dieofdeath\models\item\killer_only_block.json
